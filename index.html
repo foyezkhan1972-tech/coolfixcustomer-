@@ -1,0 +1,3299 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>কুলফিক্স — হোম অ্যাপ্লায়েন্স সার্ভিস</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --logo-deep-blue: #0038C6;
+      --logo-sky-blue: #009FFD;
+      --logo-blue-light: #E6F4FF;
+      --logo-lime-green: #58CC02;
+      --logo-green-dark: #3E9E00;
+      --logo-green-light: #EEFCE6;
+      --white: #FFFFFF;
+      --text-dark: #0A1931;
+      --text-muted: #526484;
+      --border-blue: #CBE4FF;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Hind Siliguri', 'Inter', sans-serif;
+      background-color: #EBF4FC;
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      background-color: var(--white);
+      min-height: 100vh;
+      position: relative;
+      box-shadow: 0 0 24px rgba(0, 56, 198, 0.12);
+      overflow-x: hidden;
+      padding-bottom: 86px;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .login-screen {
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(180deg, #E3F3FF 0%, #FFFFFF 55%, #F2FCEB 100%);
+    }
+
+    .login-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lang-switch-btn {
+      background: var(--white);
+      border: 1.5px solid var(--logo-green-dark);
+      color: var(--logo-green-dark);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-family: 'Inter', 'Hind Siliguri', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .skip-btn {
+      background: var(--white);
+      border: 1.5px solid var(--logo-deep-blue);
+      color: var(--logo-deep-blue);
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .brand-center {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .coolfix-logo-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .cf-logo-card {
+      width: 120px;
+      height: 120px;
+      border-radius: 28px;
+      background: linear-gradient(145deg, var(--logo-sky-blue) 0%, var(--logo-deep-blue) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 26px rgba(0, 56, 198, 0.28);
+      padding: 12px;
+    }
+
+    .logo-text {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--logo-deep-blue);
+      letter-spacing: -0.5px;
+    }
+
+    .logo-text span {
+      color: var(--logo-green-dark);
+    }
+
+    .tagline {
+      font-size: 16px;
+      color: var(--text-dark);
+      line-height: 1.45;
+      max-width: 310px;
+      margin: 0 auto 18px;
+      font-weight: 500;
+    }
+
+    .floating-tools {
+      display: flex;
+      justify-content: space-around;
+      margin: 18px 0;
+      font-size: 26px;
+    }
+
+    .tool-badge {
+      width: 54px;
+      height: 54px;
+      background: var(--white);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 56, 198, 0.08);
+      border: 1.5px dashed var(--logo-sky-blue);
+    }
+
+    .login-actions {
+      margin-top: auto;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(90deg, var(--logo-deep-blue), #0055E6);
+      color: var(--white);
+      border: none;
+      padding: 15px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0, 56, 198, 0.28);
+    }
+
+    .btn-green {
+      width: 100%;
+      background: linear-gradient(90deg, var(--logo-green-dark), var(--logo-lime-green));
+      color: var(--white);
+      border: none;
+      padding: 15px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(88, 204, 2, 0.28);
+    }
+
+    .divider-text {
+      text-align: center;
+      margin: 16px 0;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .social-row {
+      display: flex;
+      justify-content: center;
+    }
+
+    .social-btn {
+      width: 100%;
+      height: 48px;
+      background: var(--white);
+      border: 1.5px solid var(--border-blue);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--logo-deep-blue);
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .terms-text {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+
+    .terms-text span {
+      color: var(--logo-deep-blue);
+      font-weight: 600;
+    }
+
+    .home-header {
+      background: linear-gradient(180deg, #D9EEFF 0%, #FFFFFF 100%);
+      padding: 14px 16px 10px;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .mini-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, var(--logo-sky-blue), var(--logo-deep-blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 800;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      flex-shrink: 0;
+      box-shadow: 0 3px 8px rgba(0, 56, 198, 0.25);
+    }
+
+    .mini-logo span {
+      color: #8CFF1A;
+    }
+
+    .location-pill {
+      flex: 1;
+      background: var(--white);
+      padding: 8px 12px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      border: 1px solid var(--border-blue);
+    }
+
+    .loc-pin {
+      color: var(--logo-deep-blue);
+      font-size: 17px;
+    }
+
+    .loc-info small {
+      display: block;
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1;
+    }
+
+    .loc-info strong {
+      font-size: 13px;
+      color: var(--text-dark);
+    }
+
+    .icon-circle-btn {
+      width: 40px;
+      height: 40px;
+      background: var(--white);
+      border: 1px solid var(--border-blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      cursor: pointer;
+      position: relative;
+      color: var(--logo-deep-blue);
+    }
+
+    .notif-dot {
+      position: absolute;
+      top: 8px;
+      right: 9px;
+      width: 8px;
+      height: 8px;
+      background: var(--logo-lime-green);
+      border-radius: 50%;
+    }
+
+    .mode-switch-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .mode-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1.5px solid var(--border-blue);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .mode-card.active {
+      border-color: var(--logo-deep-blue);
+      background: var(--logo-blue-light);
+    }
+
+    .mode-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--logo-deep-blue);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .mode-icon.green-bg {
+      background: var(--logo-green-dark);
+    }
+
+    .mode-card span {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-dark);
+    }
+
+    .offer-badge-small {
+      position: absolute;
+      bottom: -9px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--logo-green-dark);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .search-bar-wrap {
+      padding: 0 0 12px;
+      display: none;
+    }
+
+    .search-bar-wrap.show {
+      display: block;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--logo-deep-blue);
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .section-wrap {
+      padding: 6px 16px 16px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px 8px;
+    }
+
+    .cat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .cat-box {
+      width: 68px;
+      height: 68px;
+      background: var(--logo-blue-light);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 6px;
+      border: 1.5px dashed #8AC6FF;
+    }
+
+    .cat-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.25;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 18px 0 12px;
+    }
+
+    .section-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--logo-deep-blue);
+    }
+
+    .see-all {
+      color: var(--logo-green-dark);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .trending-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .trend-card {
+      height: 148px;
+      border-radius: 16px;
+      padding: 14px;
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 5px 14px rgba(0, 56, 198, 0.15);
+    }
+
+    .trend-card h4 {
+      font-size: 16px;
+      font-weight: 700;
+      z-index: 2;
+      line-height: 1.3;
+    }
+
+    .trend-tag {
+      align-self: flex-start;
+      background: var(--white);
+      color: var(--logo-deep-blue);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 8px;
+      z-index: 2;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .trend-tag.green-pill {
+      background: var(--logo-lime-green);
+      color: var(--white);
+    }
+
+    .trend-emoji {
+      position: absolute;
+      right: 10px;
+      bottom: 8px;
+      font-size: 50px;
+      opacity: 0.9;
+    }
+
+    .bg-blue-1 { background: linear-gradient(135deg, #0038C6, #0088FF); }
+    .bg-green-1 { background: linear-gradient(135deg, #2E7D00, #58CC02); }
+    .bg-blue-2 { background: linear-gradient(135deg, #0052D4, #00A6FB); }
+    .bg-teal-blue { background: linear-gradient(135deg, #004E92, #259B24); }
+
+    .sub-header {
+      position: sticky;
+      top: 0;
+      background: var(--white);
+      z-index: 50;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1.5px solid var(--border-blue);
+    }
+
+    .back-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-blue);
+      background: var(--logo-blue-light);
+      color: var(--logo-deep-blue);
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .sub-header h2 {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--logo-deep-blue);
+      flex: 1;
+    }
+
+    .mini-cart-btn {
+      background: var(--logo-green-light);
+      border: 1.5px solid var(--logo-lime-green);
+      color: var(--logo-green-dark);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+    }
+
+    .pill-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px 16px;
+      scrollbar-width: none;
+      background: #F7FBFF;
+      border-bottom: 1px solid var(--border-blue);
+    }
+
+    .pill-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .pill-tab {
+      padding: 7px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--border-blue);
+      background: var(--white);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      font-family: 'Inter', 'Hind Siliguri', sans-serif;
+    }
+
+    .pill-tab.active {
+      background: var(--logo-blue-light);
+      color: var(--logo-deep-blue);
+      border-color: var(--logo-deep-blue);
+      font-weight: 700;
+    }
+
+    .cat-filter-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 16px 4px;
+      scrollbar-width: none;
+    }
+
+    .cat-filter-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-chip {
+      padding: 5px 12px;
+      border-radius: 10px;
+      background: var(--white);
+      border: 1px dashed var(--logo-sky-blue);
+      color: var(--text-dark);
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .filter-chip.active {
+      background: var(--logo-deep-blue);
+      color: var(--white);
+      border-style: solid;
+    }
+
+    .service-list-wrap {
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 4px 14px rgba(0, 56, 198, 0.07);
+      border: 1.5px solid var(--border-blue);
+    }
+
+    .card-top {
+      display: flex;
+      gap: 12px;
+    }
+
+    .service-thumb {
+      width: 78px;
+      height: 78px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--logo-blue-light), #D2EAFF);
+      border: 1px dashed var(--logo-sky-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .discount-tag {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--logo-lime-green);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 6px;
+      white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .service-info {
+      flex: 1;
+    }
+
+    .service-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .service-title-row h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    .price-row {
+      margin: 5px 0;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      margin-right: 4px;
+    }
+
+    .new-price {
+      color: var(--logo-green-dark);
+      font-weight: 700;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .service-bullets {
+      list-style: none;
+      margin-top: 4px;
+    }
+
+    .service-bullets li {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.35;
+      padding-left: 12px;
+      position: relative;
+    }
+
+    .service-bullets li::before {
+      content: "•";
+      color: var(--logo-sky-blue);
+      font-weight: 700;
+      position: absolute;
+      left: 0;
+    }
+
+    .card-divider {
+      border: none;
+      border-top: 1.5px dashed var(--border-blue);
+      margin: 12px 0 10px;
+    }
+
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .schedule-hint {
+      font-size: 12px;
+      color: var(--logo-deep-blue);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-card-action {
+      background: var(--logo-deep-blue);
+      color: var(--white);
+      border: none;
+      padding: 8px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+    }
+
+    .btn-card-action.add-type {
+      background: var(--logo-green-dark);
+    }
+
+    .tab-content-box {
+      margin: 14px 16px;
+      padding: 16px;
+      background: var(--logo-blue-light);
+      border: 1.5px dashed var(--logo-sky-blue);
+      border-radius: 16px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .tab-content-box h4 {
+      color: var(--logo-deep-blue);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .tab-content-box ul {
+      padding-left: 18px;
+    }
+
+    .option-step-label {
+      padding: 14px 16px 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--logo-deep-blue);
+    }
+
+    .option-list {
+      padding: 6px 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-card {
+      background: var(--white);
+      border: 1.5px solid var(--border-blue);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 10px rgba(0, 56, 198, 0.05);
+    }
+
+    .option-card-left h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .option-card-left p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .option-price {
+      color: var(--logo-green-dark);
+      font-weight: 700;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .option-price span {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .gas-step-banner {
+      margin: 12px 16px 4px;
+      padding: 10px 14px;
+      background: var(--logo-green-light);
+      border: 1px dashed var(--logo-lime-green);
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--logo-green-dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .step-progress-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 12px 16px;
+      background: #F7FBFF;
+      border-bottom: 1px solid var(--border-blue);
+    }
+
+    .step-pill {
+      text-align: center;
+      padding: 7px 6px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--white);
+      color: var(--text-muted);
+      border: 1px dashed var(--border-blue);
+    }
+
+    .step-pill.active {
+      background: var(--logo-deep-blue);
+      color: var(--white);
+      border-style: solid;
+    }
+
+    .step-pill.done {
+      background: var(--logo-green-light);
+      color: var(--logo-green-dark);
+      border: 1px solid var(--logo-lime-green);
+    }
+
+    .cart-section-wrap {
+      padding: 14px 16px;
+    }
+
+    .dashed-box-card {
+      background: var(--white);
+      border: 1.5px solid var(--border-blue);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 3px 10px rgba(0, 56, 198, 0.05);
+    }
+
+    .dashed-box-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--logo-deep-blue);
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px dashed var(--border-blue);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--border-blue);
+      gap: 10px;
+    }
+
+    .cart-item-row:last-child {
+      border-bottom: none;
+    }
+
+    .cart-item-info h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .cart-item-price {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--logo-green-dark);
+      font-family: 'Inter', sans-serif;
+      margin-top: 3px;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 1.5px solid var(--logo-deep-blue);
+      background: var(--logo-blue-light);
+      color: var(--logo-deep-blue);
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .qty-num {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    .remove-btn {
+      background: var(--logo-blue-light);
+      border: none;
+      color: var(--logo-deep-blue);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin: 7px 0;
+      font-size: 14px;
+      color: var(--text-dark);
+    }
+
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1.5px dashed var(--logo-sky-blue);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--logo-deep-blue);
+    }
+
+    .summary-total span:last-child {
+      color: var(--logo-green-dark);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .date-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .slot-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .choice-chip {
+      padding: 10px 8px;
+      border-radius: 12px;
+      border: 1.5px dashed var(--border-blue);
+      background: var(--white);
+      color: var(--text-dark);
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .choice-chip.selected {
+      background: var(--logo-blue-light);
+      border: 1.5px solid var(--logo-deep-blue);
+      color: var(--logo-deep-blue);
+      font-weight: 700;
+    }
+
+    .choice-chip.slot-chip.selected {
+      background: var(--logo-green-light);
+      border: 1.5px solid var(--logo-green-dark);
+      color: var(--logo-green-dark);
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--logo-deep-blue);
+      margin-bottom: 5px;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1.5px solid var(--border-blue);
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-dark);
+      background: var(--white);
+      outline: none;
+    }
+
+    .cash-badge-box {
+      background: var(--logo-green-light);
+      border: 1.5px dashed var(--logo-lime-green);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--logo-green-dark);
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .success-box {
+      text-align: center;
+      padding: 20px 14px;
+      background: linear-gradient(180deg, var(--logo-green-light) 0%, var(--white) 100%);
+      border: 1.5px solid var(--logo-lime-green);
+      border-radius: 18px;
+    }
+
+    .order-id-badge {
+      display: inline-block;
+      background: var(--logo-deep-blue);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      padding: 8px 20px;
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+
+    .empty-cart-box {
+      text-align: center;
+      padding: 36px 16px;
+      border: 1.5px dashed var(--border-blue);
+      border-radius: 16px;
+      background: #F9FCFF;
+    }
+
+    .offer-hero-banner {
+      background: linear-gradient(135deg, var(--logo-deep-blue), var(--logo-sky-blue));
+      color: var(--white);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 6px 16px rgba(0, 56, 198, 0.2);
+    }
+
+    .offer-hero-banner h3 {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .offer-hero-banner p {
+      font-size: 13px;
+    }
+
+    .order-card {
+      background: var(--white);
+      border: 1.5px solid var(--border-blue);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 3px 10px rgba(0, 56, 198, 0.05);
+    }
+
+    .order-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      border-bottom: 1.5px dashed var(--border-blue);
+    }
+
+    .order-code {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--logo-deep-blue);
+    }
+
+    .status-badge {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    .st-pending {
+      background: var(--logo-blue-light);
+      color: var(--logo-deep-blue);
+      border: 1px solid var(--logo-sky-blue);
+    }
+
+    .st-active {
+      background: var(--logo-blue-light);
+      color: var(--logo-deep-blue);
+      border: 1px solid var(--logo-deep-blue);
+    }
+
+    .st-completed {
+      background: var(--logo-green-light);
+      color: var(--logo-green-dark);
+      border: 1px solid var(--logo-lime-green);
+    }
+
+    .st-cancelled {
+      background: #F4F6F9;
+      color: var(--text-muted);
+      border: 1px dashed var(--text-muted);
+    }
+
+    .order-action-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-blue);
+    }
+
+    .mini-outline-btn {
+      flex: 1;
+      padding: 7px 10px;
+      border-radius: 10px;
+      border: 1.5px solid var(--logo-deep-blue);
+      background: var(--white);
+      color: var(--logo-deep-blue);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .mini-green-btn {
+      flex: 1;
+      padding: 7px 10px;
+      border-radius: 10px;
+      border: 1.5px solid var(--logo-green-dark);
+      background: var(--logo-green-light);
+      color: var(--logo-green-dark);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .menu-profile-card {
+      background: linear-gradient(145deg, var(--logo-blue-light), var(--white));
+      border: 1.5px solid var(--border-blue);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .menu-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, var(--logo-sky-blue), var(--logo-deep-blue));
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .menu-list-item {
+      background: var(--white);
+      border: 1.5px solid var(--border-blue);
+      border-radius: 14px;
+      padding: 13px 14px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-dark);
+    }
+
+    .menu-list-item span.sub-info {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--logo-green-dark);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 480px;
+      background: var(--white);
+      border-top: 1.5px solid var(--border-blue);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 8px 0 6px;
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .nav-item.active {
+      color: var(--logo-deep-blue);
+    }
+
+    .nav-item.active .nav-icon {
+      background: var(--logo-blue-light);
+      padding: 2px 12px;
+      border-radius: 12px;
+    }
+
+    .nav-icon {
+      font-size: 19px;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -2px;
+      right: 22%;
+      background: var(--logo-green-dark);
+      color: var(--white);
+      font-size: 10px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      min-width: 16px;
+      height: 16px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 25, 49, 0.55);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 200;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      max-width: 480px;
+      background: var(--white);
+      border-radius: 22px 22px 0 0;
+      padding: 20px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      color: var(--logo-deep-blue);
+    }
+
+    .close-modal {
+      background: var(--logo-blue-light);
+      color: var(--logo-deep-blue);
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .area-option {
+      padding: 12px 14px;
+      border: 1.5px dashed var(--border-blue);
+      border-radius: 12px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-dark);
+    }
+
+    .phone-input {
+      width: 100%;
+      padding: 14px;
+      border: 1.5px solid var(--logo-deep-blue);
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      margin-bottom: 14px;
+      outline: none;
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--logo-deep-blue);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 300;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0, 56, 198, 0.3);
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <div id="toast" class="toast">বার্তা</div>
+
+  <!-- ================= LOGIN SCREEN ================= -->
+  <div id="screen-login" class="screen active">
+    <div class="login-screen">
+      <div class="login-top">
+        <button class="lang-switch-btn" id="login-lang-btn" onclick="toggleLanguage()">🌐 English</button>
+        <button class="skip-btn" id="login-skip-btn" onclick="goToHome('guest')">Skip</button>
+      </div>
+
+      <div class="brand-center">
+        <div class="coolfix-logo-box">
+          <div class="cf-logo-card">
+            <svg viewBox="0 0 120 120" width="96" height="96" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 76 C32 104, 86 106, 102 82 C82 96, 38 94, 24 72 Z" fill="#62D800"/>
+              <path d="M56 22 C82 14, 106 26, 104 46 C98 30, 78 22, 56 26 Z" fill="#62D800"/>
+              <path d="M58 34 A28 28 0 1 0 58 86 L58 73 A15 15 0 1 1 58 47 Z" fill="#FFFFFF"/>
+              <g stroke="#FFFFFF" stroke-width="3" stroke-linecap="round">
+                <line x1="42" y1="50" x2="42" y2="70"/>
+                <line x1="32" y1="60" x2="52" y2="60"/>
+                <line x1="35" y1="53" x2="49" y2="67"/>
+                <line x1="49" y1="53" x2="35" y2="67"/>
+              </g>
+              <path d="M64 38 L100 38 L95 50 L77 50 L77 57 L93 57 L89 68 L77 68 L77 84 L64 84 Z" fill="#62D800"/>
+              <path d="M64 38 L100 38 L97 44 L64 44 Z" fill="#FFFFFF"/>
+            </svg>
+          </div>
+          <div class="logo-text" id="brand-logo-text">কুল<span>ফিক্স</span></div>
+        </div>
+        <p class="tagline" id="login-tagline">আপনার বাসা ও অফিসের জন্য বিশ্বস্ত হোম অ্যাপ্লায়েন্স টেকনিশিয়ান</p>
+
+        <div class="floating-tools">
+          <div class="tool-badge">❄️</div>
+          <div class="tool-badge">🧊</div>
+          <div class="tool-badge">🔧</div>
+          <div class="tool-badge">♨️</div>
+        </div>
+      </div>
+
+      <div class="login-actions">
+        <button class="btn-primary" id="login-phone-btn" onclick="openPhoneModal()">
+          <span>📞</span> ফোন নম্বর দিয়ে চালিয়ে যান
+        </button>
+
+        <div class="divider-text" id="login-divider">অথবা যুক্ত হোন</div>
+
+        <div class="social-row">
+          <button class="social-btn" id="login-google-btn" onclick="demoGoogleLogin()">
+            <strong style="font-family:'Inter',sans-serif; font-size:18px; color:#0038C6;">G</strong> Google দিয়ে সাইন-ইন করুন
+          </button>
+        </div>
+
+        <p class="terms-text" id="login-terms">
+          লগইন বা রেজিস্টার করার মাধ্যমে আপনি আমাদের <span>শর্তাবলী</span> এবং <span>গোপনীয়তা নীতি</span> মেনে নিচ্ছেন।
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= HOME SCREEN ================= -->
+  <div id="screen-home" class="screen">
+    <div class="home-header">
+      <div class="top-bar">
+        <div class="mini-logo">C<span>F</span></div>
+        <div class="location-pill" onclick="openAreaModal()">
+          <span class="loc-pin">📍</span>
+          <div class="loc-info">
+            <small id="home-area-label">আপনার এলাকা</small>
+            <strong id="selected-area-display">মোহাম্মদপুর ▾</strong>
+          </div>
+        </div>
+        <button class="icon-circle-btn" onclick="toggleSearch()">🔍</button>
+        <button class="icon-circle-btn" onclick="openOffersScreen()">
+          🔔
+          <span class="notif-dot"></span>
+        </button>
+      </div>
+
+      <div id="search-wrap" class="search-bar-wrap">
+        <input type="text" id="home-search-input" class="search-input" placeholder="AC সার্ভিস, ফ্রিজ বা ওভেন খুঁজুন..." onkeyup="filterHome(this.value)">
+      </div>
+
+      <div class="mode-switch-row">
+        <div class="mode-card active" onclick="openCategory('all')">
+          <div class="mode-icon">🛠️</div>
+          <span id="home-mode-services">সার্ভিসসমূহ</span>
+        </div>
+        <div class="mode-card" onclick="openOffersScreen()">
+          <div class="mode-icon green-bg">🏷️</div>
+          <span id="home-mode-offers">স্পেশাল অফার</span>
+          <span class="offer-badge-small">৳300 OFF</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-wrap">
+      <div class="category-grid" id="category-grid">
+        <div class="cat-item" onclick="openCategory('ac_service')">
+          <div class="cat-box">❄️</div>
+          <span class="cat-label" id="cat-lbl-ac-service">AC সার্ভিসিং</span>
+        </div>
+        <div class="cat-item" onclick="openCategory('ac_cooling')">
+          <div class="cat-box">🌡️</div>
+          <span class="cat-label" id="cat-lbl-ac-cooling">AC কুলিং সমস্যা</span>
+        </div>
+        <div class="cat-item" onclick="openCategory('fridge')">
+          <div class="cat-box">🧊</div>
+          <span class="cat-label" id="cat-lbl-fridge">ফ্রিজ রিপেয়ার</span>
+        </div>
+        <div class="cat-item" onclick="openCategory('freezer')">
+          <div class="cat-box">📦</div>
+          <span class="cat-label" id="cat-lbl-freezer">ডিপ ফ্রিজার</span>
+        </div>
+        <div class="cat-item" onclick="openCategory('oven')">
+          <div class="cat-box">♨️</div>
+          <span class="cat-label" id="cat-lbl-oven">ওভেন সার্ভিস</span>
+        </div>
+        <div class="cat-item" onclick="openCategory('ac_install')">
+          <div class="cat-box">🔩</div>
+          <span class="cat-label" id="cat-lbl-ac-install">AC ইনস্টলেশন</span>
+        </div>
+        <div class="cat-item" onclick="openCategory('fridge')">
+          <div class="cat-box">✨</div>
+          <span class="cat-label" id="cat-lbl-fridge-clean">ফ্রিজ ক্লিনিং</span>
+        </div>
+        <div class="cat-item" onclick="openCategory('all')">
+          <div class="cat-box">•••</div>
+          <span class="cat-label" id="cat-lbl-all">সব সার্ভিস</span>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <h3 class="section-title" id="home-trending-title">Trending</h3>
+        <span class="see-all" id="home-see-all" onclick="openCategory('all')">See All</span>
+      </div>
+
+      <div class="trending-grid">
+        <div class="trend-card bg-blue-1" onclick="openCategory('ac_service')">
+          <h4 id="trend-1-title">AC জেট ওয়াশ ও সার্ভিসিং</h4>
+          <span class="trend-tag green-pill">৳506 OFF</span>
+          <span class="trend-emoji">❄️</span>
+        </div>
+        <div class="trend-card bg-green-1" onclick="openCategory('fridge')">
+          <h4 id="trend-2-title">ফ্রিজ গ্যাস ও কম্প্রেসর</h4>
+          <span class="trend-tag" id="trend-2-tag">জনপ্রিয়</span>
+          <span class="trend-emoji">🧊</span>
+        </div>
+        <div class="trend-card bg-blue-2" onclick="openCategory('freezer')">
+          <h4 id="trend-3-title">ডিপ ফ্রিজার ডিপ ক্লিনিং</h4>
+          <span class="trend-tag" id="trend-3-tag">৳1,593 থেকে</span>
+          <span class="trend-emoji">📦</span>
+        </div>
+        <div class="trend-card bg-teal-blue" onclick="openCategory('oven')">
+          <h4 id="trend-4-title">ওভেন চেক আপ ও রিপেয়ার</h4>
+          <span class="trend-tag green-pill">৳300 OFF</span>
+          <span class="trend-emoji">♨️</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SERVICE LIST SCREEN ================= -->
+  <div id="screen-services" class="screen">
+    <div class="sub-header">
+      <button class="back-btn" onclick="goBackToHome()">←</button>
+      <h2 id="service-screen-title">সার্ভিস তালিকা</h2>
+      <button class="mini-cart-btn" onclick="openCartScreen()">
+        🛒 <span id="top-cart-count">0</span>
+      </button>
+    </div>
+
+    <div class="cat-filter-strip" id="cat-filter-strip"></div>
+
+    <div class="pill-tabs" id="service-pill-tabs">
+      <button class="pill-tab active" data-tab="services" onclick="switchServiceTab(this, 'services')">Services</button>
+      <button class="pill-tab" data-tab="request" onclick="switchServiceTab(this, 'request')">Service Request</button>
+      <button class="pill-tab" data-tab="overview" onclick="switchServiceTab(this, 'overview')">Overview</button>
+      <button class="pill-tab" data-tab="included" onclick="switchServiceTab(this, 'included')">What's Included</button>
+    </div>
+
+    <div id="service-tab-body"></div>
+  </div>
+
+  <!-- ================= SUB-OPTIONS SCREEN ================= -->
+  <div id="screen-suboptions" class="screen">
+    <div class="sub-header">
+      <button class="back-btn" onclick="backFromSuboptions()">←</button>
+      <div style="flex:1;">
+        <h2 id="subopt-title" style="font-size:17px;">অপশন বাছাই করুন</h2>
+        <small id="subopt-subtitle" style="color:var(--text-muted); font-size:12px;">সঠিক সাইজ বা সমস্যা নির্বাচন করুন</small>
+      </div>
+      <button class="mini-cart-btn" onclick="openCartScreen()">
+        🛒 <span id="sub-cart-count">0</span>
+      </button>
+    </div>
+
+    <div id="subopt-body"></div>
+  </div>
+
+  <!-- ================= CART & CHECKOUT SCREEN ================= -->
+  <div id="screen-cart" class="screen">
+    <div class="sub-header">
+      <button class="back-btn" onclick="goBackToHome()">←</button>
+      <h2 id="checkout-header-title">অর্ডার ও চেকআউট</h2>
+      <span id="checkout-cash-tag" style="font-size:12px; font-weight:700; color:var(--logo-green-dark);">ক্যাশ অন সার্ভিস</span>
+    </div>
+
+    <div class="step-progress-bar" id="checkout-step-bar">
+      <div class="step-pill active" id="pill-1">১. কার্ট ও সময়</div>
+      <div class="step-pill" id="pill-2">২. ঠিকানা</div>
+      <div class="step-pill" id="pill-3">৩. কনফার্ম</div>
+    </div>
+
+    <div id="checkout-body" class="cart-section-wrap"></div>
+  </div>
+
+  <!-- ================= OFFERS SCREEN ================= -->
+  <div id="screen-offers" class="screen">
+    <div class="sub-header">
+      <button class="back-btn" onclick="goBackToHome()">←</button>
+      <h2 id="offers-screen-title">চলমান অফারসমূহ</h2>
+      <button class="mini-cart-btn" onclick="openCartScreen()">
+        🛒 <span id="offers-cart-count">0</span>
+      </button>
+    </div>
+
+    <div id="offers-body" class="cart-section-wrap"></div>
+  </div>
+
+  <!-- ================= ORDERS SCREEN ================= -->
+  <div id="screen-orders" class="screen">
+    <div class="sub-header">
+      <button class="back-btn" onclick="goBackToHome()">←</button>
+      <h2 id="orders-screen-title">আমার অর্ডারসমূহ</h2>
+      <span style="font-size:12px; font-weight:700; color:var(--logo-deep-blue);" id="orders-count-label">0</span>
+    </div>
+
+    <div id="orders-body" class="cart-section-wrap"></div>
+  </div>
+
+  <!-- ================= MENU SCREEN ================= -->
+  <div id="screen-menu" class="screen">
+    <div class="sub-header">
+      <button class="back-btn" onclick="goBackToHome()">←</button>
+      <h2 id="menu-screen-title">মেনু ও প্রোফাইল</h2>
+      <span style="font-size:12px; font-weight:700; color:var(--logo-green-dark);">CoolFix</span>
+    </div>
+
+    <div id="menu-body" class="cart-section-wrap"></div>
+  </div>
+
+  <!-- ================= BOTTOM NAV ================= -->
+  <div id="bottom-nav" class="bottom-nav" style="display:none;">
+    <div class="nav-item active" data-nav="Home" onclick="navClick('Home')">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-text">Home</span>
+    </div>
+    <div class="nav-item" data-nav="Offers" onclick="navClick('Offers')">
+      <span class="nav-icon">🏷️</span>
+      <span class="nav-text">Offers</span>
+    </div>
+    <div class="nav-item" data-nav="Orders" onclick="navClick('Orders')">
+      <span class="nav-icon">📋</span>
+      <span class="nav-text">Orders</span>
+    </div>
+    <div class="nav-item" data-nav="Cart" onclick="navClick('Cart')">
+      <span class="nav-icon">🛒</span>
+      <span class="cart-badge" id="bottom-cart-badge">0</span>
+      <span class="nav-text">Cart</span>
+    </div>
+    <div class="nav-item" data-nav="Menu" onclick="navClick('Menu')">
+      <span class="nav-icon">🎛️</span>
+      <span class="nav-text">Menu</span>
+    </div>
+  </div>
+
+  <!-- ================= PHONE MODAL ================= -->
+  <div id="phone-modal" class="modal-overlay">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h3 id="phone-modal-title">ফোন নম্বর দিন</h3>
+        <button class="close-modal" onclick="closeModals()">✕</button>
+      </div>
+      <input type="tel" id="phone-field" class="phone-input" placeholder="01XXXXXXXXX" maxlength="11">
+      <button class="btn-green" id="phone-submit-btn" onclick="verifyDemoPhone()">OTP পাঠান ও লগইন করুন</button>
+    </div>
+  </div>
+
+  <!-- ================= AREA MODAL ================= -->
+  <div id="area-modal" class="modal-overlay">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h3 id="area-modal-title">আপনার এলাকা নির্বাচন করুন</h3>
+        <button class="close-modal" onclick="closeModals()">✕</button>
+      </div>
+      <div id="area-options-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var lang = 'bn'; // 'bn' or 'en'
+
+  var AREAS = [
+    { key: 'Mohammadpur', bn: 'মোহাম্মদপুর', en: 'Mohammadpur' },
+    { key: 'Dhanmondi', bn: 'ধানমন্ডি', en: 'Dhanmondi' },
+    { key: 'Gulshan', bn: 'গুলশান', en: 'Gulshan' },
+    { key: 'Banani', bn: 'বনানী', en: 'Banani' },
+    { key: 'Mirpur', bn: 'মিরপুর', en: 'Mirpur' }
+  ];
+
+  var CATEGORIES = [
+    { id: 'all', bn: 'সব সার্ভিস', en: 'All Services' },
+    { id: 'ac_service', bn: 'AC সার্ভিসিং', en: 'AC Servicing' },
+    { id: 'ac_cooling', bn: 'AC কুলিং সমস্যা', en: 'AC Cooling Fix' },
+    { id: 'ac_install', bn: 'AC ইনস্টলেশন', en: 'AC Installation' },
+    { id: 'fridge', bn: 'ফ্রিজ রিপেয়ার', en: 'Fridge Repair' },
+    { id: 'freezer', bn: 'ডিপ ফ্রিজার', en: 'Deep Freezer' },
+    { id: 'oven', bn: 'ওভেন সার্ভিস', en: 'Oven Service' }
+  ];
+
+  var SERVICES = [
+    {
+      id: 'ac_checkup', cat: 'ac_service',
+      titleBn: 'AC চেক আপ', titleEn: 'AC Checkup',
+      icon: '🔍', price: 299.63, oldPrice: 757.63, offTextBn: '৳458 ছাড়', offTextEn: '৳458 OFF', type: 'ton',
+      bulletsBn: ['দক্ষ টেকনিশিয়ান দ্বারা AC-র সমস্যা নির্ণয়', 'ইনডোর ও আউটডোর ইউনিট পরীক্ষা'],
+      bulletsEn: ['Fault diagnosis by skilled technician', 'Indoor & outdoor unit inspection'],
+      options: [
+        { labelBn: '1 - 2 Ton AC', labelEn: '1 - 2 Ton AC', price: 299.63, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '2.5 - 5 Ton AC', labelEn: '2.5 - 5 Ton AC', price: 418, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'ac_jet_wash', cat: 'ac_service',
+      titleBn: 'AC জেট ওয়াশ', titleEn: 'AC Jet Wash',
+      icon: '💦', price: 800.25, oldPrice: 1306.25, offTextBn: '৳506 ছাড়', offTextEn: '৳506 OFF', type: 'ton',
+      bulletsBn: ['হাই-প্রেশার জেট পাম্প দিয়ে সম্পূর্ণ ওয়াশ', 'হ্যাঙ্গিং চার্জ প্রযোজ্য ক্ষেত্রে আলাদা'],
+      bulletsEn: ['Deep wash with high-pressure jet pump', 'Hanging charge applicable if needed'],
+      options: [
+        { labelBn: '১টি AC জেট ওয়াশ (1-2 Ton)', labelEn: '1 AC Jet Wash (1-2 Ton)', price: 800.25, unitBn: '/AC', unitEn: '/AC' },
+        { labelBn: '২টি AC জেট ওয়াশ প্যাকেজ', labelEn: '2 AC Jet Wash Package', price: 1579.5, unitBn: '/প্যাকেজ', unitEn: '/pkg' },
+        { labelBn: '৩টি AC জেট ওয়াশ প্যাকেজ', labelEn: '3 AC Jet Wash Package', price: 2298.75, unitBn: '/প্যাকেজ', unitEn: '/pkg' }
+      ]
+    },
+    {
+      id: 'ac_water_drop', cat: 'ac_service',
+      titleBn: 'AC পানি পড়া সমাধান', titleEn: 'AC Water Leakage Fix',
+      icon: '💧', price: 898.75, oldPrice: 1201.75, offTextBn: '৳303 ছাড়', offTextEn: '৳303 OFF', type: 'direct',
+      bulletsBn: ['ড্রেনেজ পাইপ পরিষ্কার ও লিকেজ সমাধান', 'ইনডোর ট্রে চেক আপ'],
+      bulletsEn: ['Drain pipe cleaning & leakage fix', 'Indoor tray inspection']
+    },
+    {
+      id: 'ac_gas', cat: 'ac_cooling',
+      titleBn: 'AC গ্যাস চার্জ', titleEn: 'AC Gas Charge',
+      icon: '❄️', price: 1881, oldPrice: null, offTextBn: null, offTextEn: null, type: 'gas_two_step',
+      bulletsBn: ['গ্যাস প্রেশার চেক আপ ও রিফিল', 'R22, R410 ও R32 গ্যাস সাপোর্ট'],
+      bulletsEn: ['Gas pressure check & refill', 'R22, R410 & R32 gas support'],
+      tons: [
+        { label: '1 Ton', startPrice: 1881 },
+        { label: '1.5 Ton', startPrice: 2821.5 },
+        { label: '2 Ton', startPrice: 3762 },
+        { label: '2.5 Ton', startPrice: 4702.5 },
+        { label: '3 Ton', startPrice: 5643 },
+        { label: '4 Ton', startPrice: 7524 },
+        { label: '4.5 Ton', startPrice: 8464.5 },
+        { label: '5 Ton', startPrice: 9405 }
+      ],
+      gases: [
+        { labelBn: 'Full R22 গ্যাস রিফিল', labelEn: 'Full R22 Gas Refill', price: 3344 },
+        { labelBn: 'Partial R22 গ্যাস টপ-আপ', labelEn: 'Partial R22 Gas Top-up', price: 1881 },
+        { labelBn: 'Full R410 গ্যাস রিফিল', labelEn: 'Full R410 Gas Refill', price: 4807 },
+        { labelBn: 'Partial R410 গ্যাস টপ-আপ', labelEn: 'Partial R410 Gas Top-up', price: 2612.5 },
+        { labelBn: 'Full R32 গ্যাস রিফিল', labelEn: 'Full R32 Gas Refill', price: 3344 },
+        { labelBn: 'Partial R32 গ্যাস টপ-আপ', labelEn: 'Partial R32 Gas Top-up', price: 1881 }
+      ]
+    },
+    {
+      id: 'ac_leak', cat: 'ac_cooling',
+      titleBn: 'AC লিক রিপেয়ার', titleEn: 'AC Leak Repair',
+      icon: '🛠️', price: 3082.75, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['কপার পাইপ ও জয়েন্ট লিক সনাক্তকরণ', 'ওয়েল্ডিং ও প্রেশার টেস্টিং'],
+      bulletsEn: ['Copper pipe & joint leak detection', 'Brazing & pressure testing'],
+      options: [
+        { labelBn: '১ – ১.৫ টন AC', labelEn: '1 – 1.5 Ton AC', price: 3082.75, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '২ – ৩ টন AC', labelEn: '2 – 3 Ton AC', price: 3631.38, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '৪ – ৫ টন AC', labelEn: '4 – 5 Ton AC', price: 5329.5, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'ac_circuit', cat: 'ac_cooling',
+      titleBn: 'AC সার্কিট রিপেয়ার/রিপ্লেসমেন্ট', titleEn: 'AC Circuit Repair / Replace',
+      icon: '🔌', price: 3187.25, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['ইনডোর/আউটডোর PCB সার্কিট মেরামত', 'অভিজ্ঞ টেকনিশিয়ান দ্বারা পরীক্ষা'],
+      bulletsEn: ['Indoor/outdoor PCB repair', 'Tested by experienced technician'],
+      options: [
+        { labelBn: '১ – ১.৫ টন AC', labelEn: '1 – 1.5 Ton AC', price: 3187.25, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '২ – ৩ টন AC', labelEn: '2 – 3 Ton AC', price: 3735.88, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '৪ – ৫ টন AC', labelEn: '4 – 5 Ton AC', price: 4258.38, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'ac_capacitor', cat: 'ac_cooling',
+      titleBn: 'AC ক্যাপাসিটর রিপ্লেসমেন্ট', titleEn: 'AC Capacitor Replacement',
+      icon: '⚡', price: 1175.63, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['উন্নত মানের ক্যাপাসিটর সংযোজন', 'কম্প্রেসর ও ফ্যান মোটর রানিং চেক'],
+      bulletsEn: ['Quality capacitor fitting', 'Compressor & fan running test'],
+      options: [
+        { labelBn: '১ – ১.৫ টন AC', labelEn: '1 – 1.5 Ton AC', price: 1175.63, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '২ – ৩ টন AC', labelEn: '2 – 3 Ton AC', price: 1828.75, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '৪ – ৫ টন AC', labelEn: '4 – 5 Ton AC', price: 2090, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'ac_compressor', cat: 'ac_cooling',
+      titleBn: 'AC কম্প্রেসর ফিটিং', titleEn: 'AC Compressor Fitting',
+      icon: '⚙️', price: 4807, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['পুরনো কম্প্রেসর খোলা ও নতুন ফিটিং', 'ভ্যাকুয়াম ও সিস্টেম চেক'],
+      bulletsEn: ['Old removal & new fitting', 'Vacuum & system check'],
+      options: [
+        { labelBn: '১ – ১.৫ টন AC', labelEn: '1 – 1.5 Ton AC', price: 4807, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '২ – ৩ টন AC', labelEn: '2 – 3 Ton AC', price: 5852, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '৪ – ৫ টন AC', labelEn: '4 – 5 Ton AC', price: 7471.75, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'ac_combo_install', cat: 'ac_install',
+      titleBn: 'ইনস্টলেশন ও আনইনস্টলেশন প্যাকেজ', titleEn: 'Install & Uninstall Package',
+      icon: '🔩', price: 4493.5, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['এক স্থান থেকে খুলে অন্য স্থানে ফিটিং', 'ইনডোর ও আউটডোর সেটআপ'],
+      bulletsEn: ['Remove from old spot & fit in new', 'Indoor & outdoor setup'],
+      options: [
+        { labelBn: '১ – ১.৫ টন AC', labelEn: '1 – 1.5 Ton AC', price: 4493.5, unitBn: '/প্যাকেজ', unitEn: '/pkg' },
+        { labelBn: '২ – ৩ টন AC', labelEn: '2 – 3 Ton AC', price: 5643, unitBn: '/প্যাকেজ', unitEn: '/pkg' },
+        { labelBn: '৪ – ৫ টন AC', labelEn: '4 – 5 Ton AC', price: 9718.5, unitBn: '/প্যাকেজ', unitEn: '/pkg' }
+      ]
+    },
+    {
+      id: 'ac_install_only', cat: 'ac_install',
+      titleBn: 'AC ইনস্টলেশন', titleEn: 'AC Installation',
+      icon: '🏗️', price: 3187.25, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['নতুন বা পুরনো AC দেয়ালে ফিটিং', 'ড্রিলিং ও কপার পাইপ কানেকশন'],
+      bulletsEn: ['Wall mounting for new/old AC', 'Drilling & copper pipe connection'],
+      options: [
+        { labelBn: '১ – ১.৫ টন AC', labelEn: '1 – 1.5 Ton AC', price: 3187.25, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '২ – ৩ টন AC', labelEn: '2 – 3 Ton AC', price: 3840.38, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '৪ – ৫ টন AC', labelEn: '4 – 5 Ton AC', price: 6740.25, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'ac_uninstall', cat: 'ac_install',
+      titleBn: 'আনইনস্টলেশন / ডিসম্যান্টলিং', titleEn: 'AC Uninstallation',
+      icon: '🔧', price: 1933.25, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['গ্যাস লক করে নিরাপদে AC খোলা', 'ইনডোর ও আউটডোর প্যাকিং উপযোগী করা'],
+      bulletsEn: ['Safe removal with gas lock', 'Ready for shifting/packing']
+    },
+    {
+      id: 'fridge_gas', cat: 'fridge',
+      titleBn: 'ফ্রিজ গ্যাস রিফিল', titleEn: 'Fridge Gas Refill',
+      icon: '🧊', price: 2142.25, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['সম্পূর্ণ গ্যাস রিফিল ও কুলিং টেস্ট', 'লিকেজ পরীক্ষা সহ'],
+      bulletsEn: ['Full gas refill & cooling test', 'Includes leak check']
+    },
+    {
+      id: 'fridge_circuit', cat: 'fridge',
+      titleBn: 'ফ্রিজ সার্কিট রিপেয়ার/রিপ্লেসমেন্ট', titleEn: 'Fridge Circuit Repair / Replace',
+      icon: '🔌', price: 3735.88, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['ইনভার্টার ও নন-ইনভার্টার সার্কিট মেরামত', 'অরিজিনাল পার্টস সাপোর্ট'],
+      bulletsEn: ['Inverter & non-inverter PCB fix', 'Spare parts support']
+    },
+    {
+      id: 'fridge_condenser', cat: 'fridge',
+      titleBn: 'কন্ডেনসার ফিটিং (গ্যাস সহ)', titleEn: 'Condenser Fitting (With Gas)',
+      icon: '🛠️', price: 4258.38, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['নতুন কন্ডেনসার কয়েল ফিটিং', 'সম্পূর্ণ গ্যাস চার্জ অন্তর্ভুক্ত'],
+      bulletsEn: ['New condenser coil fitting', 'Full gas charge included']
+    },
+    {
+      id: 'fridge_compressor', cat: 'fridge',
+      titleBn: 'কম্প্রেসর ফিটিং (গ্যাস সহ)', titleEn: 'Compressor Fitting (With Gas)',
+      icon: '⚙️', price: 5852, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['কম্প্রেসর পরিবর্তন ও ওয়েল্ডিং', 'গ্যাস রিফিল অন্তর্ভুক্ত'],
+      bulletsEn: ['Compressor change & welding', 'Gas refill included']
+    },
+    {
+      id: 'fridge_thermostat', cat: 'fridge',
+      titleBn: 'থার্মোস্ট্যাট পরিবর্তন', titleEn: 'Thermostat Change',
+      icon: '🌡️', price: 1593.63, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['অটো কুলিং কন্ট্রোল ঠিক করা', 'নতুন থার্মোস্ট্যাট সংযোজন'],
+      bulletsEn: ['Fix auto cooling control', 'New thermostat fitting']
+    },
+    {
+      id: 'fridge_clean_prem', cat: 'fridge',
+      titleBn: 'ফ্রিজ ক্লিনিং: প্রিমিয়াম', titleEn: 'Fridge Cleaning: Premium',
+      icon: '✨', price: 1593.63, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['ভেতর-বাইরে ডিপ ক্লিনিং ও দুর্গন্ধ দূরীকরণ', 'রাবার গ্যাসকেট ও ট্রে পরিষ্কার'],
+      bulletsEn: ['Deep inside-out cleaning & odor removal', 'Gasket & tray wash']
+    },
+    {
+      id: 'fridge_clean_reg', cat: 'fridge',
+      titleBn: 'ফ্রিজ ক্লিনিং: রেগুলার', titleEn: 'Fridge Cleaning: Regular',
+      icon: '🧼', price: 1071.13, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['সাধারণ ওয়াশ ও জীবাণুমুক্তকরণ', 'সব তাক ও ড্রয়ার পরিষ্কার'],
+      bulletsEn: ['Standard wash & sanitization', 'All shelves & drawers cleaned']
+    },
+    {
+      id: 'freezer_clean', cat: 'freezer',
+      titleBn: 'ডিপ ফ্রিজার ক্লিনিং', titleEn: 'Deep Freezer Cleaning',
+      icon: '📦', price: 1593.63, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['বরফ গলিয়ে সম্পূর্ণ জীবাণুমুক্ত পরিষ্কার', 'লিটার অনুযায়ী নির্ধারিত চার্জ'],
+      bulletsEn: ['Defrost & hygienic deep clean', 'Price based on liter capacity'],
+      options: [
+        { labelBn: '১০০ – ২০০ লিটার ডিপ ফ্রিজার', labelEn: '100 – 200 Liter Freezer', price: 1593.63, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '২০১ – ৪০০ লিটার ডিপ ফ্রিজার', labelEn: '201 – 400 Liter Freezer', price: 2142.25, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '৪০১ – ৬০০ লিটার ডিপ ফ্রিজার', labelEn: '401 – 600 Liter Freezer', price: 2664.75, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'oven_checkup', cat: 'oven',
+      titleBn: 'ওভেন চেক আপ', titleEn: 'Oven Checkup',
+      icon: '♨️', price: 353.13, oldPrice: 653.13, offTextBn: '৳300 ছাড়', offTextEn: '৳300 OFF', type: 'direct',
+      bulletsBn: ['মাইক্রোওয়েভ ও ইলেকট্রিক ওভেন পরীক্ষা', 'সঠিক সমস্যা ও খরচ নির্ধারণ'],
+      bulletsEn: ['Microwave & electric oven check', 'Accurate fault & cost estimate']
+    },
+    {
+      id: 'oven_clean', cat: 'oven',
+      titleBn: 'ওভেন ক্লিনিং (ভেতর ও বাইরে)', titleEn: 'Oven Cleaning (Inside & Out)',
+      icon: '✨', price: 1045, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['তেল-চর্বি ও পোড়া দাগ পরিষ্কার', 'দুর্গন্ধ মুক্ত করে নতুনের মতো করা'],
+      bulletsEn: ['Grease & stain removal', 'Odor-free fresh finish']
+    },
+    {
+      id: 'oven_repair', cat: 'oven',
+      titleBn: 'ওভেন রিপেয়ার / সার্ভিসিং', titleEn: 'Oven Repair / Servicing',
+      icon: '🔧', price: 731.5, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['গরম না হওয়া, বাটন বা সার্কিট সমস্যা সমাধান', 'সমস্যা অনুযায়ী নির্ধারিত রেট'],
+      bulletsEn: ['Heating, button or circuit fix', 'Rate based on issue'],
+      options: [
+        { labelBn: 'চালু হচ্ছে না (ইলেকট্রিকাল সমস্যা)', labelEn: 'Not Turning On (Electrical)', price: 809.88, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: 'শব্দ সমস্যা (Noise Issue)', labelEn: 'Noise Issue', price: 914.38, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: 'হিটিং সমস্যা (গরম হয় না)', labelEn: 'Heating Issue (Not Heating)', price: 1071.13, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: 'বাটন / টাচ প্যাড সমস্যা', labelEn: 'Button / Touch Pad Issue', price: 1593.63, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: 'সার্কিট রিপেয়ার', labelEn: 'Circuit Repair', price: 3187.25, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    }
+  ];
+
+  var I18N = {
+    bn: {
+      brandName: 'কুল<span>ফিক্স</span>',
+      skip: 'Skip',
+      toggleLang: '🌐 English',
+      tagline: 'আপনার বাসা ও অফিসের জন্য বিশ্বস্ত হোম অ্যাপ্লায়েন্স টেকনিশিয়ান',
+      phoneBtn: 'ফোন নম্বর দিয়ে চালিয়ে যান',
+      divider: 'অথবা যুক্ত হোন',
+      googleBtn: 'Google দিয়ে সাইন-ইন করুন',
+      terms: 'লগইন বা রেজিস্টার করার মাধ্যমে আপনি আমাদের <span>শর্তাবলী</span> এবং <span>গোপনীয়তা নীতি</span> মেনে নিচ্ছেন।',
+      areaLabel: 'আপনার এলাকা',
+      searchPlaceholder: 'AC সার্ভিস, ফ্রিজ বা ওভেন খুঁজুন...',
+      modeServices: 'সার্ভিসসমূহ',
+      modeOffers: 'স্পেশাল অফার',
+      catAcService: 'AC সার্ভিসিং',
+      catAcCooling: 'AC কুলিং সমস্যা',
+      catFridge: 'ফ্রিজ রিপেয়ার',
+      catFreezer: 'ডিপ ফ্রিজার',
+      catOven: 'ওভেন সার্ভিস',
+      catAcInstall: 'AC ইনস্টলেশন',
+      catFridgeClean: 'ফ্রিজ ক্লিনিং',
+      catAll: 'সব সার্ভিস',
+      trending: 'Trending',
+      seeAll: 'See All',
+      trend1: 'AC জেট ওয়াশ ও সার্ভিসিং',
+      trend2: 'ফ্রিজ গ্যাস ও কম্প্রেসর',
+      trend2Tag: 'জনপ্রিয়',
+      trend3: 'ডিপ ফ্রিজার ডিপ ক্লিনিং',
+      trend3Tag: '৳1,593 থেকে',
+      trend4: 'ওভেন চেক আপ ও রিপেয়ার',
+      tabServices: 'Services',
+      tabRequest: 'Service Request',
+      tabOverview: 'Overview',
+      tabIncluded: 'What\'s Included',
+      startsFrom: 'Starts from',
+      tapSchedule: '📅 Tap to schedule ▾',
+      addBtn: 'ADD',
+      nextBtn: 'Next',
+      suboptSubtitle: 'সঠিক সাইজ বা সমস্যা নির্বাচন করুন',
+      chooseOption: 'অপশন নির্বাচন করুন',
+      gasStep1: 'ধাপ ১/২: আপনার AC-র টন (Ton) বাছাই করুন',
+      gasStep2: 'ধাপ ২/২: গ্যাসের ধরন ও Full/Partial বাছাই করুন',
+      startPrice: 'শুরুর দাম',
+      fromWord: 'থেকে',
+      forAc: 'AC-র জন্য',
+      selectedSize: 'নির্বাচিত সাইজ:',
+      changeSize: 'বদলান',
+      checkoutTitle: 'অর্ডার ও চেকআউট',
+      cashOnService: 'ক্যাশ অন সার্ভিস',
+      pill1: '১. কার্ট ও সময়',
+      pill2: '২. ঠিকানা',
+      pill3: '৩. কনফার্ম',
+      emptyCartTitle: 'আপনার কার্ট খালি',
+      emptyCartDesc: 'অর্ডার করতে পছন্দের সার্ভিস কার্টে যোগ করুন।',
+      viewServicesBtn: 'সার্ভিস দেখুন',
+      cartReview: 'কার্ট রিভিউ',
+      itemsWord: 'টি আইটেম',
+      addMore: '+ আরও যোগ করুন',
+      removeBtn: 'বাদ',
+      serviceTotal: 'সার্ভিস মোট',
+      scheduleTitle: 'শিডিউল (তারিখ ও সময়)',
+      selectDate: 'তারিখ নির্বাচন করুন',
+      selectSlot: 'সময়ের স্লট নির্বাচন করুন',
+      dates: ['আজ', 'আগামীকাল', 'পরশু'],
+      slots: ['সকাল (৯টা - ১২টা)', 'দুপুর (১২টা - ৩টা)', 'বিকাল (৩টা - ৬টা)', 'সন্ধ্যা (৬টা - ৯টা)'],
+      goToAddress: 'ঠিকানা দিন →',
+      addressTitle: 'সার্ভিসের ঠিকানা',
+      areaPrefix: 'এলাকা:',
+      nameLabel: 'আপনার নাম *',
+      namePlaceholder: 'যেমন: ফাইজউদ্দিন',
+      phoneLabel: 'মোবাইল নম্বর *',
+      fullAddrLabel: 'পূর্ণ ঠিকানা (বাড়ি/ফ্ল্যাট/রোড/ব্লক) *',
+      fullAddrPlaceholder: 'যেমন: চাঁদ উদ্যান, মেইন রোড, বাসা নং ১২',
+      landmarkLabel: 'স্পর্শকাতর ল্যান্ডমার্ক',
+      landmarkPlaceholder: 'যেমন: মসজিদের পাশে / বড় গেটের বিপরীতে',
+      backBtn: '← পিছনে',
+      goToSummary: 'অর্ডার সারসংক্ষেপ দেখুন →',
+      orderSummary: 'অর্ডার সারসংক্ষেপ',
+      scheduleRow: 'শিডিউল:',
+      customerRow: 'কাস্টমার:',
+      addressRow: 'ঠিকানা:',
+      totalMoney: 'মোট টাকা',
+      cashBadge: 'পেমেন্ট মাধ্যম: সার্ভিসের সময় ক্যাশ (Cash on Service)',
+      backToAddr: '← ঠিকানা',
+      confirmOrder: 'Confirm Order',
+      orderConfirmed: 'অর্ডার কনফার্ম হয়েছে!',
+      orderConfirmedDesc: 'আপনার অর্ডারটি গ্রহণ করা হয়েছে। টেকনিশিয়ান নির্ধারিত সময়ে যোগাযোগ করবেন।',
+      statusRow: 'স্ট্যাটাস:',
+      timeRow: 'সময়:',
+      paymentRow: 'পেমেন্ট:',
+      cashPaymentVal: 'সার্ভিসের সময় ক্যাশ',
+      payableTotal: 'মোট পরিশোধযোগ্য',
+      viewMyOrders: 'আমার অর্ডার দেখুন',
+      backHome: 'হোম স্ক্রিনে ফিরে যান',
+      offersTitle: 'চলমান অফারসমূহ',
+      offerHeroTitle: 'বিশেষ ডিসকাউন্ট ও অফারসমূহ',
+      offerHeroDesc: 'নির্বাচিত সার্ভিসে সরাসরি ছাড় উপভোগ করুন। সব সার্ভিসেই ক্যাশ পেমেন্ট প্রযোজ্য।',
+      ordersTitle: 'আমার অর্ডারসমূহ',
+      ordersCountSuffix: 'টি',
+      noOrdersTitle: 'এখনও কোনো অর্ডার নেই',
+      noOrdersDesc: 'আপনার প্রথম সার্ভিস অর্ডারটি এখনই বুক করুন।',
+      bookServiceBtn: 'সার্ভিস বুক করুন',
+      totalBillCash: 'মোট বিল',
+      updateStatusDemo: 'স্ট্যাটাস আপডেট (ডেমো)',
+      cancelOrderBtn: 'বাতিল করুন',
+      menuTitle: 'মেনু ও প্রোফাইল',
+      guestUser: 'অতিথি ব্যবহারকারী',
+      googleUser: 'Google ইউজার',
+      currentAreaLabel: 'বর্তমান এলাকা:',
+      changeAreaMenu: '📍 এলাকা পরিবর্তন করুন',
+      orderTrackMenu: '📋 আমার অর্ডার ট্র্যাকিং',
+      ordersWord: 'টি অর্ডার',
+      offersMenu: '🏷️ চলমান অফারসমূহ',
+      seeDiscount: 'ছাড় দেখুন ›',
+      aboutMenu: '❄️ কুলফিক্স সম্পর্কে',
+      versionInfo: 'v1.0 ডেমো ›',
+      goLoginBtn: 'লগইন স্ক্রিনে যান / অ্যাকাউন্ট বদলান',
+      phoneModalTitle: 'ফোন নম্বর দিন',
+      otpBtn: 'OTP পাঠান ও লগইন করুন',
+      areaModalTitle: 'আপনার এলাকা নির্বাচন করুন',
+      navHome: 'Home',
+      navOffers: 'Offers',
+      navOrders: 'Orders',
+      navCart: 'Cart',
+      navMenu: 'Menu',
+      reqTitle: 'কাস্টম সার্ভিস রিকোয়েস্ট',
+      reqDesc: 'আপনার কাঙ্ক্ষিত সার্ভিসটি তালিকায় না পেলে নিচে সমস্যার বিবরণ লিখে জানান, আমাদের টেকনিশিয়ান কল করবেন।',
+      reqPlaceholder: 'যেমন: ফ্রিজের ডোর সিল নরম হয়ে গেছে...',
+      reqSendBtn: 'রিকোয়েস্ট পাঠান',
+      overviewTitle: 'কুলফিক্স সার্ভিস ওভারভিউ',
+      overviewList: [
+        'অভিজ্ঞ ও যাচাইকৃত হোম অ্যাপ্লায়েন্স টেকনিশিয়ান।',
+        'সার্ভিস শেষে ৭ দিনের ওয়ারেন্টি সুবিধা।',
+        'কাজ শেষে ক্যাশ পেমেন্টের সুবিধা (কোনো লুকানো চার্জ নেই)।'
+      ],
+      includedTitle: 'যা যা অন্তর্ভুক্ত থাকছে',
+      includedList: [
+        'দক্ষ টেকনিশিয়ানের ভিজিট ও প্রাথমিক চেক আপ।',
+        'প্রয়োজনীয় যন্ত্রপাতি ও টুলস সাপোর্ট।',
+        '<strong>যা অন্তর্ভুক্ত নয়:</strong> অতিরিক্ত স্পেয়ার পার্টস বা হ্যাঙ্গিং চার্জ।'
+      ],
+      toastLangSwitched: 'ভাষা বাংলায় পরিবর্তন করা হয়েছে',
+      toastWelcome: 'স্বাগতম, ',
+      toastBadPhone: 'সঠিক ১১ ডিজিটের ফোন নম্বর দিন',
+      toastAreaChanged: 'এলাকা পরিবর্তন হয়েছে: ',
+      toastReqEmpty: 'দয়া করে সমস্যার কথা লিখুন',
+      toastReqSent: 'আপনার রিকোয়েস্ট গ্রহণ করা হয়েছে!',
+      toastAdded: 'কার্টে যোগ হয়েছে: ',
+      toastRemoved: 'সার্ভিসটি কার্ট থেকে বাদ দেওয়া হয়েছে',
+      toastNeedCart: 'আগে কার্টে অন্তত একটি সার্ভিস যোগ করুন',
+      toastBadAddr: 'নাম, ১১ ডিজিটের ফোন নম্বর ও পূর্ণ ঠিকানা দিন',
+      toastOrderSuccess: 'অর্ডার কনফার্ম হয়েছে! আইডি: ',
+      toastStatusUpdated: 'স্ট্যাটাস পরিবর্তিত হয়েছে: ',
+      toastOrderCancelled: 'অর্ডার বাতিল করা হয়েছে: '
+    },
+    en: {
+      brandName: 'Cool<span>Fix</span>',
+      skip: 'Skip',
+      toggleLang: '🌐 বাংলা',
+      tagline: 'Trusted Home Appliance Technicians for Your Home & Office',
+      phoneBtn: 'Continue with Phone Number',
+      divider: 'Or connect with',
+      googleBtn: 'Sign in with Google',
+      terms: 'By logging in or registering, you agree to our <span>Terms</span> and <span>Privacy Policy</span>.',
+      areaLabel: 'Your Area',
+      searchPlaceholder: 'Search AC service, fridge or oven...',
+      modeServices: 'Services',
+      modeOffers: 'Special Offers',
+      catAcService: 'AC Servicing',
+      catAcCooling: 'AC Cooling Fix',
+      catFridge: 'Fridge Repair',
+      catFreezer: 'Deep Freezer',
+      catOven: 'Oven Service',
+      catAcInstall: 'AC Installation',
+      catFridgeClean: 'Fridge Cleaning',
+      catAll: 'All Services',
+      trending: 'Trending',
+      seeAll: 'See All',
+      trend1: 'AC Jet Wash & Servicing',
+      trend2: 'Fridge Gas & Compressor',
+      trend2Tag: 'Popular',
+      trend3: 'Deep Freezer Deep Clean',
+      trend3Tag: 'From ৳1,593',
+      trend4: 'Oven Checkup & Repair',
+      tabServices: 'Services',
+      tabRequest: 'Service Request',
+      tabOverview: 'Overview',
+      tabIncluded: 'What\'s Included',
+      startsFrom: 'Starts from',
+      tapSchedule: '📅 Tap to schedule ▾',
+      addBtn: 'ADD',
+      nextBtn: 'Next',
+      suboptSubtitle: 'Select exact size or issue',
+      chooseOption: 'Choose an option',
+      gasStep1: 'Step 1/2: Select your AC Tonnage',
+      gasStep2: 'Step 2/2: Select Gas Type & Full/Partial',
+      startPrice: 'Starting price',
+      fromWord: 'from',
+      forAc: 'For AC',
+      selectedSize: 'Selected size:',
+      changeSize: 'Change',
+      checkoutTitle: 'Order & Checkout',
+      cashOnService: 'Cash on Service',
+      pill1: '1. Cart & Time',
+      pill2: '2. Address',
+      pill3: '3. Confirm',
+      emptyCartTitle: 'Your cart is empty',
+      emptyCartDesc: 'Add services to your cart to place an order.',
+      viewServicesBtn: 'Browse Services',
+      cartReview: 'Cart Review',
+      itemsWord: ' item(s)',
+      addMore: '+ Add More',
+      removeBtn: 'Remove',
+      serviceTotal: 'Service Total',
+      scheduleTitle: 'Schedule (Date & Time)',
+      selectDate: 'Select Date',
+      selectSlot: 'Select Time Slot',
+      dates: ['Today', 'Tomorrow', 'Day After'],
+      slots: ['Morning (9am - 12pm)', 'Afternoon (12pm - 3pm)', 'Evening (3pm - 6pm)', 'Night (6pm - 9pm)'],
+      goToAddress: 'Enter Address →',
+      addressTitle: 'Service Address',
+      areaPrefix: 'Area:',
+      nameLabel: 'Your Name *',
+      namePlaceholder: 'e.g. Faizuddin',
+      phoneLabel: 'Mobile Number *',
+      fullAddrLabel: 'Full Address (House/Flat/Road/Block) *',
+      fullAddrPlaceholder: 'e.g. Chand Udyan, Main Road, House 12',
+      landmarkLabel: 'Landmark',
+      landmarkPlaceholder: 'e.g. Near mosque / opposite big gate',
+      backBtn: '← Back',
+      goToSummary: 'View Order Summary →',
+      orderSummary: 'Order Summary',
+      scheduleRow: 'Schedule:',
+      customerRow: 'Customer:',
+      addressRow: 'Address:',
+      totalMoney: 'Total Amount',
+      cashBadge: 'Payment Method: Cash on Service',
+      backToAddr: '← Address',
+      confirmOrder: 'Confirm Order',
+      orderConfirmed: 'Order Confirmed!',
+      orderConfirmedDesc: 'Your order has been placed. Our technician will contact you at the scheduled time.',
+      statusRow: 'Status:',
+      timeRow: 'Time:',
+      paymentRow: 'Payment:',
+      cashPaymentVal: 'Cash on Service',
+      payableTotal: 'Total Payable',
+      viewMyOrders: 'View My Orders',
+      backHome: 'Back to Home',
+      offersTitle: 'Active Offers',
+      offerHeroTitle: 'Special Discounts & Offers',
+      offerHeroDesc: 'Enjoy instant discounts on selected services. Cash on service applies to all orders.',
+      ordersTitle: 'My Orders',
+      ordersCountSuffix: '',
+      noOrdersTitle: 'No orders yet',
+      noOrdersDesc: 'Book your first appliance service now.',
+      bookServiceBtn: 'Book a Service',
+      totalBillCash: 'Total Bill',
+      updateStatusDemo: 'Update Status (Demo)',
+      cancelOrderBtn: 'Cancel',
+      menuTitle: 'Menu & Profile',
+      guestUser: 'Guest User',
+      googleUser: 'Google User',
+      currentAreaLabel: 'Current Area:',
+      changeAreaMenu: '📍 Change Area',
+      orderTrackMenu: '📋 My Order Tracking',
+      ordersWord: ' order(s)',
+      offersMenu: '🏷️ Active Offers',
+      seeDiscount: 'View Offers ›',
+      aboutMenu: '❄️ About CoolFix',
+      versionInfo: 'v1.0 Demo ›',
+      goLoginBtn: 'Go to Login / Switch Account',
+      phoneModalTitle: 'Enter Phone Number',
+      otpBtn: 'Send OTP & Login',
+      areaModalTitle: 'Select Your Area',
+      navHome: 'Home',
+      navOffers: 'Offers',
+      navOrders: 'Orders',
+      navCart: 'Cart',
+      navMenu: 'Menu',
+      reqTitle: 'Custom Service Request',
+      reqDesc: 'If you cannot find your required service, describe the issue below and our technician will call you.',
+      reqPlaceholder: 'e.g. Fridge door gasket is loose...',
+      reqSendBtn: 'Send Request',
+      overviewTitle: 'CoolFix Service Overview',
+      overviewList: [
+        'Skilled and verified home appliance technicians.',
+        '7-day service warranty after completion.',
+        'Pay cash after service (no hidden charges).'
+      ],
+      includedTitle: 'What\'s Included',
+      includedList: [
+        'Technician visit and initial inspection.',
+        'Required tools and testing support.',
+        '<strong>Not Included:</strong> Spare parts or hanging charges.'
+      ],
+      toastLangSwitched: 'Language switched to English',
+      toastWelcome: 'Welcome, ',
+      toastBadPhone: 'Enter a valid 11-digit phone number',
+      toastAreaChanged: 'Area changed to: ',
+      toastReqEmpty: 'Please describe your issue',
+      toastReqSent: 'Your request has been received!',
+      toastAdded: 'Added to cart: ',
+      toastRemoved: 'Removed from cart',
+      toastNeedCart: 'Please add at least one service to cart first',
+      toastBadAddr: 'Enter name, 11-digit phone and full address',
+      toastOrderSuccess: 'Order confirmed! ID: ',
+      toastStatusUpdated: 'Status updated to: ',
+      toastOrderCancelled: 'Order cancelled: '
+    }
+  };
+
+  function t(key) {
+    return I18N[lang][key];
+  }
+
+  function getAreaLabel(areaKey) {
+    for (var i = 0; i < AREAS.length; i++) {
+      if (AREAS[i].key === areaKey) {
+        return (lang === 'bn') ? AREAS[i].bn : AREAS[i].en;
+      }
+    }
+    return areaKey;
+  }
+
+  function getServiceTitle(srv) {
+    return (lang === 'bn') ? srv.titleBn : srv.titleEn;
+  }
+
+  function getServiceOff(srv) {
+    return (lang === 'bn') ? srv.offTextBn : srv.offTextEn;
+  }
+
+  function getServiceBullets(srv) {
+    return (lang === 'bn') ? srv.bulletsBn : srv.bulletsEn;
+  }
+
+  var currentUserKey = null; // 'guest', 'google', or phone string
+  var selectedAreaKey = 'Mohammadpur';
+  var activeCategory = 'all';
+  var activeServiceTab = 'services';
+  var cart = []; // { serviceId, optionIndex, gasIndex, tonLabel, nameBn, nameEn, price, qty }
+  var selectedGasService = null;
+  var currentSubServiceId = null;
+  var currentGasTon = null;
+
+  var checkoutSubStep = 1;
+  var selectedDateIdx = 0;
+  var selectedSlotIdx = 0;
+  var customerAddress = {
+    name: '',
+    phone: '',
+    fullAddress: '',
+    landmark: ''
+  };
+  var ordersHistory = [];
+  var nextOrderSeq = 1001;
+  var lastCreatedOrder = null;
+  var toastTimer = null;
+
+  function showToast(msg) {
+    var el = document.getElementById('toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.style.display = 'block';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() {
+      el.style.display = 'none';
+    }, 2300);
+  }
+
+  function getCurrentUserDisplay() {
+    if (!currentUserKey || currentUserKey === 'guest') return t('guestUser');
+    if (currentUserKey === 'google') return t('googleUser');
+    return currentUserKey;
+  }
+
+  function applyTranslations() {
+    document.documentElement.lang = (lang === 'bn') ? 'bn' : 'en';
+
+    document.getElementById('login-lang-btn').textContent = t('toggleLang');
+    document.getElementById('login-skip-btn').textContent = t('skip');
+    document.getElementById('brand-logo-text').innerHTML = t('brandName');
+    document.getElementById('login-tagline').textContent = t('tagline');
+    document.getElementById('login-phone-btn').innerHTML = '<span>📞</span> ' + t('phoneBtn');
+    document.getElementById('login-divider').textContent = t('divider');
+    document.getElementById('login-google-btn').innerHTML =
+      '<strong style="font-family:\'Inter\',sans-serif; font-size:18px; color:#0038C6;">G</strong> ' + t('googleBtn');
+    document.getElementById('login-terms').innerHTML = t('terms');
+
+    document.getElementById('home-area-label').textContent = t('areaLabel');
+    document.getElementById('selected-area-display').textContent = getAreaLabel(selectedAreaKey) + ' ▾';
+    document.getElementById('home-search-input').placeholder = t('searchPlaceholder');
+    document.getElementById('home-mode-services').textContent = t('modeServices');
+    document.getElementById('home-mode-offers').textContent = t('modeOffers');
+
+    document.getElementById('cat-lbl-ac-service').textContent = t('catAcService');
+    document.getElementById('cat-lbl-ac-cooling').textContent = t('catAcCooling');
+    document.getElementById('cat-lbl-fridge').textContent = t('catFridge');
+    document.getElementById('cat-lbl-freezer').textContent = t('catFreezer');
+    document.getElementById('cat-lbl-oven').textContent = t('catOven');
+    document.getElementById('cat-lbl-ac-install').textContent = t('catAcInstall');
+    document.getElementById('cat-lbl-fridge-clean').textContent = t('catFridgeClean');
+    document.getElementById('cat-lbl-all').textContent = t('catAll');
+
+    document.getElementById('home-trending-title').textContent = t('trending');
+    document.getElementById('home-see-all').textContent = t('seeAll');
+    document.getElementById('trend-1-title').textContent = t('trend1');
+    document.getElementById('trend-2-title').textContent = t('trend2');
+    document.getElementById('trend-2-tag').textContent = t('trend2Tag');
+    document.getElementById('trend-3-title').textContent = t('trend3');
+    document.getElementById('trend-3-tag').textContent = t('trend3Tag');
+    document.getElementById('trend-4-title').textContent = t('trend4');
+
+    var pillBtns = document.querySelectorAll('#service-pill-tabs .pill-tab');
+    for (var i = 0; i < pillBtns.length; i++) {
+      var tb = pillBtns[i].getAttribute('data-tab');
+      if (tb === 'services') pillBtns[i].textContent = t('tabServices');
+      else if (tb === 'request') pillBtns[i].textContent = t('tabRequest');
+      else if (tb === 'overview') pillBtns[i].textContent = t('tabOverview');
+      else if (tb === 'included') pillBtns[i].textContent = t('tabIncluded');
+    }
+
+    document.getElementById('subopt-subtitle').textContent = t('suboptSubtitle');
+    document.getElementById('checkout-header-title').textContent = t('checkoutTitle');
+    document.getElementById('checkout-cash-tag').textContent = t('cashOnService');
+    document.getElementById('pill-1').textContent = t('pill1');
+    document.getElementById('pill-2').textContent = t('pill2');
+    document.getElementById('pill-3').textContent = t('pill3');
+
+    document.getElementById('offers-screen-title').textContent = t('offersTitle');
+    document.getElementById('orders-screen-title').textContent = t('ordersTitle');
+    document.getElementById('orders-count-label').textContent = ordersHistory.length + t('ordersCountSuffix');
+    document.getElementById('menu-screen-title').textContent = t('menuTitle');
+
+    document.getElementById('phone-modal-title').textContent = t('phoneModalTitle');
+    document.getElementById('phone-submit-btn').textContent = t('otpBtn');
+    document.getElementById('area-modal-title').textContent = t('areaModalTitle');
+
+    var navItems = document.querySelectorAll('#bottom-nav .nav-item');
+    for (var n = 0; n < navItems.length; n++) {
+      var nv = navItems[n].getAttribute('data-nav');
+      var txtEl = navItems[n].querySelector('.nav-text');
+      if (nv === 'Home') txtEl.textContent = t('navHome');
+      else if (nv === 'Offers') txtEl.textContent = t('navOffers');
+      else if (nv === 'Orders') txtEl.textContent = t('navOrders');
+      else if (nv === 'Cart') txtEl.textContent = t('navCart');
+      else if (nv === 'Menu') txtEl.textContent = t('navMenu');
+    }
+
+    renderAreaModalOptions();
+
+    var activeScreen = document.querySelector('.screen.active');
+    if (activeScreen) {
+      var sid = activeScreen.id;
+      if (sid === 'screen-services') {
+        var catLabel = t('catAll');
+        for (var c = 0; c < CATEGORIES.length; c++) {
+          if (CATEGORIES[c].id === activeCategory) {
+            catLabel = (lang === 'bn') ? CATEGORIES[c].bn : CATEGORIES[c].en;
+            break;
+          }
+        }
+        document.getElementById('service-screen-title').textContent = catLabel;
+        renderCategoryChips();
+        renderServiceTabContent();
+      } else if (sid === 'screen-suboptions' && currentSubServiceId) {
+        var srvObj = findServiceById(currentSubServiceId);
+        if (srvObj) document.getElementById('subopt-title').textContent = getServiceTitle(srvObj);
+        if (selectedGasService && currentGasTon) renderGasStep2(currentGasTon);
+        else if (selectedGasService) renderGasStep1();
+        else openSubOptions(currentSubServiceId);
+      } else if (sid === 'screen-cart') {
+        renderCheckoutStep();
+      } else if (sid === 'screen-offers') {
+        renderOffersBody();
+      } else if (sid === 'screen-orders') {
+        renderOrdersBody();
+      } else if (sid === 'screen-menu') {
+        renderMenuBody();
+      }
+    }
+  }
+
+  function toggleLanguage() {
+    lang = (lang === 'bn') ? 'en' : 'bn';
+    applyTranslations();
+    showToast(t('toastLangSwitched'));
+  }
+
+  function showScreen(screenId) {
+    var screens = document.querySelectorAll('.screen');
+    for (var i = 0; i < screens.length; i++) {
+      screens[i].classList.remove('active');
+    }
+    var target = document.getElementById(screenId);
+    if (target) target.classList.add('active');
+    var nav = document.getElementById('bottom-nav');
+    if (nav) nav.style.display = (screenId === 'screen-login') ? 'none' : 'grid';
+    window.scrollTo(0, 0);
+  }
+
+  function goToHome(userKey) {
+    currentUserKey = userKey;
+    if (!customerAddress.name && userKey && userKey !== 'guest') {
+      if (/^01\d{9}$/.test(userKey)) {
+        customerAddress.phone = userKey;
+      } else if (userKey === 'google') {
+        customerAddress.name = getCurrentUserDisplay();
+      }
+    }
+    setActiveNavTab('Home');
+    showScreen('screen-home');
+    showToast(t('toastWelcome') + getCurrentUserDisplay());
+  }
+
+  function goBackToHome() {
+    setActiveNavTab('Home');
+    showScreen('screen-home');
+  }
+
+  function setActiveNavTab(tabName) {
+    var items = document.querySelectorAll('.nav-item');
+    for (var i = 0; i < items.length; i++) {
+      var nv = items[i].getAttribute('data-nav');
+      if (nv === tabName) items[i].classList.add('active');
+      else items[i].classList.remove('active');
+    }
+  }
+
+  function openPhoneModal() {
+    document.getElementById('phone-modal').classList.add('open');
+  }
+
+  function renderAreaModalOptions() {
+    var listEl = document.getElementById('area-options-list');
+    if (!listEl) return;
+    var html = '';
+    for (var i = 0; i < AREAS.length; i++) {
+      var a = AREAS[i];
+      var lbl = (lang === 'bn') ? a.bn : a.en;
+      var chk = (a.key === selectedAreaKey) ? '<span style="color:var(--logo-green-dark);">✓</span>' : '<span></span>';
+      html += '<div class="area-option" onclick="setArea(\'' + a.key + '\')"><span>' + lbl + '</span>' + chk + '</div>';
+    }
+    listEl.innerHTML = html;
+  }
+
+  function openAreaModal() {
+    renderAreaModalOptions();
+    document.getElementById('area-modal').classList.add('open');
+  }
+
+  function closeModals() {
+    document.getElementById('phone-modal').classList.remove('open');
+    document.getElementById('area-modal').classList.remove('open');
+  }
+
+  function verifyDemoPhone() {
+    var phone = document.getElementById('phone-field').value.trim();
+    if (phone.length < 11) {
+      showToast(t('toastBadPhone'));
+      return;
+    }
+    customerAddress.phone = phone;
+    closeModals();
+    goToHome(phone);
+  }
+
+  function demoGoogleLogin() {
+    goToHome('google');
+  }
+
+  function setArea(areaKey) {
+    selectedAreaKey = areaKey;
+    document.getElementById('selected-area-display').textContent = getAreaLabel(areaKey) + ' ▾';
+    closeModals();
+    showToast(t('toastAreaChanged') + getAreaLabel(areaKey));
+  }
+
+  function toggleSearch() {
+    document.getElementById('search-wrap').classList.toggle('show');
+  }
+
+  function filterHome(query) {
+    var q = query.toLowerCase();
+    var items = document.querySelectorAll('.cat-item');
+    for (var i = 0; i < items.length; i++) {
+      var match = items[i].textContent.toLowerCase().indexOf(q) !== -1;
+      items[i].style.display = match ? 'flex' : 'none';
+    }
+  }
+
+  function formatMoney(num) {
+    var n = Number(num);
+    var formatted = n.toLocaleString('en-US', {
+      minimumFractionDigits: (n % 1 === 0) ? 0 : 2,
+      maximumFractionDigits: 2
+    });
+    return '৳' + formatted;
+  }
+
+  function findServiceById(id) {
+    for (var i = 0; i < SERVICES.length; i++) {
+      if (SERVICES[i].id === id) return SERVICES[i];
+    }
+    return null;
+  }
+
+  function getCartItemLabel(item) {
+    return (lang === 'bn') ? item.nameBn : item.nameEn;
+  }
+
+  function openCategory(catId) {
+    activeCategory = catId;
+    activeServiceTab = 'services';
+    var catName = t('catAll');
+    for (var i = 0; i < CATEGORIES.length; i++) {
+      if (CATEGORIES[i].id === catId) {
+        catName = (lang === 'bn') ? CATEGORIES[i].bn : CATEGORIES[i].en;
+        break;
+      }
+    }
+    document.getElementById('service-screen-title').textContent = catName;
+    renderCategoryChips();
+    resetPillTabs();
+    renderServiceTabContent();
+    showScreen('screen-services');
+  }
+
+  function renderCategoryChips() {
+    var strip = document.getElementById('cat-filter-strip');
+    var html = '';
+    for (var i = 0; i < CATEGORIES.length; i++) {
+      var c = CATEGORIES[i];
+      var cName = (lang === 'bn') ? c.bn : c.en;
+      var activeCls = (c.id === activeCategory) ? ' active' : '';
+      html += '<button class="filter-chip' + activeCls + '" onclick="openCategory(\'' + c.id + '\')">' + cName + '</button>';
+    }
+    strip.innerHTML = html;
+  }
+
+  function resetPillTabs() {
+    var tabs = document.querySelectorAll('.pill-tab');
+    for (var i = 0; i < tabs.length; i++) {
+      if (i === 0) tabs[i].classList.add('active');
+      else tabs[i].classList.remove('active');
+    }
+  }
+
+  function switchServiceTab(btn, tabKey) {
+    var tabs = document.querySelectorAll('.pill-tab');
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].classList.remove('active');
+    }
+    btn.classList.add('active');
+    activeServiceTab = tabKey;
+    renderServiceTabContent();
+  }
+
+  function renderServiceCardsHtml(list, extraMargin) {
+    var html = '<div class="service-list-wrap">';
+    for (var i = 0; i < list.length; i++) {
+      var s = list[i];
+      var sTitle = getServiceTitle(s);
+      var sOff = getServiceOff(s);
+      var sBullets = getServiceBullets(s);
+
+      var bulletsHtml = '';
+      for (var b = 0; b < sBullets.length; b++) {
+        bulletsHtml += '<li>' + sBullets[b] + '</li>';
+      }
+
+      var actionBtn = (s.type === 'direct')
+        ? '<button class="btn-card-action add-type" onclick="addDirectService(\'' + s.id + '\')">' + t('addBtn') + '</button>'
+        : '<button class="btn-card-action" onclick="openSubOptions(\'' + s.id + '\')">' + t('nextBtn') + '</button>';
+
+      html += '<div class="service-card"' + (extraMargin ? ' style="margin-bottom:14px;"' : '') + '>' +
+        '<div class="card-top">' +
+          '<div class="service-thumb">' +
+            s.icon +
+            (sOff ? '<span class="discount-tag">' + sOff + '</span>' : '') +
+          '</div>' +
+          '<div class="service-info">' +
+            '<div class="service-title-row"><h3>' + sTitle + '</h3><span style="color:var(--logo-deep-blue); font-weight:700;">›</span></div>' +
+            '<div class="price-row">' + t('startsFrom') + ' ' +
+              (s.oldPrice ? '<span class="old-price">' + formatMoney(s.oldPrice) + '</span>' : '') +
+              '<span class="new-price">' + formatMoney(s.price) + '</span>' +
+            '</div>' +
+            '<ul class="service-bullets">' + bulletsHtml + '</ul>' +
+          '</div>' +
+        '</div>' +
+        '<hr class="card-divider">' +
+        '<div class="card-bottom">' +
+          '<span class="schedule-hint" onclick="openCartScreen()">' + t('tapSchedule') + '</span>' +
+          actionBtn +
+        '</div>' +
+      '</div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function renderServiceTabContent() {
+    var body = document.getElementById('service-tab-body');
+
+    if (activeServiceTab === 'request') {
+      body.innerHTML =
+        '<div class="tab-content-box">' +
+          '<h4>' + t('reqTitle') + '</h4>' +
+          '<p>' + t('reqDesc') + '</p>' +
+          '<textarea id="custom-req-text" style="width:100%; height:90px; margin:10px 0; padding:10px; border-radius:12px; border:1.5px solid var(--logo-deep-blue); font-family:inherit;" placeholder="' + t('reqPlaceholder') + '"></textarea>' +
+          '<button class="btn-green" onclick="submitCustomReq()">' + t('reqSendBtn') + '</button>' +
+        '</div>';
+      return;
+    }
+
+    if (activeServiceTab === 'overview') {
+      var ovList = t('overviewList');
+      var ovHtml = '';
+      for (var o = 0; o < ovList.length; o++) ovHtml += '<li>' + ovList[o] + '</li>';
+      body.innerHTML =
+        '<div class="tab-content-box">' +
+          '<h4>' + t('overviewTitle') + '</h4>' +
+          '<ul>' + ovHtml + '</ul>' +
+        '</div>';
+      return;
+    }
+
+    if (activeServiceTab === 'included') {
+      var incList = t('includedList');
+      var incHtml = '';
+      for (var k = 0; k < incList.length; k++) incHtml += '<li>' + incList[k] + '</li>';
+      body.innerHTML =
+        '<div class="tab-content-box">' +
+          '<h4>' + t('includedTitle') + '</h4>' +
+          '<ul>' + incHtml + '</ul>' +
+        '</div>';
+      return;
+    }
+
+    var list = [];
+    if (activeCategory === 'all') {
+      list = SERVICES;
+    } else {
+      for (var i = 0; i < SERVICES.length; i++) {
+        if (SERVICES[i].cat === activeCategory) list.push(SERVICES[i]);
+      }
+    }
+    body.innerHTML = renderServiceCardsHtml(list, false);
+  }
+
+  function submitCustomReq() {
+    var val = document.getElementById('custom-req-text').value.trim();
+    if (!val) {
+      showToast(t('toastReqEmpty'));
+      return;
+    }
+    document.getElementById('custom-req-text').value = '';
+    showToast(t('toastReqSent'));
+  }
+
+  function addDirectService(serviceId) {
+    var srv = findServiceById(serviceId);
+    if (!srv) return;
+    pushCartItem({
+      key: serviceId + '_direct',
+      nameBn: srv.titleBn,
+      nameEn: srv.titleEn,
+      price: srv.price,
+      qty: 1
+    });
+  }
+
+  function openSubOptions(serviceId) {
+    var srv = findServiceById(serviceId);
+    if (!srv) return;
+    currentSubServiceId = serviceId;
+    selectedGasService = null;
+    currentGasTon = null;
+
+    document.getElementById('subopt-title').textContent = getServiceTitle(srv);
+    var body = document.getElementById('subopt-body');
+
+    if (srv.type === 'ton') {
+      var cardsHtml = '';
+      for (var i = 0; i < srv.options.length; i++) {
+        var opt = srv.options[i];
+        var oLabel = (lang === 'bn') ? opt.labelBn : opt.labelEn;
+        var oUnit = (lang === 'bn') ? opt.unitBn : opt.unitEn;
+        cardsHtml +=
+          '<div class="option-card">' +
+            '<div class="option-card-left">' +
+              '<h4>' + oLabel + '</h4>' +
+              '<div class="option-price">' + formatMoney(opt.price) + ' <span>' + oUnit + '</span></div>' +
+            '</div>' +
+            '<button class="btn-card-action add-type" onclick="addOptionService(\'' + serviceId + '\', ' + i + ')">' + t('addBtn') + '</button>' +
+          '</div>';
+      }
+      body.innerHTML = '<div class="option-step-label">' + t('chooseOption') + '</div><div class="option-list">' + cardsHtml + '</div>';
+    } else if (srv.type === 'gas_two_step') {
+      selectedGasService = srv;
+      renderGasStep1();
+    }
+
+    showScreen('screen-suboptions');
+  }
+
+  function addOptionService(serviceId, optIdx) {
+    var srv = findServiceById(serviceId);
+    if (!srv || !srv.options || !srv.options[optIdx]) return;
+    var opt = srv.options[optIdx];
+    pushCartItem({
+      key: serviceId + '_opt_' + optIdx,
+      nameBn: srv.titleBn + ' (' + opt.labelBn + ')',
+      nameEn: srv.titleEn + ' (' + opt.labelEn + ')',
+      price: opt.price,
+      qty: 1
+    });
+  }
+
+  function renderGasStep1() {
+    currentGasTon = null;
+    var body = document.getElementById('subopt-body');
+    var cardsHtml = '';
+    for (var i = 0; i < selectedGasService.tons.length; i++) {
+      var tn = selectedGasService.tons[i];
+      cardsHtml +=
+        '<div class="option-card">' +
+          '<div class="option-card-left">' +
+            '<h4>' + tn.label + ' AC</h4>' +
+            '<p>' + t('startPrice') + '</p>' +
+            '<div class="option-price">' + formatMoney(tn.startPrice) + ' <span>' + t('fromWord') + '</span></div>' +
+          '</div>' +
+          '<button class="btn-card-action" onclick="renderGasStep2(\'' + tn.label + '\')">' + t('nextBtn') + '</button>' +
+        '</div>';
+    }
+    body.innerHTML = '<div class="option-step-label">' + t('gasStep1') + '</div><div class="option-list">' + cardsHtml + '</div>';
+  }
+
+  function renderGasStep2(tonLabel) {
+    currentGasTon = tonLabel;
+    var body = document.getElementById('subopt-body');
+    var cardsHtml = '';
+    for (var i = 0; i < selectedGasService.gases.length; i++) {
+      var g = selectedGasService.gases[i];
+      var gLabel = (lang === 'bn') ? g.labelBn : g.labelEn;
+      cardsHtml +=
+        '<div class="option-card">' +
+          '<div class="option-card-left">' +
+            '<h4>' + gLabel + '</h4>' +
+            '<p>' + tonLabel + ' ' + t('forAc') + '</p>' +
+            '<div class="option-price">' + formatMoney(g.price) + ' <span>/unit</span></div>' +
+          '</div>' +
+          '<button class="btn-card-action add-type" onclick="addGasService(\'' + tonLabel + '\', ' + i + ')">' + t('addBtn') + '</button>' +
+        '</div>';
+    }
+    body.innerHTML =
+      '<div class="gas-step-banner">' +
+        '<span>' + t('selectedSize') + ' <strong>' + tonLabel + ' AC</strong></span>' +
+        '<span style="text-decoration:underline; cursor:pointer;" onclick="renderGasStep1()">' + t('changeSize') + '</span>' +
+      '</div>' +
+      '<div class="option-step-label">' + t('gasStep2') + '</div>' +
+      '<div class="option-list">' + cardsHtml + '</div>';
+  }
+
+  function addGasService(tonLabel, gasIdx) {
+    if (!selectedGasService || !selectedGasService.gases[gasIdx]) return;
+    var g = selectedGasService.gases[gasIdx];
+    pushCartItem({
+      key: 'gas_' + tonLabel + '_' + gasIdx,
+      nameBn: 'AC গ্যাস চার্জ (' + tonLabel + ' - ' + g.labelBn + ')',
+      nameEn: 'AC Gas Charge (' + tonLabel + ' - ' + g.labelEn + ')',
+      price: g.price,
+      qty: 1
+    });
+  }
+
+  function backFromSuboptions() {
+    currentSubServiceId = null;
+    selectedGasService = null;
+    currentGasTon = null;
+    showScreen('screen-services');
+  }
+
+  function pushCartItem(newItem) {
+    var found = false;
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].key === newItem.key) {
+        cart[i].qty += 1;
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      cart.push(newItem);
+    }
+    updateCartBadges();
+    var disp = (lang === 'bn') ? newItem.nameBn : newItem.nameEn;
+    showToast(t('toastAdded') + disp);
+  }
+
+  function changeCartQty(index, delta) {
+    if (!cart[index]) return;
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) {
+      cart.splice(index, 1);
+    }
+    updateCartBadges();
+    renderCheckoutStep();
+  }
+
+  function removeCartItem(index) {
+    cart.splice(index, 1);
+    updateCartBadges();
+    renderCheckoutStep();
+    showToast(t('toastRemoved'));
+  }
+
+  function getTotalCartCount() {
+    var total = 0;
+    for (var i = 0; i < cart.length; i++) {
+      total += cart[i].qty;
+    }
+    return total;
+  }
+
+  function getCartSubtotal() {
+    var sum = 0;
+    for (var i = 0; i < cart.length; i++) {
+      sum += (cart[i].price * cart[i].qty);
+    }
+    return sum;
+  }
+
+  function updateCartBadges() {
+    var totalCount = getTotalCartCount();
+    var ids = ['bottom-cart-badge', 'top-cart-count', 'sub-cart-count', 'offers-cart-count'];
+    for (var i = 0; i < ids.length; i++) {
+      var el = document.getElementById(ids[i]);
+      if (el) el.textContent = totalCount;
+    }
+  }
+
+  function openCartScreen() {
+    setActiveNavTab('Cart');
+    checkoutSubStep = 1;
+    renderCheckoutStep();
+    showScreen('screen-cart');
+  }
+
+  function setCheckoutSubStep(stepNum) {
+    if (stepNum > 1 && cart.length === 0) {
+      showToast(t('toastNeedCart'));
+      return;
+    }
+    checkoutSubStep = stepNum;
+    renderCheckoutStep();
+  }
+
+  function selectDateIdx(idx) {
+    selectedDateIdx = idx;
+    renderCheckoutStep();
+  }
+
+  function selectSlotIdx(idx) {
+    selectedSlotIdx = idx;
+    renderCheckoutStep();
+  }
+
+  function renderCheckoutStep() {
+    var body = document.getElementById('checkout-body');
+    var stepBar = document.getElementById('checkout-step-bar');
+
+    var pillIds = ['pill-1', 'pill-2', 'pill-3'];
+    for (var p = 0; p < pillIds.length; p++) {
+      var el = document.getElementById(pillIds[p]);
+      var stepNo = p + 1;
+      el.classList.remove('active', 'done');
+      if (stepNo === checkoutSubStep) el.classList.add('active');
+      else if (stepNo < checkoutSubStep) el.classList.add('done');
+    }
+
+    if (checkoutSubStep !== 3 && cart.length === 0) {
+      stepBar.style.display = 'none';
+      body.innerHTML =
+        '<div class="empty-cart-box">' +
+          '<div style="font-size:44px; margin-bottom:10px;">🛒</div>' +
+          '<h3 style="color:var(--logo-deep-blue); margin-bottom:6px;">' + t('emptyCartTitle') + '</h3>' +
+          '<p style="color:var(--text-muted); font-size:14px; margin-bottom:18px;">' + t('emptyCartDesc') + '</p>' +
+          '<button class="btn-primary" onclick="openCategory(\'all\')">' + t('viewServicesBtn') + '</button>' +
+        '</div>';
+      return;
+    }
+
+    stepBar.style.display = 'grid';
+
+    if (checkoutSubStep === 1) {
+      var subtotal = getCartSubtotal();
+      var dates = t('dates');
+      var slots = t('slots');
+
+      var itemsHtml = '';
+      for (var i = 0; i < cart.length; i++) {
+        var item = cart[i];
+        itemsHtml +=
+          '<div class="cart-item-row">' +
+            '<div class="cart-item-info">' +
+              '<h4>' + getCartItemLabel(item) + '</h4>' +
+              '<div class="cart-item-price">' + formatMoney(item.price * item.qty) + '</div>' +
+            '</div>' +
+            '<div class="qty-controls">' +
+              '<button class="qty-btn" onclick="changeCartQty(' + i + ', -1)">-</button>' +
+              '<span class="qty-num">' + item.qty + '</span>' +
+              '<button class="qty-btn" onclick="changeCartQty(' + i + ', 1)">+</button>' +
+              '<button class="remove-btn" onclick="removeCartItem(' + i + ')">' + t('removeBtn') + '</button>' +
+            '</div>' +
+          '</div>';
+      }
+
+      var datesHtml = '';
+      for (var d = 0; d < dates.length; d++) {
+        datesHtml += '<button class="choice-chip' + (selectedDateIdx === d ? ' selected' : '') + '" onclick="selectDateIdx(' + d + ')">' + dates[d] + '</button>';
+      }
+
+      var slotsHtml = '';
+      for (var s = 0; s < slots.length; s++) {
+        slotsHtml += '<button class="choice-chip slot-chip' + (selectedSlotIdx === s ? ' selected' : '') + '" onclick="selectSlotIdx(' + s + ')">' + slots[s] + '</button>';
+      }
+
+      body.innerHTML =
+        '<div class="dashed-box-card">' +
+          '<div class="dashed-box-title">' +
+            '<span>' + t('cartReview') + ' (' + getTotalCartCount() + t('itemsWord') + ')</span>' +
+            '<span style="font-size:12px; color:var(--logo-green-dark); cursor:pointer;" onclick="openCategory(\'all\')">' + t('addMore') + '</span>' +
+          '</div>' +
+          itemsHtml +
+          '<div class="summary-total"><span>' + t('serviceTotal') + '</span><span>' + formatMoney(subtotal) + '</span></div>' +
+        '</div>' +
+        '<div class="dashed-box-card">' +
+          '<div class="dashed-box-title"><span>' + t('scheduleTitle') + '</span></div>' +
+          '<div class="form-label">' + t('selectDate') + '</div>' +
+          '<div class="date-grid">' + datesHtml + '</div>' +
+          '<div class="form-label">' + t('selectSlot') + '</div>' +
+          '<div class="slot-grid">' + slotsHtml + '</div>' +
+        '</div>' +
+        '<button class="btn-primary" onclick="setCheckoutSubStep(2)">' + t('goToAddress') + '</button>';
+      return;
+    }
+
+    if (checkoutSubStep === 2) {
+      var areaText = getAreaLabel(selectedAreaKey);
+      body.innerHTML =
+        '<div class="dashed-box-card">' +
+          '<div class="dashed-box-title">' +
+            '<span>' + t('addressTitle') + '</span>' +
+            '<span style="font-size:12px; color:var(--logo-green-dark);">' + t('areaPrefix') + ' ' + areaText + '</span>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label class="form-label">' + t('nameLabel') + '</label>' +
+            '<input type="text" id="addr-name" class="form-input" placeholder="' + t('namePlaceholder') + '" value="' + customerAddress.name + '">' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label class="form-label">' + t('phoneLabel') + '</label>' +
+            '<input type="tel" id="addr-phone" class="form-input" placeholder="01XXXXXXXXX" maxlength="11" value="' + customerAddress.phone + '">' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label class="form-label">' + t('fullAddrLabel') + '</label>' +
+            '<textarea id="addr-full" class="form-textarea" rows="2" placeholder="' + t('fullAddrPlaceholder') + '">' + customerAddress.fullAddress + '</textarea>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label class="form-label">' + t('landmarkLabel') + '</label>' +
+            '<input type="text" id="addr-landmark" class="form-input" placeholder="' + t('landmarkPlaceholder') + '" value="' + customerAddress.landmark + '">' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex; gap:10px;">' +
+          '<button class="skip-btn" style="padding:14px 18px; border-radius:14px;" onclick="setCheckoutSubStep(1)">' + t('backBtn') + '</button>' +
+          '<button class="btn-primary" style="flex:1;" onclick="saveAddressAndGoConfirm()">' + t('goToSummary') + '</button>' +
+        '</div>';
+      return;
+    }
+
+    if (checkoutSubStep === 3) {
+      if (lastCreatedOrder) {
+        var dLbl = I18N[lang].dates[lastCreatedOrder.dateIdx];
+        var sLbl = I18N[lang].slots[lastCreatedOrder.slotIdx];
+        body.innerHTML =
+          '<div class="success-box">' +
+            '<div style="font-size:48px;">✅</div>' +
+            '<h3 style="color:var(--logo-green-dark); margin-top:6px; font-size:21px;">' + t('orderConfirmed') + '</h3>' +
+            '<p style="font-size:13px; color:var(--text-muted); margin-top:4px;">' + t('orderConfirmedDesc') + '</p>' +
+            '<div class="order-id-badge">' + lastCreatedOrder.orderId + '</div>' +
+            '<div class="dashed-box-card" style="text-align:left; margin-top:10px;">' +
+              '<div class="summary-line"><span>' + t('statusRow') + '</span><strong style="color:var(--logo-deep-blue);">' + lastCreatedOrder.status + '</strong></div>' +
+              '<div class="summary-line"><span>' + t('timeRow') + '</span><strong>' + dLbl + ' · ' + sLbl + '</strong></div>' +
+              '<div class="summary-line"><span>' + t('addressRow') + '</span><strong>' + lastCreatedOrder.address.fullAddress + '</strong></div>' +
+              '<div class="summary-line"><span>' + t('paymentRow') + '</span><strong style="color:var(--logo-green-dark);">' + t('cashPaymentVal') + '</strong></div>' +
+              '<div class="summary-total"><span>' + t('payableTotal') + '</span><span>' + formatMoney(lastCreatedOrder.total) + '</span></div>' +
+            '</div>' +
+            '<button class="btn-green" style="margin-bottom:10px;" onclick="openOrdersScreen()">' + t('viewMyOrders') + '</button>' +
+            '<button class="btn-primary" onclick="goBackToHome()">' + t('backHome') + '</button>' +
+          '</div>';
+        return;
+      }
+
+      var sub = getCartSubtotal();
+      var sumLines = '';
+      for (var k = 0; k < cart.length; k++) {
+        var cItem = cart[k];
+        sumLines += '<div class="summary-line"><span>' + getCartItemLabel(cItem) + ' × ' + cItem.qty + '</span><strong style="font-family:\'Inter\',sans-serif;">' + formatMoney(cItem.price * cItem.qty) + '</strong></div>';
+      }
+
+      body.innerHTML =
+        '<div class="dashed-box-card">' +
+          '<div class="dashed-box-title"><span>' + t('orderSummary') + '</span></div>' +
+          sumLines +
+          '<hr class="card-divider">' +
+          '<div class="summary-line"><span>' + t('scheduleRow') + '</span><strong>' + t('dates')[selectedDateIdx] + ' · ' + t('slots')[selectedSlotIdx] + '</strong></div>' +
+          '<div class="summary-line"><span>' + t('customerRow') + '</span><strong>' + customerAddress.name + ' (' + customerAddress.phone + ')</strong></div>' +
+          '<div class="summary-line"><span>' + t('addressRow') + '</span><strong>' + customerAddress.fullAddress + (customerAddress.landmark ? ' (' + customerAddress.landmark + ')' : '') + '</strong></div>' +
+          '<div class="summary-total"><span>' + t('totalMoney') + '</span><span>' + formatMoney(sub) + '</span></div>' +
+        '</div>' +
+        '<div class="cash-badge-box"><span>💵</span><span>' + t('cashBadge') + '</span></div>' +
+        '<div style="display:flex; gap:10px;">' +
+          '<button class="skip-btn" style="padding:14px 16px; border-radius:14px;" onclick="setCheckoutSubStep(2)">' + t('backToAddr') + '</button>' +
+          '<button class="btn-green" style="flex:1;" onclick="confirmFinalOrder()">' + t('confirmOrder') + '</button>' +
+        '</div>';
+    }
+  }
+
+  function saveAddressAndGoConfirm() {
+    var name = document.getElementById('addr-name').value.trim();
+    var phone = document.getElementById('addr-phone').value.trim();
+    var full = document.getElementById('addr-full').value.trim();
+    var landmark = document.getElementById('addr-landmark').value.trim();
+
+    if (!name || phone.length < 11 || !full) {
+      showToast(t('toastBadAddr'));
+      return;
+    }
+
+    customerAddress = { name: name, phone: phone, fullAddress: full, landmark: landmark };
+    lastCreatedOrder = null;
+    checkoutSubStep = 3;
+    renderCheckoutStep();
+  }
+
+  function confirmFinalOrder() {
+    var orderId = 'CF' + (nextOrderSeq++);
+    var itemsCopy = [];
+    for (var i = 0; i < cart.length; i++) {
+      itemsCopy.push({
+        key: cart[i].key,
+        nameBn: cart[i].nameBn,
+        nameEn: cart[i].nameEn,
+        price: cart[i].price,
+        qty: cart[i].qty
+      });
+    }
+    var newOrder = {
+      orderId: orderId,
+      items: itemsCopy,
+      dateIdx: selectedDateIdx,
+      slotIdx: selectedSlotIdx,
+      address: {
+        name: customerAddress.name,
+        phone: customerAddress.phone,
+        fullAddress: customerAddress.fullAddress,
+        landmark: customerAddress.landmark
+      },
+      total: getCartSubtotal(),
+      status: 'Pending'
+    };
+
+    ordersHistory.unshift(newOrder);
+    lastCreatedOrder = newOrder;
+    cart = [];
+    updateCartBadges();
+    renderCheckoutStep();
+    showToast(t('toastOrderSuccess') + orderId);
+  }
+
+  function renderOffersBody() {
+    updateCartBadges();
+    var discounted = [];
+    for (var i = 0; i < SERVICES.length; i++) {
+      if (SERVICES[i].offTextBn || SERVICES[i].offTextEn) discounted.push(SERVICES[i]);
+    }
+    var banner =
+      '<div class="offer-hero-banner">' +
+        '<h3>' + t('offerHeroTitle') + '</h3>' +
+        '<p>' + t('offerHeroDesc') + '</p>' +
+      '</div>';
+    document.getElementById('offers-body').innerHTML = banner + renderServiceCardsHtml(discounted, true);
+  }
+
+  function openOffersScreen() {
+    setActiveNavTab('Offers');
+    renderOffersBody();
+    showScreen('screen-offers');
+  }
+
+  function renderOrdersBody() {
+    document.getElementById('orders-count-label').textContent = ordersHistory.length + t('ordersCountSuffix');
+    var body = document.getElementById('orders-body');
+
+    if (ordersHistory.length === 0) {
+      body.innerHTML =
+        '<div class="empty-cart-box">' +
+          '<div style="font-size:44px; margin-bottom:10px;">📋</div>' +
+          '<h3 style="color:var(--logo-deep-blue); margin-bottom:6px;">' + t('noOrdersTitle') + '</h3>' +
+          '<p style="color:var(--text-muted); font-size:14px; margin-bottom:18px;">' + t('noOrdersDesc') + '</p>' +
+          '<button class="btn-primary" onclick="openCategory(\'all\')">' + t('bookServiceBtn') + '</button>' +
+        '</div>';
+      return;
+    }
+
+    var cards = '';
+    for (var i = 0; i < ordersHistory.length; i++) {
+      var ord = ordersHistory[i];
+      var badgeClass = 'st-pending';
+      if (ord.status === 'Completed') badgeClass = 'st-completed';
+      else if (ord.status === 'Cancelled') badgeClass = 'st-cancelled';
+      else if (ord.status === 'Assigned' || ord.status === 'On the way') badgeClass = 'st-active';
+
+      var ordItemsHtml = '';
+      for (var j = 0; j < ord.items.length; j++) {
+        var it = ord.items[j];
+        ordItemsHtml += '<div>• ' + getCartItemLabel(it) + ' × ' + it.qty + ' — <strong style="color:var(--logo-green-dark); font-family:\'Inter\',sans-serif;">' + formatMoney(it.price * it.qty) + '</strong></div>';
+      }
+
+      var actionRow = '';
+      if (ord.status !== 'Cancelled' && ord.status !== 'Completed') {
+        actionRow =
+          '<div class="order-action-row">' +
+            '<button class="mini-green-btn" onclick="cycleDemoStatus(' + i + ')">' + t('updateStatusDemo') + '</button>' +
+            '<button class="mini-outline-btn" onclick="cancelDemoOrder(' + i + ')">' + t('cancelOrderBtn') + '</button>' +
+          '</div>';
+      }
+
+      var dTxt = I18N[lang].dates[ord.dateIdx];
+      var sTxt = I18N[lang].slots[ord.slotIdx];
+
+      cards +=
+        '<div class="order-card">' +
+          '<div class="order-card-top">' +
+            '<div>' +
+              '<div class="order-code">' + ord.orderId + '</div>' +
+              '<small style="color:var(--text-muted); font-size:12px;">' + dTxt + ' · ' + sTxt + '</small>' +
+            '</div>' +
+            '<span class="status-badge ' + badgeClass + '">' + ord.status + '</span>' +
+          '</div>' +
+          '<div style="font-size:13px; margin-bottom:6px;">' + ordItemsHtml + '</div>' +
+          '<div style="font-size:12px; color:var(--text-muted); margin-top:6px;">📍 ' + t('addressRow') + ' <strong style="color:var(--text-dark);">' + ord.address.fullAddress + '</strong> (' + ord.address.phone + ')</div>' +
+          '<div class="summary-line" style="margin-top:8px; padding-top:6px; border-top:1px dashed var(--border-blue);">' +
+            '<span>' + t('totalBillCash') + ' (' + t('cashOnService') + '):</span>' +
+            '<strong style="color:var(--logo-green-dark); font-family:\'Inter\',sans-serif;">' + formatMoney(ord.total) + '</strong>' +
+          '</div>' +
+          actionRow +
+        '</div>';
+    }
+
+    body.innerHTML = cards;
+  }
+
+  function openOrdersScreen() {
+    setActiveNavTab('Orders');
+    renderOrdersBody();
+    showScreen('screen-orders');
+  }
+
+  function cycleDemoStatus(idx) {
+    var flow = ['Pending', 'Assigned', 'On the way', 'Completed'];
+    var current = ordersHistory[idx].status;
+    var nextIdx = (flow.indexOf(current) + 1) % flow.length;
+    ordersHistory[idx].status = flow[nextIdx];
+    showToast(t('toastStatusUpdated') + flow[nextIdx]);
+    renderOrdersBody();
+  }
+
+  function cancelDemoOrder(idx) {
+    ordersHistory[idx].status = 'Cancelled';
+    showToast(t('toastOrderCancelled') + ordersHistory[idx].orderId);
+    renderOrdersBody();
+  }
+
+  function renderMenuBody() {
+    var displayName = getCurrentUserDisplay();
+    var areaText = getAreaLabel(selectedAreaKey);
+
+    document.getElementById('menu-body').innerHTML =
+      '<div class="menu-profile-card">' +
+        '<div class="menu-avatar">CF</div>' +
+        '<div>' +
+          '<h3 style="color:var(--logo-deep-blue); font-size:17px;">' + displayName + '</h3>' +
+          '<p style="font-size:12px; color:var(--text-muted);">' + t('currentAreaLabel') + ' <strong>' + areaText + '</strong></p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="menu-list-item" onclick="toggleLanguage()">' +
+        '<span>🌐 বাংলা / English</span>' +
+        '<span class="sub-info">' + (lang === 'bn' ? 'বাংলা (English)' : 'English (বাংলা)') + ' ›</span>' +
+      '</div>' +
+      '<div class="menu-list-item" onclick="openAreaModal()">' +
+        '<span>' + t('changeAreaMenu') + '</span>' +
+        '<span class="sub-info">' + areaText + ' ›</span>' +
+      '</div>' +
+      '<div class="menu-list-item" onclick="openOrdersScreen()">' +
+        '<span>' + t('orderTrackMenu') + '</span>' +
+        '<span class="sub-info">' + ordersHistory.length + t('ordersWord') + ' ›</span>' +
+      '</div>' +
+      '<div class="menu-list-item" onclick="openOffersScreen()">' +
+        '<span>' + t('offersMenu') + '</span>' +
+        '<span class="sub-info">' + t('seeDiscount') + '</span>' +
+      '</div>' +
+      '<div class="menu-list-item" onclick="showToast(\'' + t('tagline').replace(/'/g, "\\'") + '\')">' +
+        '<span>' + t('aboutMenu') + '</span>' +
+        '<span class="sub-info">' + t('versionInfo') + '</span>' +
+      '</div>' +
+      '<button class="btn-primary" style="margin-top:16px;" onclick="showScreen(\'screen-login\')">' + t('goLoginBtn') + '</button>';
+  }
+
+  function openMenuScreen() {
+    setActiveNavTab('Menu');
+    renderMenuBody();
+    showScreen('screen-menu');
+  }
+
+  function navClick(tabName) {
+    setActiveNavTab(tabName);
+    if (tabName === 'Home') {
+      showScreen('screen-home');
+    } else if (tabName === 'Cart') {
+      openCartScreen();
+    } else if (tabName === 'Offers') {
+      openOffersScreen();
+    } else if (tabName === 'Orders') {
+      openOrdersScreen();
+    } else if (tabName === 'Menu') {
+      openMenuScreen();
+    }
+  }
+
+  applyTranslations();
+</script>
+</body>
+</html>
