@@ -1706,6 +1706,60 @@
   </div>
 </div>
 
+<!-- ================= FIREBASE SDK INTEGRATION ================= -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyB0hXKY60-A8_LTLS2VRODRLnIsWXyoAQ",
+    authDomain: "cool-fix-8cc00.firebaseapp.com",
+    projectId: "cool-fix-8cc00",
+    storageBucket: "cool-fix-8cc00.firebasestorage.app",
+    messagingSenderId: "1080573194990",
+    appId: "1:1080573194990:web:94400fd5994310470ab9ff",
+    measurementId: "G-DMM010CD30"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const googleProvider = new GoogleAuthProvider();
+
+  window.firebaseApp = app;
+  window.firebaseAnalytics = analytics;
+  window.firebaseAuth = auth;
+  window.firebaseDb = db;
+
+  // বাস্তব Google Sign-In ফাংশন (Firebase Console-এ Google Provider অন থাকলে কাজ করবে)
+  window.signInWithFirebaseGoogle = async function() {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      window.customerAddress.name = user.displayName || window.t('googleUser');
+      window.goToHome(user.displayName || 'google');
+    } catch (err) {
+      console.warn("Google popup fallback to demo:", err);
+      window.goToHome('google');
+    }
+  };
+
+  // অর্ডার হলে Firestore-এ সেভ করার হেল্পার
+  window.saveOrderToFirestore = async function(orderObj) {
+    try {
+      await addDoc(collection(db, "orders"), {
+        ...orderObj,
+        createdAt: serverTimestamp()
+      });
+    } catch (err) {
+      console.warn("Firestore save skipped or rules pending:", err);
+    }
+  };
+</script>
+
 <script>
   var lang = 'bn'; // 'bn' or 'en'
 
@@ -2267,6 +2321,7 @@
   function t(key) {
     return I18N[lang][key];
   }
+  window.t = t;
 
   function getAreaLabel(areaKey) {
     for (var i = 0; i < AREAS.length; i++) {
@@ -2289,11 +2344,11 @@
     return (lang === 'bn') ? srv.bulletsBn : srv.bulletsEn;
   }
 
-  var currentUserKey = null; // 'guest', 'google', or phone string
+  var currentUserKey = null;
   var selectedAreaKey = 'Mohammadpur';
   var activeCategory = 'all';
   var activeServiceTab = 'services';
-  var cart = []; // { serviceId, optionIndex, gasIndex, tonLabel, nameBn, nameEn, price, qty }
+  var cart = [];
   var selectedGasService = null;
   var currentSubServiceId = null;
   var currentGasTon = null;
@@ -2307,6 +2362,8 @@
     fullAddress: '',
     landmark: ''
   };
+  window.customerAddress = customerAddress;
+
   var ordersHistory = [];
   var nextOrderSeq = 1001;
   var lastCreatedOrder = null;
@@ -2467,6 +2524,7 @@
     showScreen('screen-home');
     showToast(t('toastWelcome') + getCurrentUserDisplay());
   }
+  window.goToHome = goToHome;
 
   function goBackToHome() {
     setActiveNavTab('Home');
@@ -2521,7 +2579,11 @@
   }
 
   function demoGoogleLogin() {
-    goToHome('google');
+    if (typeof window.signInWithFirebaseGoogle === 'function') {
+      window.signInWithFirebaseGoogle();
+    } else {
+      goToHome('google');
+    }
   }
 
   function setArea(areaKey) {
@@ -3093,6 +3155,7 @@
     }
 
     customerAddress = { name: name, phone: phone, fullAddress: full, landmark: landmark };
+    window.customerAddress = customerAddress;
     lastCreatedOrder = null;
     checkoutSubStep = 3;
     renderCheckoutStep();
@@ -3112,6 +3175,7 @@
     }
     var newOrder = {
       orderId: orderId,
+      area: selectedAreaKey,
       items: itemsCopy,
       dateIdx: selectedDateIdx,
       slotIdx: selectedSlotIdx,
@@ -3124,6 +3188,10 @@
       total: getCartSubtotal(),
       status: 'Pending'
     };
+
+    if (typeof window.saveOrderToFirestore === 'function') {
+      window.saveOrderToFirestore(newOrder);
+    }
 
     ordersHistory.unshift(newOrder);
     lastCreatedOrder = newOrder;
