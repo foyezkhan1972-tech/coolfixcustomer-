@@ -4,10 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>কুলফিক্স — হোম অ্যাপ্লায়েন্স সার্ভিস</title>
-  <meta name="theme-color" content="#00266E">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="description" content="কুলফিক্স — AC, ফ্রিজ, মাইক্রোওয়েভ ও ওয়াশিং মেশিনের বিশ্বস্ত হোম সার্ভিস, ১৫ দিনের সার্ভিস ওয়ারেন্টিসহ।">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230038C6'/%3E%3Cpath d='M32 13v38M13 32h38M19 19l26 26M45 19L19 45' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1960,157 +1956,6 @@
       color: var(--logo-green-dark);
     }
 
-    /* ===== Polish ===== */
-    html { -webkit-text-size-adjust: 100%; }
-
-    .screen.active { animation: scrFade 0.26s ease both; }
-
-    @keyframes scrFade {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, [onclick]:focus-visible {
-      outline: 3px solid rgba(11, 78, 201, 0.45);
-      outline-offset: 2px;
-    }
-
-    .cf-srv-circle[data-ico] {
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
-      position: relative;
-    }
-
-    .cf-srv-circle[data-ico]::before, .tool-badge[data-ico]::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 58%);
-      pointer-events: none;
-    }
-
-    .tool-badge[data-ico] {
-      position: relative;
-      border: none;
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
-    }
-
-    .tool-col { display: flex; flex-direction: column; align-items: center; gap: 7px; }
-    .tool-cap { font-family: 'Inter', sans-serif; font-size: 10.5px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.3px; }
-
-    /* How it works */
-    .hiw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
-
-    .hiw-card {
-      position: relative;
-      background: var(--white);
-      border: 1px solid #E6EEF8;
-      border-radius: 16px;
-      padding: 14px 8px 12px;
-      text-align: center;
-      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
-    }
-
-    .hiw-num {
-      position: absolute;
-      top: 8px;
-      right: 10px;
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      font-weight: 800;
-      color: #C3D3EA;
-    }
-
-    .hiw-ico {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      margin: 0 auto 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 14px -6px rgba(0, 56, 198, 0.5);
-    }
-
-    .hiw-card h5 { font-size: 13px; font-weight: 700; color: var(--text-dark); margin-bottom: 3px; }
-    .hiw-card p { font-size: 11px; color: var(--text-muted); line-height: 1.35; }
-
-    /* Order tracker */
-    .trk { display: flex; margin: 10px 0 14px; }
-
-    .trk-step {
-      flex: 1;
-      position: relative;
-      text-align: center;
-      font-size: 10.5px;
-      font-weight: 600;
-      color: #8A98B2;
-      line-height: 1.2;
-    }
-
-    .trk-step::before {
-      content: "";
-      position: absolute;
-      top: 10px;
-      left: -50%;
-      width: 100%;
-      height: 3px;
-      background: #E1E9F6;
-      z-index: 1;
-    }
-
-    .trk-step:first-child::before { display: none; }
-
-    .trk-dot {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: #EEF3FA;
-      border: 2px solid #D3DEF0;
-      margin: 0 auto 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 2;
-    }
-
-    .trk-step.done, .trk-step.current { color: var(--text-dark); }
-    .trk-step.done::before, .trk-step.current::before { background: var(--logo-green-dark); }
-    .trk-step.done .trk-dot { background: var(--logo-green-dark); border-color: var(--logo-green-dark); }
-    .trk-step.current .trk-dot { background: var(--white); border-color: var(--logo-deep-blue); box-shadow: 0 0 0 4px rgba(0, 56, 198, 0.14); }
-    .trk-step.current .trk-dot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--logo-deep-blue); }
-
-    .ord-item { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; font-size: 13px; border-bottom: 1px dashed #E3ECF8; }
-    .ord-item:last-child { border-bottom: none; }
-    .ord-item .nm { color: var(--text-dark); font-weight: 600; }
-    .ord-item .qt { color: var(--text-muted); font-family: 'Inter', sans-serif; font-weight: 600; margin-left: 4px; }
-    .ord-item .pr { color: var(--logo-green-dark); font-weight: 700; font-family: 'Inter', sans-serif; white-space: nowrap; }
-
-    .mini-outline-btn { display: flex; align-items: center; justify-content: center; gap: 6px; }
-
-    /* Menu rows */
-    .mi-left { display: flex; align-items: center; gap: 12px; }
-    .mi-ico { width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-
-    .btn-outline-danger {
-      width: 100%;
-      margin-top: 16px;
-      padding: 14px;
-      border-radius: 14px;
-      border: 1.5px solid #F4B6BE;
-      background: #FFF5F6;
-      color: var(--accent-red);
-      font-size: 15px;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
-    }
-
     /* ================= 4-ITEM BOTTOM NAV ================= */
     .bottom-nav {
       position: fixed;
@@ -2300,10 +2145,10 @@
         <p class="tagline" id="login-tagline">আপনার বাসা ও অফিসের জন্য বিশ্বস্ত হোম অ্যাপ্লায়েন্স টেকনিশিয়ান</p>
 
         <div class="floating-tools">
-          <div class="tool-col"><div class="tool-badge" data-ico="ac" data-size="30"></div><span class="tool-cap">AC</span></div>
-          <div class="tool-col"><div class="tool-badge" data-ico="fridge" data-size="30"></div><span class="tool-cap">Fridge</span></div>
-          <div class="tool-col"><div class="tool-badge" data-ico="washer" data-size="30"></div><span class="tool-cap">Washer</span></div>
-          <div class="tool-col"><div class="tool-badge" data-ico="oven" data-size="30"></div><span class="tool-cap">Oven</span></div>
+          <div class="tool-badge">❄️</div>
+          <div class="tool-badge">🧊</div>
+          <div class="tool-badge">🫧</div>
+          <div class="tool-badge">♨️</div>
         </div>
       </div>
 
@@ -2357,7 +2202,7 @@
           </button>
           <button class="cf-bell-btn" onclick="openOffersScreen()" aria-label="Notifications">
             🔔
-            <span class="cf-bell-badge" id="bell-badge">0</span>
+            <span class="cf-bell-badge">2</span>
           </button>
         </div>
       </div>
@@ -2454,28 +2299,55 @@
       <div class="cf-services-4grid">
         <!-- AC Service -->
         <div class="cf-srv-card" onclick="openCategory('ac_service')">
-          <div class="cf-srv-circle" data-ico="ac" data-size="30"></div>
+          <div class="cf-srv-circle circle-blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round">
+              <line x1="12" y1="3" x2="12" y2="21"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="5.6" y1="5.6" x2="18.4" y2="18.4"/>
+              <line x1="18.4" y1="5.6" x2="5.6" y2="18.4"/>
+            </svg>
+          </div>
           <div class="cf-srv-en">AC Service</div>
           <div class="cf-srv-bn" id="cat-lbl-ac-service">এসি সার্ভিস</div>
         </div>
 
         <!-- Fridge Service -->
         <div class="cf-srv-card" onclick="openCategory('fridge')">
-          <div class="cf-srv-circle" data-ico="fridge" data-size="30"></div>
+          <div class="cf-srv-circle circle-green">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linejoin="round">
+              <rect x="6" y="3" width="12" height="18" rx="2" fill="#FFFFFF" fill-opacity="0.18"/>
+              <line x1="6" y1="10" x2="18" y2="10"/>
+              <line x1="9" y1="6.5" x2="9" y2="8"/>
+              <line x1="9" y1="13" x2="9" y2="16"/>
+            </svg>
+          </div>
           <div class="cf-srv-en">Fridge Service</div>
           <div class="cf-srv-bn" id="cat-lbl-fridge">ফ্রিজ সার্ভিস</div>
         </div>
 
         <!-- Microwave Oven -->
         <div class="cf-srv-card" onclick="openCategory('oven')">
-          <div class="cf-srv-circle" data-ico="oven" data-size="30"></div>
+          <div class="cf-srv-circle circle-orange">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.1" stroke-linejoin="round">
+              <rect x="3" y="6" width="18" height="12" rx="2"/>
+              <rect x="6" y="9" width="8" height="6" rx="1"/>
+              <circle cx="17.5" cy="10.5" r="1" fill="#FFFFFF"/>
+              <circle cx="17.5" cy="14" r="1" fill="#FFFFFF"/>
+            </svg>
+          </div>
           <div class="cf-srv-en">Microwave Oven</div>
           <div class="cf-srv-bn" id="cat-lbl-oven">মাইক্রোওয়েভ সার্ভিস</div>
         </div>
 
         <!-- Washing Machine -->
         <div class="cf-srv-card" onclick="openCategory('washing_machine')">
-          <div class="cf-srv-circle" data-ico="washer" data-size="30"></div>
+          <div class="cf-srv-circle circle-purple">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.1" stroke-linejoin="round">
+              <rect x="5" y="3" width="14" height="18" rx="2"/>
+              <line x1="5" y1="7.5" x2="19" y2="7.5"/>
+              <circle cx="12" cy="13.5" r="3.5"/>
+            </svg>
+          </div>
           <div class="cf-srv-en">Washing Machine</div>
           <div class="cf-srv-bn" id="cat-lbl-washing">ওয়াশিং মেশিন সার্ভিস</div>
         </div>
@@ -2595,34 +2467,6 @@
           <div class="cf-util-label" id="util-support">সাপোর্ট</div>
         </div>
 
-      </div>
-
-      <div class="cf-sec-head cf-sec-head-sub" style="margin-top:6px;">
-        <div class="cf-sec-title">
-          <span class="cf-sec-bar"></span>
-          <span id="hiw-heading">কীভাবে কাজ করে</span>
-        </div>
-      </div>
-
-      <div class="hiw-grid">
-        <div class="hiw-card">
-          <span class="hiw-num">01</span>
-          <div class="hiw-ico" style="background:linear-gradient(145deg,#38BDF8,#2563EB);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="3"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2.5" x2="8" y2="6.5"/><line x1="16" y1="2.5" x2="16" y2="6.5"/><polyline points="9 15.5 11.2 17.7 15.2 13.3"/></svg></div>
-          <h5 id="hiw-t1">বুক করুন</h5>
-          <p id="hiw-d1">সার্ভিস, তারিখ ও সময় বাছুন</p>
-        </div>
-        <div class="hiw-card">
-          <span class="hiw-num">02</span>
-          <div class="hiw-ico" style="background:linear-gradient(145deg,#FB923C,#DC2626);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-          <h5 id="hiw-t2">টেকনিশিয়ান আসবেন</h5>
-          <p id="hiw-d2">নির্ধারিত সময়ে আপনার দরজায়</p>
-        </div>
-        <div class="hiw-card">
-          <span class="hiw-num">03</span>
-          <div class="hiw-ico" style="background:linear-gradient(145deg,#4ADE80,#15803D);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="8.5 12 11 14.5 15.5 9.5"/></svg></div>
-          <h5 id="hiw-t3">নিশ্চিন্ত থাকুন</h5>
-          <p id="hiw-d3">কাজ শেষে ক্যাশ পেমেন্ট, ১৫ দিন ওয়ারেন্টি</p>
-        </div>
       </div>
     </div>
   </div>
@@ -3178,4 +3022,108 @@
       id: 'ac_gas', cat: 'ac_service',
       titleBn: 'AC গ্যাস চার্জ', titleEn: 'AC Gas Charge',
       icon: '❄️', price: 1881, oldPrice: null, offTextBn: null, offTextEn: null, type: 'gas_two_step',
-      bulletsBn: ['গ্যাস প্রেশার চেক আপ ও রিফিল', 
+      bulletsBn: ['গ্যাস প্রেশার চেক আপ ও রিফিল', 'R22, R410 ও R32 গ্যাস সাপোর্ট'],
+      bulletsEn: ['Gas pressure check & refill', 'R22, R410 & R32 gas support'],
+      tons: [
+        { label: '1 Ton', startPrice: 1881 },
+        { label: '1.5 Ton', startPrice: 2821.5 },
+        { label: '2 Ton', startPrice: 3762 },
+        { label: '2.5 Ton', startPrice: 4702.5 },
+        { label: '3 Ton', startPrice: 5643 },
+        { label: '4 Ton', startPrice: 7524 },
+        { label: '4.5 Ton', startPrice: 8464.5 },
+        { label: '5 Ton', startPrice: 9405 }
+      ],
+      gases: [
+        { labelBn: 'Full R22 গ্যাস রিফিল', labelEn: 'Full R22 Gas Refill', price: 3344 },
+        { labelBn: 'Partial R22 গ্যাস টপ-আপ', labelEn: 'Partial R22 Gas Top-up', price: 1881 },
+        { labelBn: 'Full R410 গ্যাস রিফিল', labelEn: 'Full R410 Gas Refill', price: 4807 },
+        { labelBn: 'Partial R410 গ্যাস টপ-আপ', labelEn: 'Partial R410 Gas Top-up', price: 2612.5 },
+        { labelBn: 'Full R32 গ্যাস রিফিল', labelEn: 'Full R32 Gas Refill', price: 3344 },
+        { labelBn: 'Partial R32 গ্যাস টপ-আপ', labelEn: 'Partial R32 Gas Top-up', price: 1881 }
+      ]
+    },
+    {
+      id: 'ac_leak', cat: 'ac_service',
+      titleBn: 'AC লিক রিপেয়ার', titleEn: 'AC Leak Repair',
+      icon: '🛠️', price: 3082.75, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['কপার পাইপ ও জয়েন্ট লিক সনাক্তকরণ', 'ওয়েল্ডিং ও প্রেশার টেস্টিং'],
+      bulletsEn: ['Copper pipe & joint leak detection', 'Brazing & pressure testing'],
+      options: [
+        { labelBn: '১ – ১.৫ টন AC', labelEn: '1 – 1.5 Ton AC', price: 3082.75, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '২ – ৩ টন AC', labelEn: '2 – 3 Ton AC', price: 3631.38, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '৪ – ৫ টন AC', labelEn: '4 – 5 Ton AC', price: 5329.5, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'ac_circuit', cat: 'ac_service',
+      titleBn: 'AC সার্কিট রিপেয়ার/রিপ্লেসমেন্ট', titleEn: 'AC Circuit Repair / Replace',
+      icon: '🔌', price: 3187.25, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['ইনডোর/আউটডোর PCB সার্কিট মেরামত', 'অভিজ্ঞ টেকনিশিয়ান দ্বারা পরীক্ষা'],
+      bulletsEn: ['Indoor/outdoor PCB repair', 'Tested by experienced technician'],
+      options: [
+        { labelBn: '১ – ১.৫ টন AC', labelEn: '1 – 1.5 Ton AC', price: 3187.25, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '২ – ৩ টন AC', labelEn: '2 – 3 Ton AC', price: 3735.88, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '৪ – ৫ টন AC', labelEn: '4 – 5 Ton AC', price: 4258.38, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'ac_capacitor', cat: 'ac_service',
+      titleBn: 'AC ক্যাপাসিটর রিপ্লেসমেন্ট', titleEn: 'AC Capacitor Replacement',
+      icon: '⚡', price: 1175.63, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['উন্নত মানের ক্যাপাসিটর সংযোজন', 'কম্প্রেসর ও ফ্যান মোটর রানিং চেক'],
+      bulletsEn: ['Quality capacitor fitting', 'Compressor & fan running test'],
+      options: [
+        { labelBn: '১ – ১.৫ টন AC', labelEn: '1 – 1.5 Ton AC', price: 1175.63, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '২ – ৩ টন AC', labelEn: '2 – 3 Ton AC', price: 1828.75, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '৪ – ৫ টন AC', labelEn: '4 – 5 Ton AC', price: 2090, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'ac_compressor', cat: 'ac_service',
+      titleBn: 'AC কম্প্রেসর ফিটিং', titleEn: 'AC Compressor Fitting',
+      icon: '⚙️', price: 4807, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['পুরনো কম্প্রেসর খোলা ও নতুন ফিটিং', 'ভ্যাকুয়াম ও সিস্টেম চেক'],
+      bulletsEn: ['Old removal & new fitting', 'Vacuum & system check'],
+      options: [
+        { labelBn: '১ – ১.৫ টন AC', labelEn: '1 – 1.5 Ton AC', price: 4807, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '২ – ৩ টন AC', labelEn: '2 – 3 Ton AC', price: 5852, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '৪ – ৫ টন AC', labelEn: '4 – 5 Ton AC', price: 7471.75, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'ac_combo_install', cat: 'ac_service',
+      titleBn: 'ইনস্টলেশন ও আনইনস্টলেশন প্যাকেজ', titleEn: 'Install & Uninstall Package',
+      icon: '🔩', price: 4493.5, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['এক স্থান থেকে খুলে অন্য স্থানে ফিটিং', 'ইনডোর ও আউটডোর সেটআপ'],
+      bulletsEn: ['Remove from old spot & fit in new', 'Indoor & outdoor setup'],
+      options: [
+        { labelBn: '১ – ১.৫ টন AC', labelEn: '1 – 1.5 Ton AC', price: 4493.5, unitBn: '/প্যাকেজ', unitEn: '/pkg' },
+        { labelBn: '২ – ৩ টন AC', labelEn: '2 – 3 Ton AC', price: 5643, unitBn: '/প্যাকেজ', unitEn: '/pkg' },
+        { labelBn: '৪ – ৫ টন AC', labelEn: '4 – 5 Ton AC', price: 9718.5, unitBn: '/প্যাকেজ', unitEn: '/pkg' }
+      ]
+    },
+    {
+      id: 'ac_install_only', cat: 'ac_service',
+      titleBn: 'AC ইনস্টলেশন', titleEn: 'AC Installation',
+      icon: '🏗️', price: 3187.25, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['নতুন বা পুরনো AC দেয়ালে ফিটিং', 'ড্রিলিং ও কপার পাইপ কানেকশন'],
+      bulletsEn: ['Wall mounting for new/old AC', 'Drilling & copper pipe connection'],
+      options: [
+        { labelBn: '১ – ১.৫ টন AC', labelEn: '1 – 1.5 Ton AC', price: 3187.25, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '২ – ৩ টন AC', labelEn: '2 – 3 Ton AC', price: 3840.38, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '৪ – ৫ টন AC', labelEn: '4 – 5 Ton AC', price: 6740.25, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'ac_uninstall', cat: 'ac_service',
+      titleBn: 'আনইনস্টলেশন / ডিসম্যান্টলিং', titleEn: 'AC Uninstallation',
+      icon: '🔧', price: 1933.25, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['গ্যাস লক করে নিরাপদে AC খোলা', 'ইনডোর ও আউটডোর প্যাকিং উপযোগী করা'],
+      bulletsEn: ['Safe removal with gas lock', 'Ready for shifting/packing']
+    },
+
+    // ================= FRIDGE SERVICES =================
+    {
+      id: 'fridge_gas', cat: 'fridge',
+      titleBn: 'ফ্রিজ গ্যাস রিফিল', titleEn: 'Fridge Gas Refil
