@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>কুলফিক্স — হোম অ্যাপ্লায়েন্স সার্ভিস</title>
+  <meta name="theme-color" content="#00266E">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="description" content="কুলফিক্স — AC, ফ্রিজ, মাইক্রোওয়েভ ও ওয়াশিং মেশিনের বিশ্বস্ত হোম সার্ভিস, ১৫ দিনের সার্ভিস ওয়ারেন্টিসহ।">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230038C6'/%3E%3Cpath d='M32 13v38M13 32h38M19 19l26 26M45 19L19 45' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1956,6 +1960,157 @@
       color: var(--logo-green-dark);
     }
 
+    /* ===== Polish ===== */
+    html { -webkit-text-size-adjust: 100%; }
+
+    .screen.active { animation: scrFade 0.26s ease both; }
+
+    @keyframes scrFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, [onclick]:focus-visible {
+      outline: 3px solid rgba(11, 78, 201, 0.45);
+      outline-offset: 2px;
+    }
+
+    .cf-srv-circle[data-ico] {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      position: relative;
+    }
+
+    .cf-srv-circle[data-ico]::before, .tool-badge[data-ico]::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 58%);
+      pointer-events: none;
+    }
+
+    .tool-badge[data-ico] {
+      position: relative;
+      border: none;
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+    }
+
+    .tool-col { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+    .tool-cap { font-family: 'Inter', sans-serif; font-size: 10.5px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.3px; }
+
+    /* How it works */
+    .hiw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
+
+    .hiw-card {
+      position: relative;
+      background: var(--white);
+      border: 1px solid #E6EEF8;
+      border-radius: 16px;
+      padding: 14px 8px 12px;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
+    }
+
+    .hiw-num {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      color: #C3D3EA;
+    }
+
+    .hiw-ico {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      margin: 0 auto 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 14px -6px rgba(0, 56, 198, 0.5);
+    }
+
+    .hiw-card h5 { font-size: 13px; font-weight: 700; color: var(--text-dark); margin-bottom: 3px; }
+    .hiw-card p { font-size: 11px; color: var(--text-muted); line-height: 1.35; }
+
+    /* Order tracker */
+    .trk { display: flex; margin: 10px 0 14px; }
+
+    .trk-step {
+      flex: 1;
+      position: relative;
+      text-align: center;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #8A98B2;
+      line-height: 1.2;
+    }
+
+    .trk-step::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: -50%;
+      width: 100%;
+      height: 3px;
+      background: #E1E9F6;
+      z-index: 1;
+    }
+
+    .trk-step:first-child::before { display: none; }
+
+    .trk-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #EEF3FA;
+      border: 2px solid #D3DEF0;
+      margin: 0 auto 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .trk-step.done, .trk-step.current { color: var(--text-dark); }
+    .trk-step.done::before, .trk-step.current::before { background: var(--logo-green-dark); }
+    .trk-step.done .trk-dot { background: var(--logo-green-dark); border-color: var(--logo-green-dark); }
+    .trk-step.current .trk-dot { background: var(--white); border-color: var(--logo-deep-blue); box-shadow: 0 0 0 4px rgba(0, 56, 198, 0.14); }
+    .trk-step.current .trk-dot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--logo-deep-blue); }
+
+    .ord-item { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; font-size: 13px; border-bottom: 1px dashed #E3ECF8; }
+    .ord-item:last-child { border-bottom: none; }
+    .ord-item .nm { color: var(--text-dark); font-weight: 600; }
+    .ord-item .qt { color: var(--text-muted); font-family: 'Inter', sans-serif; font-weight: 600; margin-left: 4px; }
+    .ord-item .pr { color: var(--logo-green-dark); font-weight: 700; font-family: 'Inter', sans-serif; white-space: nowrap; }
+
+    .mini-outline-btn { display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+    /* Menu rows */
+    .mi-left { display: flex; align-items: center; gap: 12px; }
+    .mi-ico { width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    .btn-outline-danger {
+      width: 100%;
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1.5px solid #F4B6BE;
+      background: #FFF5F6;
+      color: var(--accent-red);
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
     /* ================= 4-ITEM BOTTOM NAV ================= */
     .bottom-nav {
       position: fixed;
@@ -2145,10 +2300,10 @@
         <p class="tagline" id="login-tagline">আপনার বাসা ও অফিসের জন্য বিশ্বস্ত হোম অ্যাপ্লায়েন্স টেকনিশিয়ান</p>
 
         <div class="floating-tools">
-          <div class="tool-badge">❄️</div>
-          <div class="tool-badge">🧊</div>
-          <div class="tool-badge">🫧</div>
-          <div class="tool-badge">♨️</div>
+          <div class="tool-col"><div class="tool-badge" data-ico="ac" data-size="30"></div><span class="tool-cap">AC</span></div>
+          <div class="tool-col"><div class="tool-badge" data-ico="fridge" data-size="30"></div><span class="tool-cap">Fridge</span></div>
+          <div class="tool-col"><div class="tool-badge" data-ico="washer" data-size="30"></div><span class="tool-cap">Washer</span></div>
+          <div class="tool-col"><div class="tool-badge" data-ico="oven" data-size="30"></div><span class="tool-cap">Oven</span></div>
         </div>
       </div>
 
@@ -2202,7 +2357,7 @@
           </button>
           <button class="cf-bell-btn" onclick="openOffersScreen()" aria-label="Notifications">
             🔔
-            <span class="cf-bell-badge">2</span>
+            <span class="cf-bell-badge" id="bell-badge">0</span>
           </button>
         </div>
       </div>
@@ -2299,55 +2454,28 @@
       <div class="cf-services-4grid">
         <!-- AC Service -->
         <div class="cf-srv-card" onclick="openCategory('ac_service')">
-          <div class="cf-srv-circle circle-blue">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round">
-              <line x1="12" y1="3" x2="12" y2="21"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="5.6" y1="5.6" x2="18.4" y2="18.4"/>
-              <line x1="18.4" y1="5.6" x2="5.6" y2="18.4"/>
-            </svg>
-          </div>
+          <div class="cf-srv-circle" data-ico="ac" data-size="30"></div>
           <div class="cf-srv-en">AC Service</div>
           <div class="cf-srv-bn" id="cat-lbl-ac-service">এসি সার্ভিস</div>
         </div>
 
         <!-- Fridge Service -->
         <div class="cf-srv-card" onclick="openCategory('fridge')">
-          <div class="cf-srv-circle circle-green">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linejoin="round">
-              <rect x="6" y="3" width="12" height="18" rx="2" fill="#FFFFFF" fill-opacity="0.18"/>
-              <line x1="6" y1="10" x2="18" y2="10"/>
-              <line x1="9" y1="6.5" x2="9" y2="8"/>
-              <line x1="9" y1="13" x2="9" y2="16"/>
-            </svg>
-          </div>
+          <div class="cf-srv-circle" data-ico="fridge" data-size="30"></div>
           <div class="cf-srv-en">Fridge Service</div>
           <div class="cf-srv-bn" id="cat-lbl-fridge">ফ্রিজ সার্ভিস</div>
         </div>
 
         <!-- Microwave Oven -->
         <div class="cf-srv-card" onclick="openCategory('oven')">
-          <div class="cf-srv-circle circle-orange">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.1" stroke-linejoin="round">
-              <rect x="3" y="6" width="18" height="12" rx="2"/>
-              <rect x="6" y="9" width="8" height="6" rx="1"/>
-              <circle cx="17.5" cy="10.5" r="1" fill="#FFFFFF"/>
-              <circle cx="17.5" cy="14" r="1" fill="#FFFFFF"/>
-            </svg>
-          </div>
+          <div class="cf-srv-circle" data-ico="oven" data-size="30"></div>
           <div class="cf-srv-en">Microwave Oven</div>
           <div class="cf-srv-bn" id="cat-lbl-oven">মাইক্রোওয়েভ সার্ভিস</div>
         </div>
 
         <!-- Washing Machine -->
         <div class="cf-srv-card" onclick="openCategory('washing_machine')">
-          <div class="cf-srv-circle circle-purple">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.1" stroke-linejoin="round">
-              <rect x="5" y="3" width="14" height="18" rx="2"/>
-              <line x1="5" y1="7.5" x2="19" y2="7.5"/>
-              <circle cx="12" cy="13.5" r="3.5"/>
-            </svg>
-          </div>
+          <div class="cf-srv-circle" data-ico="washer" data-size="30"></div>
           <div class="cf-srv-en">Washing Machine</div>
           <div class="cf-srv-bn" id="cat-lbl-washing">ওয়াশিং মেশিন সার্ভিস</div>
         </div>
@@ -2467,6 +2595,34 @@
           <div class="cf-util-label" id="util-support">সাপোর্ট</div>
         </div>
 
+      </div>
+
+      <div class="cf-sec-head cf-sec-head-sub" style="margin-top:6px;">
+        <div class="cf-sec-title">
+          <span class="cf-sec-bar"></span>
+          <span id="hiw-heading">কীভাবে কাজ করে</span>
+        </div>
+      </div>
+
+      <div class="hiw-grid">
+        <div class="hiw-card">
+          <span class="hiw-num">01</span>
+          <div class="hiw-ico" style="background:linear-gradient(145deg,#38BDF8,#2563EB);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="3"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2.5" x2="8" y2="6.5"/><line x1="16" y1="2.5" x2="16" y2="6.5"/><polyline points="9 15.5 11.2 17.7 15.2 13.3"/></svg></div>
+          <h5 id="hiw-t1">বুক করুন</h5>
+          <p id="hiw-d1">সার্ভিস, তারিখ ও সময় বাছুন</p>
+        </div>
+        <div class="hiw-card">
+          <span class="hiw-num">02</span>
+          <div class="hiw-ico" style="background:linear-gradient(145deg,#FB923C,#DC2626);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+          <h5 id="hiw-t2">টেকনিশিয়ান আসবেন</h5>
+          <p id="hiw-d2">নির্ধারিত সময়ে আপনার দরজায়</p>
+        </div>
+        <div class="hiw-card">
+          <span class="hiw-num">03</span>
+          <div class="hiw-ico" style="background:linear-gradient(145deg,#4ADE80,#15803D);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="8.5 12 11 14.5 15.5 9.5"/></svg></div>
+          <h5 id="hiw-t3">নিশ্চিন্ত থাকুন</h5>
+          <p id="hiw-d3">কাজ শেষে ক্যাশ পেমেন্ট, ১৫ দিন ওয়ারেন্টি</p>
+        </div>
       </div>
     </div>
   </div>
@@ -3126,4 +3282,2175 @@
     // ================= FRIDGE SERVICES =================
     {
       id: 'fridge_gas', cat: 'fridge',
-      titleBn: 'ফ্রিজ গ্যাস রিফিল', titleEn: 'Fridge Gas Refil
+      titleBn: 'ফ্রিজ গ্যাস রিফিল', titleEn: 'Fridge Gas Refill',
+      icon: '🧊', price: 2142.25, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['সম্পূর্ণ গ্যাস রিফিল ও কুলিং টেস্ট', 'লিকেজ পরীক্ষা সহ'],
+      bulletsEn: ['Full gas refill & cooling test', 'Includes leak check']
+    },
+    {
+      id: 'fridge_circuit', cat: 'fridge',
+      titleBn: 'ফ্রিজ সার্কিট রিপেয়ার/রিপ্লেসমেন্ট', titleEn: 'Fridge Circuit Repair / Replace',
+      icon: '🔌', price: 3735.88, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['ইনভার্টার ও নন-ইনভার্টার সার্কিট মেরামত', 'অরিজিনাল পার্টস সাপোর্ট'],
+      bulletsEn: ['Inverter & non-inverter PCB fix', 'Spare parts support']
+    },
+    {
+      id: 'fridge_condenser', cat: 'fridge',
+      titleBn: 'কন্ডেনসার ফিটিং (গ্যাস সহ)', titleEn: 'Condenser Fitting (With Gas)',
+      icon: '🛠️', price: 4258.38, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['নতুন কন্ডেনসার কয়েল ফিটিং', 'সম্পূর্ণ গ্যাস চার্জ অন্তর্ভুক্ত'],
+      bulletsEn: ['New condenser coil fitting', 'Full gas charge included']
+    },
+    {
+      id: 'fridge_compressor', cat: 'fridge',
+      titleBn: 'কম্প্রেসর ফিটিং (গ্যাস সহ)', titleEn: 'Compressor Fitting (With Gas)',
+      icon: '⚙️', price: 5852, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['কম্প্রেসর পরিবর্তন ও ওয়েল্ডিং', 'গ্যাস রিফিল অন্তর্ভুক্ত'],
+      bulletsEn: ['Compressor change & welding', 'Gas refill included']
+    },
+    {
+      id: 'fridge_thermostat', cat: 'fridge',
+      titleBn: 'থার্মোস্ট্যাট পরিবর্তন', titleEn: 'Thermostat Change',
+      icon: '🌡️', price: 1593.63, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['অটো কুলিং কন্ট্রোল ঠিক করা', 'নতুন থার্মোস্ট্যাট সংযোজন'],
+      bulletsEn: ['Fix auto cooling control', 'New thermostat fitting']
+    },
+    {
+      id: 'fridge_clean_prem', cat: 'fridge',
+      titleBn: 'ফ্রিজ ক্লিনিং: প্রিমিয়াম', titleEn: 'Fridge Cleaning: Premium',
+      icon: '✨', price: 1593.63, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['ভেতর-বাইরে ডিপ ক্লিনিং ও দুর্গন্ধ দূরীকরণ', 'রাবার গ্যাসকেট ও ট্রে পরিষ্কার'],
+      bulletsEn: ['Deep inside-out cleaning & odor removal', 'Gasket & tray wash']
+    },
+    {
+      id: 'fridge_clean_reg', cat: 'fridge',
+      titleBn: 'ফ্রিজ ক্লিনিং: রেগুলার', titleEn: 'Fridge Cleaning: Regular',
+      icon: '🧼', price: 1071.13, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['সাধারণ ওয়াশ ও জীবাণুমুক্তকরণ', 'সব তাক ও ড্রয়ার পরিষ্কার'],
+      bulletsEn: ['Standard wash & sanitization', 'All shelves & drawers cleaned']
+    },
+    {
+      id: 'freezer_clean', cat: 'fridge',
+      titleBn: 'ডিপ ফ্রিজার ক্লিনিং', titleEn: 'Deep Freezer Cleaning',
+      icon: '📦', price: 1593.63, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['বরফ গলিয়ে সম্পূর্ণ জীবাণুমুক্ত পরিষ্কার', 'লিটার অনুযায়ী নির্ধারিত চার্জ'],
+      bulletsEn: ['Defrost & hygienic deep clean', 'Price based on liter capacity'],
+      options: [
+        { labelBn: '১০০ – ২০০ লিটার ডিপ ফ্রিজার', labelEn: '100 – 200 Liter Freezer', price: 1593.63, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '২০১ – ৪০০ লিটার ডিপ ফ্রিজার', labelEn: '201 – 400 Liter Freezer', price: 2142.25, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: '৪০১ – ৬০০ লিটার ডিপ ফ্রিজার', labelEn: '401 – 600 Liter Freezer', price: 2664.75, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+
+    // ================= OVEN SERVICES =================
+    {
+      id: 'oven_checkup', cat: 'oven',
+      titleBn: 'ওভেন চেক আপ', titleEn: 'Oven Checkup',
+      icon: '♨️', price: 353.13, oldPrice: 653.13, offTextBn: '৳300 ছাড়', offTextEn: '৳300 OFF', type: 'direct',
+      bulletsBn: ['মাইক্রোওয়েভ ও ইলেকট্রিক ওভেন পরীক্ষা', 'সঠিক সমস্যা ও খরচ নির্ধারণ'],
+      bulletsEn: ['Microwave & electric oven check', 'Accurate fault & cost estimate']
+    },
+    {
+      id: 'oven_clean', cat: 'oven',
+      titleBn: 'ওভেন ক্লিনিং (ভেতর ও বাইরে)', titleEn: 'Oven Cleaning (Inside & Out)',
+      icon: '✨', price: 1045, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['তেল-চর্বি ও পোড়া দাগ পরিষ্কার', 'দুর্গন্ধ মুক্ত করে নতুনের মতো করা'],
+      bulletsEn: ['Grease & stain removal', 'Odor-free fresh finish']
+    },
+    {
+      id: 'oven_repair', cat: 'oven',
+      titleBn: 'ওভেন রিপেয়ার / সার্ভিসিং', titleEn: 'Oven Repair / Servicing',
+      icon: '🔧', price: 731.5, oldPrice: null, offTextBn: null, offTextEn: null, type: 'ton',
+      bulletsBn: ['গরম না হওয়া, বাটন বা সার্কিট সমস্যা সমাধান', 'সমস্যা অনুযায়ী নির্ধারিত রেট'],
+      bulletsEn: ['Heating, button or circuit fix', 'Rate based on issue'],
+      options: [
+        { labelBn: 'চালু হচ্ছে না (ইলেকট্রিকাল সমস্যা)', labelEn: 'Not Turning On (Electrical)', price: 809.88, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: 'শব্দ সমস্যা (Noise Issue)', labelEn: 'Noise Issue', price: 914.38, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: 'হিটিং সমস্যা (গরম হয় না)', labelEn: 'Heating Issue (Not Heating)', price: 1071.13, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: 'বাটন / টাচ প্যাড সমস্যা', labelEn: 'Button / Touch Pad Issue', price: 1593.63, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: 'সার্কিট রিপেয়ার', labelEn: 'Circuit Repair', price: 3187.25, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+
+    // ================= WASHING MACHINE SERVICES =================
+    {
+      id: 'wm_checkup', cat: 'washing_machine',
+      titleBn: 'ওয়াশিং মেশিন চেক আপ', titleEn: 'Washing Machine Checkup',
+      icon: '🫧', price: 350, oldPrice: 550, offTextBn: '৳200 ছাড়', offTextEn: '৳200 OFF', type: 'ton',
+      bulletsBn: ['টপ লোড ও ফ্রন্ট লোড মেশিন পরীক্ষা', 'মোটর, ড্রাম ও সেন্সর চেক আপ'],
+      bulletsEn: ['Top & front load machine check', 'Motor, drum & sensor inspection'],
+      options: [
+        { labelBn: 'Top Load Washing Machine', labelEn: 'Top Load Washing Machine', price: 350, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: 'Front Load Washing Machine', labelEn: 'Front Load Washing Machine', price: 450, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'wm_deep_clean', cat: 'washing_machine',
+      titleBn: 'ওয়াশিং মেশিন ডিপ ক্লিনিং', titleEn: 'Washing Machine Deep Clean',
+      icon: '🧼', price: 950, oldPrice: 1250, offTextBn: '৳300 ছাড়', offTextEn: '৳300 OFF', type: 'ton',
+      bulletsBn: ['ড্রাম, ফিল্টার ও ডিটারজেন্ট ট্রে পরিষ্কার', 'ময়লা ও দুর্গন্ধ দূর করা'],
+      bulletsEn: ['Drum, filter & tray deep clean', 'Removes dirt & odor buildup'],
+      options: [
+        { labelBn: 'Top Load Deep Clean', labelEn: 'Top Load Deep Clean', price: 950, unitBn: '/ইউনিট', unitEn: '/unit' },
+        { labelBn: 'Front Load Deep Clean', labelEn: 'Front Load Deep Clean', price: 1250, unitBn: '/ইউনিট', unitEn: '/unit' }
+      ]
+    },
+    {
+      id: 'wm_drain_spin', cat: 'washing_machine',
+      titleBn: 'ড্রেন ও স্পিন সমস্যা সমাধান', titleEn: 'Drain & Spin Issue Fix',
+      icon: '🌀', price: 850, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['পানি না যাওয়া বা স্পিন না ঘোরার সমাধান', 'ড্রেন পাম্প ও ভালভ পরীক্ষা'],
+      bulletsEn: ['Fix water drainage or spin fault', 'Drain pump & valve check']
+    },
+    {
+      id: 'wm_motor_belt', cat: 'washing_machine',
+      titleBn: 'মোটর / বেল্ট / পুশ বাটন রিপেয়ার', titleEn: 'Motor / Belt / Switch Repair',
+      icon: '⚙️', price: 1200, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['ড্রাম না ঘোরার সমস্যা সমাধান', 'বেল্ট বা ক্যাপাসিটর পরিবর্তন'],
+      bulletsEn: ['Fix drum rotation fault', 'Belt or capacitor replacement']
+    },
+    {
+      id: 'wm_pcb_repair', cat: 'washing_machine',
+      titleBn: 'ওয়াশিং মেশিন সার্কিট (PCB) রিপেয়ার', titleEn: 'Washing Machine PCB Repair',
+      icon: '🔌', price: 2450, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['পাওয়ার না আসা বা এরর কোড সমাধান', 'কন্ট্রোল বোর্ড মেরামত ও টেস্টিং'],
+      bulletsEn: ['Fix no power or error codes', 'Control board repair & testing']
+    },
+    {
+      id: 'wm_install', cat: 'washing_machine',
+      titleBn: 'ওয়াশিং মেশিন ইনস্টলেশন', titleEn: 'Washing Machine Installation',
+      icon: '🔧', price: 650, oldPrice: null, offTextBn: null, offTextEn: null, type: 'direct',
+      bulletsBn: ['ইনলেট পাইপ ও ড্রেন লাইন সেটআপ', 'লেভেলিং ও ট্রায়াল রান'],
+      bulletsEn: ['Inlet pipe & drain line setup', 'Leveling & trial run']
+    }
+  ];
+
+  // ================= SERVICE ICONS =================
+  var ACC = '#FFE14D';
+  var SERVICE_ICONS = {
+    search: { g: ['#38BDF8', '#2563EB'], b: '<circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21" stroke-width="2.4"/><polyline points="7.8 10.7 9.8 12.7 13.4 8.7" stroke="' + '#FFE14D' + '" stroke-width="2"/>' },
+    ac: { g: ['#38BDF8', '#1D4ED8'], b: '<rect x="2.5" y="4" width="19" height="8" rx="2.5"/><line x1="6" y1="9" x2="18" y2="9" stroke="#FFE14D"/><path d="M7 15.5c-.8 1.5.8 2.5 0 4M12 15.5c-.8 1.5.8 2.5 0 4M17 15.5c-.8 1.5.8 2.5 0 4" stroke="#C9F3FF"/>' },
+    jet: { g: ['#22D3EE', '#1D4ED8'], b: '<rect x="2.5" y="8.5" width="7" height="7" rx="1.5"/><path d="M9.5 9.5l3.5-2.5v10l-3.5-2.5"/><line x1="15.5" y1="9" x2="21.5" y2="6.5" stroke="#C9F3FF"/><line x1="16" y1="12" x2="22" y2="12" stroke="#C9F3FF"/><line x1="15.5" y1="15" x2="21.5" y2="17.5" stroke="#C9F3FF"/><circle cx="19.5" cy="9.4" r="0.9" fill="#FFE14D" stroke="none"/><circle cx="19.5" cy="14.6" r="0.9" fill="#FFE14D" stroke="none"/>' },
+    drop: { g: ['#60A5FA', '#4F46E5'], b: '<path d="M12 3C12 3 5.5 10 5.5 14.5a6.5 6.5 0 0 0 13 0C18.5 10 12 3 12 3z" fill="rgba(255,255,255,0.2)"/><path d="M9 15a3 3 0 0 0 3 3" stroke="#FFE14D" stroke-width="2"/>' },
+    gas: { g: ['#34D399', '#047857'], b: '<rect x="7" y="9" width="10" height="13" rx="3.5"/><path d="M10 9V6.5a2 2 0 0 1 4 0V9"/><line x1="9" y1="3.5" x2="15" y2="3.5"/><g stroke="#FFE14D" stroke-width="1.6"><line x1="12" y1="12.5" x2="12" y2="18.5"/><line x1="9.4" y1="14" x2="14.6" y2="17"/><line x1="14.6" y1="14" x2="9.4" y2="17"/></g>' },
+    wrench: { g: ['#FB923C', '#DC2626'], b: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" fill="rgba(255,255,255,0.15)"/><circle cx="5.4" cy="18.6" r="1" fill="#FFE14D" stroke="none"/>' },
+    cpu: { g: ['#A78BFA', '#6D28D9'], b: '<rect x="4.5" y="4.5" width="15" height="15" rx="2.5"/><rect x="9" y="9" width="6" height="6" rx="1" fill="#FFE14D" stroke="#FFE14D"/><path d="M9 1.5v3M15 1.5v3M9 19.5v3M15 19.5v3M19.5 9h3M19.5 15h3M1.5 9h3M1.5 15h3"/>' },
+    bolt: { g: ['#FBBF24', '#EA580C'], b: '<polygon points="13 2 4 14 11.5 14 10.5 22 20 10 12.5 10 13 2" fill="#FFE14D" stroke="#FFFFFF"/>' },
+    gear: { g: ['#F472B6', '#BE185D'], b: '<circle cx="12" cy="12" r="5.6"/><circle cx="12" cy="12" r="2.2" fill="#FFE14D" stroke="none"/><g stroke-width="2.4"><line x1="12" y1="2.2" x2="12" y2="4.8"/><line x1="19.07" y1="4.93" x2="17.2" y2="6.8"/><line x1="21.8" y1="12" x2="19.2" y2="12"/><line x1="19.07" y1="19.07" x2="17.2" y2="17.2"/><line x1="12" y1="21.8" x2="12" y2="19.2"/><line x1="4.93" y1="19.07" x2="6.8" y2="17.2"/><line x1="2.2" y1="12" x2="4.8" y2="12"/><line x1="4.93" y1="4.93" x2="6.8" y2="6.8"/></g>' },
+    install: { g: ['#2DD4BF', '#0F766E'], b: '<rect x="3" y="3.5" width="18" height="7" rx="2"/><line x1="12" y1="13.5" x2="12" y2="21" stroke="#FFE14D" stroke-width="2.2"/><polyline points="8.5 17.5 12 21 15.5 17.5" stroke="#FFE14D" stroke-width="2.2"/>' },
+    uninstall: { g: ['#FB7185', '#BE123C'], b: '<rect x="3" y="3.5" width="18" height="7" rx="2"/><line x1="12" y1="21" x2="12" y2="13.5" stroke="#FFE14D" stroke-width="2.2"/><polyline points="8.5 17 12 13.5 15.5 17" stroke="#FFE14D" stroke-width="2.2"/>' },
+    combo: { g: ['#818CF8', '#4338CA'], b: '<rect x="3" y="2.5" width="18" height="6" rx="2"/><g stroke="#FFE14D" stroke-width="2.2"><line x1="7.5" y1="12" x2="7.5" y2="21"/><polyline points="4.5 18 7.5 21 10.5 18"/><line x1="16.5" y1="21" x2="16.5" y2="12"/><polyline points="13.5 15 16.5 12 19.5 15"/></g>' },
+    fridge: { g: ['#4ADE80', '#15803D'], b: '<rect x="6" y="2.5" width="12" height="19" rx="2.5"/><line x1="6" y1="10" x2="18" y2="10"/><line x1="9" y1="5.8" x2="9" y2="7.8" stroke-width="2.2"/><line x1="9" y1="12.8" x2="9" y2="17" stroke-width="2.2"/><g stroke="#FFE14D" stroke-width="1.5"><line x1="14.5" y1="13.5" x2="14.5" y2="18.5"/><line x1="12.3" y1="14.7" x2="16.7" y2="17.3"/><line x1="16.7" y1="14.7" x2="12.3" y2="17.3"/></g>' },
+    coil: { g: ['#F59E0B', '#DC2626'], b: '<path d="M4 5.5H17a2.5 2.5 0 0 1 0 5H7a2.5 2.5 0 0 0 0 5H17a2.5 2.5 0 0 1 0 5H4"/><circle cx="4" cy="5.5" r="1.5" fill="#FFE14D" stroke="none"/><circle cx="4" cy="20.5" r="1.5" fill="#FFE14D" stroke="none"/>' },
+    thermo: { g: ['#FB7185', '#E11D48'], b: '<path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/><circle cx="11.5" cy="17.2" r="1.9" fill="#FFE14D" stroke="none"/><line x1="11.5" y1="8" x2="11.5" y2="15" stroke="#FFE14D" stroke-width="1.8"/><path d="M17 6h3M17 10h3"/>' },
+    clean: { g: ['#C084FC', '#9333EA'], b: '<path d="M11 4l1.9 6.1L19 12l-6.1 1.9L11 20l-1.9-6.1L3 12l6.1-1.9z" fill="rgba(255,255,255,0.2)"/><path d="M19 2.5l.8 2.2 2.2.8-2.2.8L19 8.5l-.8-2.2-2.2-.8 2.2-.8z" fill="#FFE14D" stroke="none"/><path d="M19.5 15.5l.6 1.6 1.6.6-1.6.6-.6 1.6-.6-1.6-1.6-.6 1.6-.6z" fill="#FFE14D" stroke="none"/>' },
+    bubbles: { g: ['#22D3EE', '#0E7490'], b: '<circle cx="9" cy="14.5" r="5.5"/><circle cx="17" cy="8" r="3.2"/><circle cx="17.5" cy="17.5" r="2.2"/><path d="M6.4 13a3 3 0 0 1 2.2-1.8" stroke="#FFE14D" stroke-width="1.7"/>' },
+    freezer: { g: ['#67E8F9', '#0369A1'], b: '<rect x="2.5" y="7.5" width="19" height="13" rx="2.5"/><line x1="2.5" y1="12" x2="21.5" y2="12"/><line x1="9" y1="9.8" x2="15" y2="9.8"/><g stroke="#FFE14D" stroke-width="1.5"><line x1="12" y1="13.8" x2="12" y2="18.6"/><line x1="9.9" y1="15" x2="14.1" y2="17.4"/><line x1="14.1" y1="15" x2="9.9" y2="17.4"/></g>' },
+    oven: { g: ['#FDBA74', '#EA580C'], b: '<rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><rect x="5.5" y="8.5" width="9" height="7" rx="1.5"/><circle cx="18" cy="10" r="1.2" fill="#FFE14D" stroke="none"/><circle cx="18" cy="14" r="1.2" fill="#FFE14D" stroke="none"/>' },
+    washer: { g: ['#C084FC', '#7E22CE'], b: '<rect x="4.5" y="2.5" width="15" height="19" rx="2.5"/><line x1="4.5" y1="7.5" x2="19.5" y2="7.5"/><circle cx="12" cy="14.2" r="4.2"/><path d="M9.6 14.2c.9-1 1.7 1 2.4 0s1.5 1 2.4 0" stroke="#FFE14D" stroke-width="1.5"/><circle cx="7.5" cy="5" r="0.9" fill="#FFE14D" stroke="none"/>' },
+    spin: { g: ['#F472B6', '#9D174D'], b: '<polyline points="22 4 22 10 16 10"/><polyline points="2 20 2 14 8 14"/><path d="M3.5 9a9 9 0 0 1 14.85-3.36L22 10M2 14l3.65 4.36A9 9 0 0 0 20.5 15"/><circle cx="12" cy="12" r="1.8" fill="#FFE14D" stroke="none"/>' }
+  };
+
+  var SERVICE_ICON_KIND = {
+    ac_checkup: 'search', ac_jet_wash: 'jet', ac_water_drop: 'drop', ac_gas: 'gas', ac_leak: 'wrench',
+    ac_circuit: 'cpu', ac_capacitor: 'bolt', ac_compressor: 'gear', ac_combo_install: 'combo',
+    ac_install_only: 'install', ac_uninstall: 'uninstall',
+    fridge_gas: 'fridge', fridge_circuit: 'cpu', fridge_condenser: 'coil', fridge_compressor: 'gear',
+    fridge_thermostat: 'thermo', fridge_clean_prem: 'clean', fridge_clean_reg: 'bubbles', freezer_clean: 'freezer',
+    oven_checkup: 'oven', oven_clean: 'clean', oven_repair: 'wrench',
+    wm_checkup: 'washer', wm_deep_clean: 'clean', wm_drain_spin: 'spin', wm_motor_belt: 'gear',
+    wm_pcb_repair: 'cpu', wm_install: 'wrench'
+  };
+
+  function getIconDef(srv) {
+    return SERVICE_ICONS[SERVICE_ICON_KIND[srv.id]] || SERVICE_ICONS.search;
+  }
+
+  function serviceIconSvg(srv, px, delay) {
+    var d = getIconDef(srv);
+    return '<svg class="svc-svg" width="' + px + '" height="' + px + '" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="animation-delay:-' + (delay || 0) + 's">' + d.b + '</svg>';
+  }
+
+  function fillIconTiles() {
+    var els = document.querySelectorAll('[data-ico]');
+    for (var i = 0; i < els.length; i++) {
+      var def = SERVICE_ICONS[els[i].getAttribute('data-ico')];
+      if (!def) continue;
+      var px = Number(els[i].getAttribute('data-size')) || 28;
+      els[i].style.background = 'linear-gradient(145deg,' + def.g[0] + ' 0%,' + def.g[1] + ' 100%)';
+      els[i].style.boxShadow = '0 10px 18px -6px ' + def.g[1] + '99';
+      els[i].innerHTML = '<svg class="svc-svg" width="' + px + '" height="' + px + '" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="animation-delay:-' + (i % 4) * 0.6 + 's">' + def.b + '</svg>';
+    }
+  }
+
+  function serviceTileStyle(srv) {
+    var g = getIconDef(srv).g;
+    return 'background:linear-gradient(145deg,' + g[0] + ' 0%,' + g[1] + ' 100%);box-shadow:0 10px 18px -6px ' + g[1] + '99;';
+  }
+
+  var I18N = {
+    bn: {
+      brandName: 'কুল<span>ফিক্স</span>',
+      skip: 'Skip',
+      toggleLang: '🌐 English',
+      tagline: 'আপনার বাসা ও অফিসের জন্য বিশ্বস্ত হোম অ্যাপ্লায়েন্স টেকনিশিয়ান',
+      callNow: 'Call Now',
+      supportMenu: '📞 কাস্টমার সাপোর্ট',
+      deleteOrderBtn: '🗑️ ডিলিট',
+      deleteTitle: 'হিস্ট্রি ডিলিট করবেন?',
+      deleteConfirmMsg: 'আপনি কি নিশ্চিত যে এই সার্ভিস হিস্ট্রি মুছে ফেলতে চান?',
+      deleteYes: 'হ্যাঁ, ডিলিট করুন',
+      deleteNo: 'না',
+      toastOrderDeleted: 'হিস্ট্রি ডিলিট করা হয়েছে: ',
+      waResend: 'WhatsApp-এ আবার পাঠান',
+      searchRecent: 'সাম্প্রতিক সার্চ',
+      searchClearAll: 'মুছুন',
+      searchPopular: 'জনপ্রিয় সার্চ',
+      searchPopularList: ['এসি গ্যাস চার্জ', 'ফ্রিজ ক্লিনিং', 'ওয়াশিং মেশিন', 'ওভেন রিপেয়ার', 'এসি জেট ওয়াশ'],
+      searchNoResult: 'কোনো সার্ভিস পাওয়া যায়নি',
+      searchNoResultDesc: 'অন্য শব্দ দিয়ে চেষ্টা করুন, অথবা আমাদের জানান — টেকনিশিয়ান কল করবেন।',
+      searchCustomReq: 'কাস্টম রিকোয়েস্ট পাঠান',
+      searchSeeAll: 'সব ফলাফল দেখুন',
+      searchResultCount: 'টি ফলাফল',
+      searchClearResults: '✕ সার্চ মুছুন',
+      searchFrom: 'শুরু',
+      heroEyebrow: 'TRUSTED HOME APPLIANCE CARE',
+      heroT1: '১৫ দিন ওয়ারেন্টি',
+      heroT2: 'দক্ষ টেকনিশিয়ান',
+      heroT3: 'ক্যাশ অন সার্ভিস',
+      hiwHeading: 'কীভাবে কাজ করে',
+      hiwT1: 'বুক করুন', hiwD1: 'সার্ভিস, তারিখ ও সময় বাছুন',
+      hiwT2: 'টেকনিশিয়ান আসবেন', hiwD2: 'নির্ধারিত সময়ে আপনার দরজায়',
+      hiwT3: 'নিশ্চিন্ত থাকুন', hiwD3: 'কাজ শেষে ক্যাশ পেমেন্ট, ১৫ দিন ওয়ারেন্টি',
+      trkSteps: ['অর্ডার গৃহীত', 'নির্ধারিত', 'পথে', 'সম্পন্ন'],
+      waPopupHint: 'WhatsApp খুলছে... অর্ডার পাঠাতে WhatsApp-এ Send চাপুন।',
+      phoneBtn: 'ফোন নম্বর দিয়ে চালিয়ে যান',
+      divider: 'অথবা যুক্ত হোন',
+      googleBtn: 'Google দিয়ে সাইন-ইন করুন',
+      terms: 'লগইন বা রেজিস্টার করার মাধ্যমে আপনি আমাদের <span>শর্তাবলী</span> এবং <span>গোপনীয়তা নীতি</span> মেনে নিচ্ছেন।',
+      heroWelcomeTitle: 'স্বাগতম!',
+      heroWelcomeSub: 'আপনার ঘরের যন্ত্রপাতির যত্নে আমরা আছি।',
+      searchPlaceholder: 'আপনার কী সার্ভিস প্রয়োজন?',
+      servicesHeading: 'আমাদের সার্ভিসসমূহ',
+      seeAll: 'সবগুলো দেখুন >',
+      catAcService: 'এসি সার্ভিস',
+      catFridge: 'ফ্রিজ সার্ভিস',
+      catOven: 'মাইক্রোওয়েভ সার্ভিস',
+      catWashing: 'ওয়াশিং মেশিন সার্ভিস',
+      catAll: 'সব সার্ভিস',
+      owRibbonText: 'বিশেষ অফার!',
+      owHeadText: 'এখনই বুক করুন',
+      owSubText: 'দক্ষ সার্ভিস, সাশ্রয়ী দামে!',
+      owC1: 'দক্ষ টেকনিশিয়ান',
+      owC2: 'দ্রুত সেবা',
+      owC3: 'সাশ্রয়ী মূল্য',
+      owC4: 'সম্পূর্ণ সন্তুষ্টি',
+      bookCardTitle: 'সার্ভিস বুক করুন',
+      bookCardSub: 'ঘরে বসেই, সহজেই!',
+      bookCardBtn: 'Book a Service >',
+      otherFeaturesHeading: 'অন্যান্য সুবিধা',
+      utilMyBooking: 'আমার বুকিং',
+      utilHistory: 'সার্ভিস হিস্ট্রি',
+      utilSupport: 'সাপোর্ট',
+      utilProfile: 'প্রোফাইল',
+      tabServices: 'Services',
+      tabRequest: 'Service Request',
+      tabOverview: 'Overview',
+      tabIncluded: 'What\'s Included',
+      startsFrom: 'Starts from',
+      tapSchedule: '📅 Tap to schedule ▾',
+      addBtn: 'ADD',
+      nextBtn: 'Next',
+      suboptSubtitle: 'সঠিক সাইজ বা সমস্যা নির্বাচন করুন',
+      chooseOption: 'অপশন নির্বাচন করুন',
+      gasStep1: 'ধাপ ১/২: আপনার AC-র টন (Ton) বাছাই করুন',
+      gasStep2: 'ধাপ ২/২: গ্যাসের ধরন ও Full/Partial বাছাই করুন',
+      startPrice: 'শুরুর দাম',
+      fromWord: 'থেকে',
+      forAc: 'AC-র জন্য',
+      selectedSize: 'নির্বাচিত সাইজ:',
+      changeSize: 'বদলান',
+      checkoutTitle: 'অর্ডার ও চেকআউট',
+      cashOnService: 'ক্যাশ অন সার্ভিস',
+      pill1: '১. কার্ট ও সময়',
+      pill2: '২. ঠিকানা',
+      pill3: '৩. কনফার্ম',
+      emptyCartTitle: 'আপনার কার্ট খালি',
+      emptyCartDesc: 'অর্ডার করতে পছন্দের সার্ভিস কার্টে যোগ করুন।',
+      viewServicesBtn: 'সার্ভিস দেখুন',
+      cartReview: 'কার্ট রিভিউ',
+      itemsWord: 'টি আইটেম',
+      addMore: '+ আরও যোগ করুন',
+      removeBtn: 'বাদ',
+      serviceTotal: 'সার্ভিস মোট',
+      scheduleTitle: 'শিডিউল (তারিখ ও সময়)',
+      selectDate: 'তারিখ নির্বাচন করুন',
+      selectSlot: 'সময়ের স্লট নির্বাচন করুন',
+      dates: ['আজ', 'আগামীকাল', 'পরশু'],
+      slots: ['সকাল (৯টা - ১২টা)', 'দুপুর (১২টা - ৩টা)', 'বিকাল (৩টা - ৬টা)', 'সন্ধ্যা (৬টা - ৯টা)'],
+      goToAddress: 'ঠিকানা দিন →',
+      addressTitle: 'সার্ভিসের ঠিকানা',
+      areaPrefix: 'এলাকা:',
+      nameLabel: 'আপনার নাম *',
+      namePlaceholder: 'যেমন: ফাইজউদ্দিন',
+      phoneLabel: 'মোবাইল নম্বর *',
+      fullAddrLabel: 'পূর্ণ ঠিকানা (বাড়ি/ফ্ল্যাট/রোড/ব্লক) *',
+      fullAddrPlaceholder: 'যেমন: চাঁদ উদ্যান, মেইন রোড, বাসা নং ১২',
+      landmarkLabel: 'স্পর্শকাতর ল্যান্ডমার্ক',
+      landmarkPlaceholder: 'যেমন: মসজিদের পাশে / বড় গেটের বিপরীতে',
+      backBtn: '← পিছনে',
+      goToSummary: 'অর্ডার সারসংক্ষেপ দেখুন →',
+      orderSummary: 'অর্ডার সারসংক্ষেপ',
+      scheduleRow: 'শিডিউল:',
+      customerRow: 'কাস্টমার:',
+      addressRow: 'ঠিকানা:',
+      totalMoney: 'মোট টাকা',
+      cashBadge: 'পেমেন্ট মাধ্যম: সার্ভিসের সময় ক্যাশ (Cash on Service)',
+      backToAddr: '← ঠিকানা',
+      confirmOrder: 'কনফার্ম করে WhatsApp-এ পাঠান',
+      orderConfirmed: 'অর্ডার কনফার্ম হয়েছে!',
+      orderConfirmedDesc: 'আপনার অর্ডারটি গ্রহণ করা হয়েছে। টেকনিশিয়ান নির্ধারিত সময়ে যোগাযোগ করবেন।',
+      statusRow: 'স্ট্যাটাস:',
+      timeRow: 'সময়:',
+      paymentRow: 'পেমেন্ট:',
+      cashPaymentVal: 'সার্ভিসের সময় ক্যাশ',
+      payableTotal: 'মোট পরিশোধযোগ্য',
+      viewMyOrders: 'আমার অর্ডার দেখুন',
+      backHome: 'হোম স্ক্রিনে ফিরে যান',
+      offersTitle: 'চলমান অফারসমূহ',
+      offerHeroTitle: 'বিশেষ ডিসকাউন্ট ও অফারসমূহ',
+      offerHeroDesc: 'নির্বাচিত সার্ভিসে সরাসরি ছাড় উপভোগ করুন। সব সার্ভিসেই ক্যাশ পেমেন্ট প্রযোজ্য।',
+      ordersTitle: 'আমার অর্ডারসমূহ',
+      ordersCountSuffix: 'টি',
+      noOrdersTitle: 'এখনও কোনো অর্ডার নেই',
+      noOrdersDesc: 'আপনার প্রথম সার্ভিস অর্ডারটি এখনই বুক করুন।',
+      bookServiceBtn: 'সার্ভিস বুক করুন',
+      totalBillCash: 'মোট বিল',
+      cancelOrderBtn: 'অর্ডার বাতিল করুন',
+      menuTitle: 'মেনু ও প্রোফাইল',
+      guestUser: 'অতিথি ব্যবহারকারী',
+      googleUser: 'Google ইউজার',
+      currentAreaLabel: 'বর্তমান এলাকা:',
+      changeAreaMenu: '📍 এলাকা পরিবর্তন করুন',
+      orderTrackMenu: '📋 আমার অর্ডার ট্র্যাকিং',
+      ordersWord: 'টি অর্ডার',
+      offersMenu: '🏷️ চলমান অফারসমূহ',
+      seeDiscount: 'ছাড় দেখুন ›',
+      aboutMenu: '❄️ কুলফিক্স সম্পর্কে',
+      versionInfo: 'v1.3 ›',
+      logoutBtn: 'লগআউট করুন',
+      phoneModalTitle: 'ফোন নম্বর ও OTP যাচাই',
+      phoneInputLabel: 'মোবাইল নম্বর (১১ ডিজিট)',
+      otpInputLabel: 'OTP কোড (৬ ডিজিট)',
+      otpHintDefault: 'আগে মোবাইল নম্বর দিয়ে OTP পাঠান, তারপর কোডটি নিচে লিখুন',
+      otpPlaceholder: '৬ ডিজিটের OTP লিখুন',
+      otpBtn: 'OTP পাঠান',
+      verifyOtpBtn: 'OTP যাচাই ও লগইন করুন',
+      areaModalTitle: 'আপনার এলাকা নির্বাচন করুন',
+      navHome: 'হোম',
+      navCart: 'বুকিং',
+      navOrders: 'হিস্ট্রি',
+      navMenu: 'প্রোফাইল',
+      reqTitle: 'কাস্টম সার্ভিস রিকোয়েস্ট',
+      reqDesc: 'আপনার কাঙ্ক্ষিত সার্ভিসটি তালিকায় না পেলে নিচে সমস্যার বিবরণ লিখে জানান, আমাদের টেকনিশিয়ান কল করবেন।',
+      reqPlaceholder: 'যেমন: ফ্রিজের ডোর সিল নরম হয়ে গেছে...',
+      reqSendBtn: 'রিকোয়েস্ট পাঠান',
+      overviewTitle: 'কুলফিক্স সার্ভিস ওভারভিউ',
+      overviewList: [
+        'অভিজ্ঞ ও যাচাইকৃত হোম অ্যাপ্লায়েন্স টেকনিশিয়ান।',
+        'সার্ভিস শেষে ১৫ দিনের ওয়ারেন্টি সুবিধা।',
+        'কাজ শেষে ক্যাশ পেমেন্টের সুবিধা (কোনো লুকানো চার্জ নেই)।'
+      ],
+      includedTitle: 'যা যা অন্তর্ভুক্ত থাকছে',
+      includedList: [
+        'দক্ষ টেকনিশিয়ানের ভিজিট ও প্রাথমিক চেক আপ।',
+        'প্রয়োজনীয় যন্ত্রপাতি ও টুলস সাপোর্ট।',
+        '<strong>যা অন্তর্ভুক্ত নয়:</strong> অতিরিক্ত স্পেয়ার পার্টস বা হ্যাঙ্গিং চার্জ।'
+      ],
+      toastLangSwitched: 'ভাষা বাংলায় পরিবর্তন করা হয়েছে',
+      toastWelcome: 'স্বাগতম, ',
+      toastBadPhone: 'সঠিক ১১ ডিজিটের ফোন নম্বর দিন (01XXXXXXXXX)',
+      toastAreaChanged: 'এলাকা পরিবর্তন হয়েছে: ',
+      toastReqEmpty: 'দয়া করে সমস্যার কথা লিখুন',
+      toastReqSent: 'আপনার রিকোয়েস্ট গ্রহণ করা হয়েছে!',
+      toastAdded: 'কার্টে যোগ হয়েছে: ',
+      toastRemoved: 'সার্ভিসটি কার্ট থেকে বাদ দেওয়া হয়েছে',
+      toastNeedCart: 'আগে কার্টে অন্তত একটি সার্ভিস যোগ করুন',
+      toastBadAddr: 'নাম, ১১ ডিজিটের ফোন নম্বর ও পূর্ণ ঠিকানা দিন',
+      toastOrderSuccess: 'অর্ডার কনফার্ম হয়েছে! আইডি: ',
+      toastOrderCancelled: 'অর্ডার বাতিল করা হয়েছে: '
+    },
+    en: {
+      brandName: 'Cool<span>Fix</span>',
+      skip: 'Skip',
+      toggleLang: '🌐 বাংলা',
+      tagline: 'Trusted Home Appliance Technicians for Your Home & Office',
+      callNow: 'Call Now',
+      supportMenu: '📞 Customer Support',
+      deleteOrderBtn: '🗑️ Delete',
+      deleteTitle: 'Delete this history?',
+      deleteConfirmMsg: 'Are you sure you want to delete this service history?',
+      deleteYes: 'Yes, Delete',
+      deleteNo: 'No',
+      toastOrderDeleted: 'History deleted: ',
+      waResend: 'Resend on WhatsApp',
+      searchRecent: 'Recent searches',
+      searchClearAll: 'Clear',
+      searchPopular: 'Popular searches',
+      searchPopularList: ['AC gas charge', 'Fridge cleaning', 'Washing machine', 'Oven repair', 'AC jet wash'],
+      searchNoResult: 'No services found',
+      searchNoResultDesc: 'Try a different word, or let us know and a technician will call you.',
+      searchCustomReq: 'Send custom request',
+      searchSeeAll: 'See all results',
+      searchResultCount: ' result(s)',
+      searchClearResults: '✕ Clear search',
+      searchFrom: 'from',
+      heroEyebrow: 'TRUSTED HOME APPLIANCE CARE',
+      heroT1: '15-Day Warranty',
+      heroT2: 'Expert Technicians',
+      heroT3: 'Cash on Service',
+      hiwHeading: 'How It Works',
+      hiwT1: 'Book', hiwD1: 'Pick a service, date & time',
+      hiwT2: 'Technician visits', hiwD2: 'At your door, on schedule',
+      hiwT3: 'Relax', hiwD3: 'Pay cash after service, 15-day warranty',
+      trkSteps: ['Received', 'Assigned', 'On the way', 'Done'],
+      waPopupHint: 'Opening WhatsApp... press Send there to submit your order.',
+      phoneBtn: 'Continue with Phone Number',
+      divider: 'Or connect with',
+      googleBtn: 'Sign in with Google',
+      terms: 'By logging in or registering, you agree to our <span>Terms</span> and <span>Privacy Policy</span>.',
+      heroWelcomeTitle: 'Welcome!',
+      heroWelcomeSub: 'We are here to care for your home appliances.',
+      searchPlaceholder: 'What service do you need?',
+      servicesHeading: 'Our Services',
+      seeAll: 'See All >',
+      catAcService: 'AC Service',
+      catFridge: 'Fridge Service',
+      catOven: 'Microwave Service',
+      catWashing: 'Washing Machine',
+      catAll: 'All Services',
+      owRibbonText: 'Special Offer!',
+      owHeadText: 'Book Now',
+      owSubText: 'Skilled Service, Fair Price!',
+      owC1: 'Skilled Technician',
+      owC2: 'Fast Service',
+      owC3: 'Affordable Price',
+      owC4: '100% Satisfaction',
+      bookCardTitle: 'Book a Service',
+      bookCardSub: 'From home, easily!',
+      bookCardBtn: 'Book a Service >',
+      otherFeaturesHeading: 'Other Features',
+      utilMyBooking: 'My Booking',
+      utilHistory: 'Service History',
+      utilSupport: 'Support',
+      utilProfile: 'Profile',
+      tabServices: 'Services',
+      tabRequest: 'Service Request',
+      tabOverview: 'Overview',
+      tabIncluded: 'What\'s Included',
+      startsFrom: 'Starts from',
+      tapSchedule: '📅 Tap to schedule ▾',
+      addBtn: 'ADD',
+      nextBtn: 'Next',
+      suboptSubtitle: 'Select exact size or issue',
+      chooseOption: 'Choose an option',
+      gasStep1: 'Step 1/2: Select your AC Tonnage',
+      gasStep2: 'Step 2/2: Select Gas Type & Full/Partial',
+      startPrice: 'Starting price',
+      fromWord: 'from',
+      forAc: 'For AC',
+      selectedSize: 'Selected size:',
+      changeSize: 'Change',
+      checkoutTitle: 'Order & Checkout',
+      cashOnService: 'Cash on Service',
+      pill1: '1. Cart & Time',
+      pill2: '2. Address',
+      pill3: '3. Confirm',
+      emptyCartTitle: 'Your cart is empty',
+      emptyCartDesc: 'Add services to your cart to place an order.',
+      viewServicesBtn: 'Browse Services',
+      cartReview: 'Cart Review',
+      itemsWord: ' item(s)',
+      addMore: '+ Add More',
+      removeBtn: 'Remove',
+      serviceTotal: 'Service Total',
+      scheduleTitle: 'Schedule (Date & Time)',
+      selectDate: 'Select Date',
+      selectSlot: 'Select Time Slot',
+      dates: ['Today', 'Tomorrow', 'Day After'],
+      slots: ['Morning (9am - 12pm)', 'Afternoon (12pm - 3pm)', 'Evening (3pm - 6pm)', 'Night (6pm - 9pm)'],
+      goToAddress: 'Enter Address →',
+      addressTitle: 'Service Address',
+      areaPrefix: 'Area:',
+      nameLabel: 'Your Name *',
+      namePlaceholder: 'e.g. Faizuddin',
+      phoneLabel: 'Mobile Number *',
+      fullAddrLabel: 'Full Address (House/Flat/Road/Block) *',
+      fullAddrPlaceholder: 'e.g. Chand Udyan, Main Road, House 12',
+      landmarkLabel: 'Landmark',
+      landmarkPlaceholder: 'e.g. Near mosque / opposite big gate',
+      backBtn: '← Back',
+      goToSummary: 'View Order Summary →',
+      orderSummary: 'Order Summary',
+      scheduleRow: 'Schedule:',
+      customerRow: 'Customer:',
+      addressRow: 'Address:',
+      totalMoney: 'Total Amount',
+      cashBadge: 'Payment Method: Cash on Service',
+      backToAddr: '← Address',
+      confirmOrder: 'Confirm & Send on WhatsApp',
+      orderConfirmed: 'Order Confirmed!',
+      orderConfirmedDesc: 'Your order has been placed. Our technician will contact you at the scheduled time.',
+      statusRow: 'Status:',
+      timeRow: 'Time:',
+      paymentRow: 'Payment:',
+      cashPaymentVal: 'Cash on Service',
+      payableTotal: 'Total Payable',
+      viewMyOrders: 'View My Orders',
+      backHome: 'Back to Home',
+      offersTitle: 'Active Offers',
+      offerHeroTitle: 'Special Discounts & Offers',
+      offerHeroDesc: 'Enjoy instant discounts on selected services. Cash on service applies to all orders.',
+      ordersTitle: 'My Orders',
+      ordersCountSuffix: '',
+      noOrdersTitle: 'No orders yet',
+      noOrdersDesc: 'Book your first appliance service now.',
+      bookServiceBtn: 'Book a Service',
+      totalBillCash: 'Total Bill',
+      cancelOrderBtn: 'Cancel Order',
+      menuTitle: 'Menu & Profile',
+      guestUser: 'Guest User',
+      googleUser: 'Google User',
+      currentAreaLabel: 'Current Area:',
+      changeAreaMenu: '📍 Change Area',
+      orderTrackMenu: '📋 My Order Tracking',
+      ordersWord: ' order(s)',
+      offersMenu: '🏷️ Active Offers',
+      seeDiscount: 'View Offers ›',
+      aboutMenu: '❄️ About CoolFix',
+      versionInfo: 'v1.3 ›',
+      logoutBtn: 'Logout',
+      phoneModalTitle: 'Phone & OTP Verification',
+      phoneInputLabel: 'Mobile Number (11 Digits)',
+      otpInputLabel: 'OTP Code (6 Digits)',
+      otpHintDefault: 'Send OTP to your mobile number first, then enter the code below',
+      otpPlaceholder: 'Enter 6-digit OTP',
+      otpBtn: 'Send OTP',
+      verifyOtpBtn: 'Verify OTP & Login',
+      areaModalTitle: 'Select Your Area',
+      navHome: 'Home',
+      navCart: 'Booking',
+      navOrders: 'History',
+      navMenu: 'Profile',
+      reqTitle: 'Custom Service Request',
+      reqDesc: 'If you cannot find your required service, describe the issue below and our technician will call you.',
+      reqPlaceholder: 'e.g. Fridge door gasket is loose...',
+      reqSendBtn: 'Send Request',
+      overviewTitle: 'CoolFix Service Overview',
+      overviewList: [
+        'Skilled and verified home appliance technicians.',
+        '15-day service warranty after completion.',
+        'Pay cash after service (no hidden charges).'
+      ],
+      includedTitle: 'What\'s Included',
+      includedList: [
+        'Technician visit and initial inspection.',
+        'Required tools and testing support.',
+        '<strong>Not Included:</strong> Spare parts or hanging charges.'
+      ],
+      toastLangSwitched: 'Language switched to English',
+      toastWelcome: 'Welcome, ',
+      toastBadPhone: 'Enter a valid 11-digit phone number (01XXXXXXXXX)',
+      toastAreaChanged: 'Area changed to: ',
+      toastReqEmpty: 'Please describe your issue',
+      toastReqSent: 'Your request has been received!',
+      toastAdded: 'Added to cart: ',
+      toastRemoved: 'Removed from cart',
+      toastNeedCart: 'Please add at least one service to cart first',
+      toastBadAddr: 'Enter name, 11-digit phone and full address',
+      toastOrderSuccess: 'Order confirmed! ID: ',
+      toastOrderCancelled: 'Order cancelled: '
+    }
+  };
+
+  function t(key) {
+    return I18N[lang][key];
+  }
+  window.t = t;
+
+  function getAreaLabel(areaKey) {
+    for (var i = 0; i < AREAS.length; i++) {
+      if (AREAS[i].key === areaKey) {
+        return (lang === 'bn') ? AREAS[i].bn : AREAS[i].en;
+      }
+    }
+    return areaKey;
+  }
+
+  function getServiceTitle(srv) {
+    return (lang === 'bn') ? srv.titleBn : srv.titleEn;
+  }
+
+  function getServiceOff(srv) {
+    return (lang === 'bn') ? srv.offTextBn : srv.offTextEn;
+  }
+
+  function getServiceBullets(srv) {
+    return (lang === 'bn') ? srv.bulletsBn : srv.bulletsEn;
+  }
+
+  var currentUserKey = localStorage.getItem('coolfix_user_key') || null;
+  window.currentUserKey = currentUserKey;
+  var selectedAreaKey = localStorage.getItem('coolfix_area') || 'Mohammadpur';
+  var activeCategory = 'all';
+  var activeServiceTab = 'services';
+  var searchFilterText = '';
+  var cart = [];
+  try { cart = JSON.parse(localStorage.getItem('coolfix_cart')) || []; } catch (e) { cart = []; }
+
+  var selectedGasService = null;
+  var currentSubServiceId = null;
+  var currentGasTon = null;
+
+  var checkoutSubStep = 1;
+  var selectedDateIdx = 0;
+  var selectedDateStr = '';
+  var lastWaUrl = '';
+  var pendingDeleteId = null;
+  var selectedSlotIdx = 0;
+  var customerAddress = {
+    name: '',
+    phone: '',
+    fullAddress: '',
+    landmark: ''
+  };
+  try {
+    var savedAddr = JSON.parse(localStorage.getItem('coolfix_address'));
+    if (savedAddr) customerAddress = savedAddr;
+  } catch (e) {}
+  window.customerAddress = customerAddress;
+
+  var ordersHistory = [];
+  try { ordersHistory = JSON.parse(localStorage.getItem('coolfix_orders')) || []; } catch (e) { ordersHistory = []; }
+  window.ordersHistory = ordersHistory;
+
+  var deletedOrderIds = [];
+  try { deletedOrderIds = JSON.parse(localStorage.getItem('coolfix_deleted_orders')) || []; } catch (e) { deletedOrderIds = []; }
+  window.deletedOrderIds = deletedOrderIds;
+
+  var nextOrderSeq = Number(localStorage.getItem('coolfix_order_seq')) || 1001;
+  var lastCreatedOrder = null;
+  var toastTimer = null;
+
+  function saveAppState() {
+    try {
+      if (window.currentUserKey) localStorage.setItem('coolfix_user_key', window.currentUserKey);
+      localStorage.setItem('coolfix_lang', lang);
+      localStorage.setItem('coolfix_area', selectedAreaKey);
+      localStorage.setItem('coolfix_cart', JSON.stringify(cart));
+      localStorage.setItem('coolfix_address', JSON.stringify(customerAddress));
+      localStorage.setItem('coolfix_orders', JSON.stringify(window.ordersHistory));
+      localStorage.setItem('coolfix_order_seq', String(nextOrderSeq));
+      localStorage.setItem('coolfix_deleted_orders', JSON.stringify(window.deletedOrderIds));
+    } catch (e) {}
+  }
+  window.saveAppState = saveAppState;
+
+  function showToast(msg) {
+    var el = document.getElementById('toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.style.display = 'block';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() {
+      el.style.display = 'none';
+    }, 2600);
+  }
+  window.showToast = showToast;
+
+  function getCurrentUserDisplay() {
+    var uKey = window.currentUserKey || currentUserKey;
+    if (!uKey || uKey === 'guest') return t('guestUser');
+    if (uKey === 'google') return customerAddress.name || t('googleUser');
+    return uKey;
+  }
+
+  function applyTranslations() {
+    document.documentElement.lang = (lang === 'bn') ? 'bn' : 'en';
+
+    document.getElementById('login-lang-btn').textContent = t('toggleLang');
+    document.getElementById('login-skip-btn').textContent = t('skip');
+    document.getElementById('brand-logo-text').innerHTML = t('brandName');
+    document.getElementById('login-tagline').textContent = t('tagline');
+    document.getElementById('login-phone-btn').innerHTML = '<span>📞</span> ' + t('phoneBtn');
+    document.getElementById('login-divider').textContent = t('divider');
+    document.getElementById('login-google-btn').innerHTML =
+      '<strong style="font-family:\'Inter\',sans-serif; font-size:18px; color:#0038C6;">G</strong> ' + t('googleBtn');
+    document.getElementById('login-terms').innerHTML = t('terms');
+
+    document.getElementById('selected-area-display').textContent = getAreaLabel(selectedAreaKey) + ' ▾';
+    document.getElementById('hero-welcome-title').textContent = t('heroWelcomeTitle');
+    document.getElementById('hero-welcome-sub').textContent = t('heroWelcomeSub');
+    document.getElementById('hero-eyebrow').textContent = t('heroEyebrow');
+    document.getElementById('hero-t1').textContent = t('heroT1');
+    document.getElementById('hero-t2').textContent = t('heroT2');
+    document.getElementById('hero-t3').textContent = t('heroT3');
+    var hiwIds = ['heading', 't1', 'd1', 't2', 'd2', 't3', 'd3'];
+    var hiwKeys = ['hiwHeading', 'hiwT1', 'hiwD1', 'hiwT2', 'hiwD2', 'hiwT3', 'hiwD3'];
+    for (var hw = 0; hw < hiwIds.length; hw++) document.getElementById('hiw-' + hiwIds[hw]).textContent = t(hiwKeys[hw]);
+    var offerCount = 0;
+    for (var oc = 0; oc < SERVICES.length; oc++) { if (SERVICES[oc].offTextBn) offerCount++; }
+    var bellEl = document.getElementById('bell-badge');
+    if (bellEl) { bellEl.textContent = offerCount; bellEl.style.display = offerCount ? 'flex' : 'none'; }
+    document.getElementById('home-search-input').placeholder = t('searchPlaceholder');
+    document.getElementById('home-services-heading').textContent = t('servicesHeading');
+    document.getElementById('home-see-all').textContent = t('seeAll');
+
+    document.getElementById('cat-lbl-ac-service').textContent = t('catAcService');
+    document.getElementById('cat-lbl-fridge').textContent = t('catFridge');
+    document.getElementById('cat-lbl-oven').textContent = t('catOven');
+    document.getElementById('cat-lbl-washing').textContent = t('catWashing');
+
+    document.getElementById('ow-ribbon-text').textContent = t('owRibbonText');
+    document.getElementById('ow-head-text').textContent = t('owHeadText');
+    document.getElementById('ow-sub-text').textContent = t('owSubText');
+    document.getElementById('ow-c1').textContent = t('owC1');
+    document.getElementById('ow-c2').textContent = t('owC2');
+    document.getElementById('ow-c3').textContent = t('owC3');
+    document.getElementById('ow-c4').textContent = t('owC4');
+
+    document.getElementById('book-card-title').textContent = t('bookCardTitle');
+    document.getElementById('book-card-sub').textContent = t('bookCardSub');
+    document.getElementById('book-card-btn').textContent = t('bookCardBtn');
+
+    document.getElementById('other-features-heading').textContent = t('otherFeaturesHeading');
+    document.getElementById('util-my-booking').textContent = t('utilMyBooking');
+    document.getElementById('util-history').textContent = t('utilHistory');
+    document.getElementById('util-support').textContent = t('utilSupport');
+    document.getElementById('call-now-text').textContent = t('callNow');
+
+    var pillBtns = document.querySelectorAll('#service-pill-tabs .pill-tab');
+    for (var i = 0; i < pillBtns.length; i++) {
+      var tb = pillBtns[i].getAttribute('data-tab');
+      if (tb === 'services') pillBtns[i].textContent = t('tabServices');
+      else if (tb === 'request') pillBtns[i].textContent = t('tabRequest');
+      else if (tb === 'overview') pillBtns[i].textContent = t('tabOverview');
+      else if (tb === 'included') pillBtns[i].textContent = t('tabIncluded');
+    }
+
+    document.getElementById('subopt-subtitle').textContent = t('suboptSubtitle');
+    document.getElementById('checkout-header-title').textContent = t('checkoutTitle');
+    document.getElementById('checkout-cash-tag').textContent = t('cashOnService');
+    document.getElementById('pill-1').textContent = t('pill1');
+    document.getElementById('pill-2').textContent = t('pill2');
+    document.getElementById('pill-3').textContent = t('pill3');
+
+    document.getElementById('offers-screen-title').textContent = t('offersTitle');
+    document.getElementById('orders-screen-title').textContent = t('ordersTitle');
+    document.getElementById('orders-count-label').textContent = window.ordersHistory.length + t('ordersCountSuffix');
+    document.getElementById('menu-screen-title').textContent = t('menuTitle');
+
+    document.getElementById('phone-modal-title').textContent = t('phoneModalTitle');
+    document.getElementById('phone-input-label').textContent = t('phoneInputLabel');
+    document.getElementById('otp-input-label').textContent = t('otpInputLabel');
+    document.getElementById('otp-code-field').placeholder = t('otpPlaceholder');
+    document.getElementById('phone-submit-btn').textContent = t('otpBtn');
+    document.getElementById('otp-verify-btn').textContent = t('verifyOtpBtn');
+    document.getElementById('area-modal-title').textContent = t('areaModalTitle');
+
+    var navItems = document.querySelectorAll('#bottom-nav .nav-item');
+    for (var n = 0; n < navItems.length; n++) {
+      var nv = navItems[n].getAttribute('data-nav');
+      var txtEl = navItems[n].querySelector('.nav-text');
+      if (nv === 'Home') txtEl.textContent = t('navHome');
+      else if (nv === 'Cart') txtEl.textContent = t('navCart');
+      else if (nv === 'Orders') txtEl.textContent = t('navOrders');
+      else if (nv === 'Menu') txtEl.textContent = t('navMenu');
+    }
+
+    renderAreaModalOptions();
+    updateCartBadges();
+
+    var activeScreen = document.querySelector('.screen.active');
+    if (activeScreen) {
+      var sid = activeScreen.id;
+      if (sid === 'screen-services') {
+        var catLabel = t('catAll');
+        for (var c = 0; c < CATEGORIES.length; c++) {
+          if (CATEGORIES[c].id === activeCategory) {
+            catLabel = (lang === 'bn') ? CATEGORIES[c].bn : CATEGORIES[c].en;
+            break;
+          }
+        }
+        document.getElementById('service-screen-title').textContent = catLabel;
+        renderCategoryChips();
+        renderServiceTabContent();
+      } else if (sid === 'screen-suboptions' && currentSubServiceId) {
+        var srvObj = findServiceById(currentSubServiceId);
+        if (srvObj) document.getElementById('subopt-title').textContent = getServiceTitle(srvObj);
+        if (selectedGasService && currentGasTon) renderGasStep2(currentGasTon);
+        else if (selectedGasService) renderGasStep1();
+        else openSubOptions(currentSubServiceId);
+      } else if (sid === 'screen-cart') {
+        renderCheckoutStep();
+      } else if (sid === 'screen-offers') {
+        renderOffersBody();
+      } else if (sid === 'screen-orders') {
+        renderOrdersBody();
+      } else if (sid === 'screen-menu') {
+        renderMenuBody();
+      }
+    }
+  }
+
+  function toggleLanguage() {
+    lang = (lang === 'bn') ? 'en' : 'bn';
+    window.lang = lang;
+    saveAppState();
+    applyTranslations();
+    showToast(t('toastLangSwitched'));
+  }
+
+  function showScreen(screenId) {
+    var screens = document.querySelectorAll('.screen');
+    for (var i = 0; i < screens.length; i++) {
+      screens[i].classList.remove('active');
+    }
+    var target = document.getElementById(screenId);
+    if (target) target.classList.add('active');
+    var nav = document.getElementById('bottom-nav');
+    if (nav) nav.style.display = (screenId === 'screen-login') ? 'none' : 'grid';
+    window.scrollTo(0, 0);
+  }
+  window.showScreen = showScreen;
+
+  function goToHome(userKey) {
+    currentUserKey = userKey;
+    window.currentUserKey = userKey;
+    if (!customerAddress.name && userKey && userKey !== 'guest') {
+      if (/^01\d{9}$/.test(userKey)) {
+        customerAddress.phone = userKey;
+      } else if (userKey === 'google') {
+        customerAddress.name = getCurrentUserDisplay();
+      }
+    }
+    saveAppState();
+    setActiveNavTab('Home');
+    showScreen('screen-home');
+    if (typeof window.startOrdersRealtimeListener === 'function') {
+      window.startOrdersRealtimeListener();
+    }
+    showToast(t('toastWelcome') + getCurrentUserDisplay());
+  }
+  window.goToHome = goToHome;
+
+  function goBackToHome() {
+    setActiveNavTab('Home');
+    showScreen('screen-home');
+  }
+
+  function setActiveNavTab(tabName) {
+    var items = document.querySelectorAll('.nav-item');
+    for (var i = 0; i < items.length; i++) {
+      var nv = items[i].getAttribute('data-nav');
+      if (nv === tabName) items[i].classList.add('active');
+      else items[i].classList.remove('active');
+    }
+  }
+  window.setActiveNavTab = setActiveNavTab;
+
+  function openPhoneModal() {
+    resetPhoneModal();
+    document.getElementById('phone-modal').classList.add('open');
+  }
+
+  function resetPhoneModal() {
+    window.confirmationResult = null;
+    var otpInput = document.getElementById('otp-code-field');
+    var verifyBtn = document.getElementById('otp-verify-btn');
+    var infoEl = document.getElementById('otp-sent-info');
+    if (otpInput) {
+      otpInput.value = '';
+      otpInput.disabled = true;
+    }
+    if (verifyBtn) {
+      verifyBtn.disabled = true;
+    }
+    if (infoEl) {
+      infoEl.style.color = 'var(--text-muted)';
+      infoEl.textContent = t('otpHintDefault');
+    }
+  }
+  window.resetPhoneModal = resetPhoneModal;
+
+  function renderAreaModalOptions() {
+    var listEl = document.getElementById('area-options-list');
+    if (!listEl) return;
+    var html = '';
+    for (var i = 0; i < AREAS.length; i++) {
+      var a = AREAS[i];
+      var lbl = (lang === 'bn') ? a.bn : a.en;
+      var chk = (a.key === selectedAreaKey) ? '<span style="color:var(--logo-green-dark);">✓</span>' : '<span></span>';
+      html += '<div class="area-option" onclick="setArea(\'' + a.key + '\')"><span>' + lbl + '</span>' + chk + '</div>';
+    }
+    listEl.innerHTML = html;
+  }
+
+  function openAreaModal() {
+    renderAreaModalOptions();
+    document.getElementById('area-modal').classList.add('open');
+  }
+
+  function closeModals() {
+    document.getElementById('phone-modal').classList.remove('open');
+    document.getElementById('area-modal').classList.remove('open');
+    document.getElementById('delete-modal').classList.remove('open');
+  }
+  window.closeModals = closeModals;
+
+  function demoGoogleLogin() {
+    if (typeof window.signInWithFirebaseGoogle === 'function') {
+      window.signInWithFirebaseGoogle();
+    } else {
+      showToast((lang === 'bn') ? 'Firebase লোড হচ্ছে, অনুগ্রহ করে একটু অপেক্ষা করুন...' : 'Loading Firebase, please wait...');
+    }
+  }
+
+  function setArea(areaKey) {
+    selectedAreaKey = areaKey;
+    saveAppState();
+    document.getElementById('selected-area-display').textContent = getAreaLabel(areaKey) + ' ▾';
+    closeModals();
+    showToast(t('toastAreaChanged') + getAreaLabel(areaKey));
+  }
+
+  // ================= SEARCH =================
+  var CAT_KEYWORDS = {
+    ac_service: 'ac air conditioner airconditioner এসি এয়ার কন্ডিশনার',
+    fridge: 'fridge refrigerator freezer ফ্রিজ ফ্রিজার রেফ্রিজারেটর',
+    oven: 'oven microwave ওভেন মাইক্রোওয়েভ',
+    washing_machine: 'washing machine washer wash ওয়াশিং মেশিন ওয়াশ'
+  };
+  var recentSearches = [];
+  try { recentSearches = JSON.parse(localStorage.getItem('coolfix_recent_search')) || []; } catch (e) { recentSearches = []; }
+
+  function escRe(x) { return x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function isAscii(x) { return /^[a-z0-9]+$/.test(x); }
+  function searchTokens(q) { return String(q || '').toLowerCase().split(/\s+/).filter(Boolean); }
+
+  function tokenPos(hay, tok) {
+    if (isAscii(tok)) {
+      var m = hay.search(new RegExp('(^|[^a-z0-9])' + escRe(tok)));
+      if (m === -1) return -1;
+      return (m === 0 && hay.charAt(0) === tok.charAt(0)) ? 0 : m + 1;
+    }
+    return hay.indexOf(tok);
+  }
+
+  function scoreService(srv, tokens) {
+    var title = (srv.titleBn + ' ' + srv.titleEn).toLowerCase();
+    var catText = '';
+    for (var c = 0; c < CATEGORIES.length; c++) {
+      if (CATEGORIES[c].id === srv.cat) catText = CATEGORIES[c].bn + ' ' + CATEGORIES[c].en;
+    }
+    var rest = (srv.bulletsBn.join(' ') + ' ' + srv.bulletsEn.join(' ') + ' ' + catText + ' ' + (CAT_KEYWORDS[srv.cat] || '')).toLowerCase();
+    var score = 0;
+    for (var i = 0; i < tokens.length; i++) {
+      var pos = tokenPos(title, tokens[i]);
+      if (pos !== -1) score += (pos === 0 ? 6 : 4);
+      else if (tokenPos(rest, tokens[i]) !== -1) score += 1;
+      else return 0;
+    }
+    return score;
+  }
+
+  function searchServices(q, pool) {
+    var tokens = searchTokens(q);
+    if (!tokens.length) return [];
+    var scored = [];
+    for (var i = 0; i < pool.length; i++) {
+      var sc = scoreService(pool[i], tokens);
+      if (sc > 0) scored.push({ s: pool[i], sc: sc, idx: i });
+    }
+    scored.sort(function(a, b) { return (b.sc - a.sc) || (a.idx - b.idx); });
+    return scored.map(function(x) { return x.s; });
+  }
+
+  function highlightText(text, q) {
+    var tokens = searchTokens(q);
+    var raw = String(text);
+    if (!tokens.length) return escapeHtml(raw);
+    var parts = [];
+    for (var i = 0; i < tokens.length; i++) {
+      parts.push((isAscii(tokens[i]) ? '\\b' : '') + escRe(tokens[i]));
+    }
+    var re = new RegExp('(' + parts.join('|') + ')', 'gi');
+    var pieces = raw.split(re);
+    var out = '';
+    for (var k = 0; k < pieces.length; k++) {
+      out += (k % 2 === 1) ? '<mark class="hl">' + escapeHtml(pieces[k]) + '</mark>' : escapeHtml(pieces[k]);
+    }
+    return out;
+  }
+
+  function escapeHtml(x) {
+    return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function getCatLabel(catId) {
+    for (var i = 0; i < CATEGORIES.length; i++) {
+      if (CATEGORIES[i].id === catId) return (lang === 'bn') ? CATEGORIES[i].bn : CATEGORIES[i].en;
+    }
+    return '';
+  }
+
+  function saveRecentSearch(q) {
+    q = String(q || '').trim();
+    if (!q) return;
+    recentSearches = recentSearches.filter(function(r) { return r.toLowerCase() !== q.toLowerCase(); });
+    recentSearches.unshift(q);
+    recentSearches = recentSearches.slice(0, 5);
+    try { localStorage.setItem('coolfix_recent_search', JSON.stringify(recentSearches)); } catch (e) {}
+  }
+
+  function clearRecentSearches() {
+    recentSearches = [];
+    try { localStorage.removeItem('coolfix_recent_search'); } catch (e) {}
+    renderSearchPanel();
+  }
+
+  function syncSearchClear() {
+    var inp = document.getElementById('home-search-input');
+    var btn = document.getElementById('search-clear-btn');
+    if (!inp || !btn) return;
+    if (inp.value.length > 0) btn.classList.add('show'); else btn.classList.remove('show');
+  }
+
+  function openSearchPanel() {
+    renderSearchPanel();
+    document.getElementById('search-panel').classList.add('open');
+  }
+
+  function closeSearchPanel() {
+    var pn = document.getElementById('search-panel');
+    if (pn) pn.classList.remove('open');
+  }
+
+  function onSearchInput() {
+    syncSearchClear();
+    openSearchPanel();
+  }
+
+  function clearSearchInput() {
+    var inp = document.getElementById('home-search-input');
+    inp.value = '';
+    searchFilterText = '';
+    syncSearchClear();
+    inp.focus();
+    openSearchPanel();
+  }
+
+  function renderSearchPanel() {
+    var panel = document.getElementById('search-panel');
+    if (!panel) return;
+    var q = (document.getElementById('home-search-input').value || '').trim();
+    var html = '';
+
+    if (!q) {
+      if (recentSearches.length) {
+        html += '<div class="sp-head"><span>' + t('searchRecent') + '</span><button onclick="clearRecentSearches()">' + t('searchClearAll') + '</button></div>';
+        for (var r = 0; r < recentSearches.length; r++) {
+          html += '<div class="sp-item" onclick="useRecentSearch(' + r + ')"><div class="sp-ico recent">🕘</div><div class="sp-txt"><div class="sp-title">' + escapeHtml(recentSearches[r]) + '</div></div><span class="sp-go">↗</span></div>';
+        }
+      }
+      var pop = t('searchPopularList');
+      html += '<div class="sp-head"><span>' + t('searchPopular') + '</span></div><div class="sp-chips">';
+      for (var p = 0; p < pop.length; p++) {
+        html += '<button class="sp-chip" onclick="usePopularSearch(' + p + ')">' + pop[p] + '</button>';
+      }
+      html += '</div>';
+      panel.innerHTML = html;
+      return;
+    }
+
+    var results = searchServices(q, SERVICES);
+    if (!results.length) {
+      html =
+        '<div class="sp-empty">' +
+          '<div class="big">🔎</div>' +
+          '<h4>' + t('searchNoResult') + '</h4>' +
+          '<p>' + t('searchNoResultDesc') + '</p>' +
+          '<button class="sp-all-btn" onclick="openCustomRequestFromSearch()">' + t('searchCustomReq') + '</button>' +
+        '</div>';
+      panel.innerHTML = html;
+      return;
+    }
+
+    var shown = results.slice(0, 6);
+    for (var i = 0; i < shown.length; i++) {
+      var sv = shown[i];
+      html +=
+        '<div class="sp-item" onclick="goToService(\'' + sv.id + '\')">' +
+          '<div class="sp-ico" style="' + serviceTileStyle(sv) + '">' + serviceIconSvg(sv, 24, 0) + '</div>' +
+          '<div class="sp-txt">' +
+            '<div class="sp-title">' + highlightText(getServiceTitle(sv), q) + '</div>' +
+            '<div class="sp-sub">' + getCatLabel(sv.cat) + ' · ' + t('searchFrom') + ' <b>' + formatMoney(sv.price) + '</b></div>' +
+          '</div>' +
+          '<span class="sp-go">›</span>' +
+        '</div>';
+    }
+    html += '<button class="sp-all-btn" onclick="handleSearchSubmit()">' + t('searchSeeAll') + ' (' + results.length + ') →</button>';
+    panel.innerHTML = html;
+  }
+
+  function useRecentSearch(idx) {
+    var q = recentSearches[idx];
+    if (!q) return;
+    document.getElementById('home-search-input').value = q;
+    syncSearchClear();
+    handleSearchSubmit();
+  }
+
+  function usePopularSearch(idx) {
+    var q = t('searchPopularList')[idx];
+    document.getElementById('home-search-input').value = q;
+    syncSearchClear();
+    handleSearchSubmit();
+  }
+
+  function handleSearchSubmit() {
+    var q = (document.getElementById('home-search-input').value || '').trim();
+    closeSearchPanel();
+    document.getElementById('home-search-input').blur();
+    if (!q) {
+      openCategory('all');
+      return;
+    }
+    saveRecentSearch(q);
+    searchFilterText = q;
+    openCategory('all', true);
+  }
+
+  function goToService(serviceId) {
+    var srv = findServiceById(serviceId);
+    if (!srv) return;
+    saveRecentSearch(getServiceTitle(srv));
+    closeSearchPanel();
+    openCategory(srv.cat);
+    setTimeout(function() {
+      var el = document.getElementById('srv-card-' + serviceId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.classList.add('flash');
+      }
+    }, 80);
+  }
+
+  function openCustomRequestFromSearch() {
+    closeSearchPanel();
+    openCategory('all');
+    var btn = document.querySelector('#service-pill-tabs .pill-tab[data-tab="request"]');
+    if (btn) switchServiceTab(btn, 'request');
+  }
+
+  function clearSearchResults() {
+    searchFilterText = '';
+    var inp = document.getElementById('home-search-input');
+    if (inp) inp.value = '';
+    syncSearchClear();
+    renderServiceTabContent();
+  }
+
+  document.addEventListener('click', function(e) {
+    var wrap = document.querySelector('.cf-search-float-wrap');
+    if (wrap && !wrap.contains(e.target)) closeSearchPanel();
+  });
+
+  // ================= TIME SLOTS (hourly) =================
+  var SLOT_FIRST_HOUR = 8;
+  var SLOT_LAST_START = 20;  // last slot: 8 PM - 9 PM
+
+  function bnDigits(str) {
+    var m = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+    return String(str).replace(/[0-9]/g, function(d) { return m[Number(d)]; });
+  }
+
+  function hour12(h) { return (h % 12 === 0) ? 12 : (h % 12); }
+
+  function slotLabel(h, l) {
+    if (l === 'bn') {
+      var period = (h < 12) ? 'সকাল' : (h < 15) ? 'দুপুর' : (h < 17) ? 'বিকাল' : (h < 19) ? 'সন্ধ্যা' : 'রাত';
+      return period + ' ' + bnDigits(hour12(h)) + 'টা – ' + bnDigits(hour12(h + 1)) + 'টা';
+    }
+    return hour12(h) + (h < 12 ? ' AM' : ' PM') + ' – ' + hour12(h + 1) + ((h + 1) < 12 || (h + 1) === 24 ? ' AM' : ' PM');
+  }
+
+  function getSlotsFor(l) {
+    var out = [];
+    for (var h = SLOT_FIRST_HOUR; h <= SLOT_LAST_START; h++) out.push(slotLabel(h, l));
+    return out;
+  }
+
+  function getOrderSlotLabel(o) {
+    if (o && o.slotBn) return (lang === 'bn') ? o.slotBn : (o.slotEn || o.slotBn);
+    return I18N[lang].slots[o ? o.slotIdx : 0] || I18N[lang].slots[0];
+  }
+
+  function tomorrowStr() {
+    var d = new Date();
+    d.setDate(d.getDate() + 1);
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  }
+
+  function callSupport() {
+    window.location.href = 'tel:' + SUPPORT_PHONE;
+  }
+
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  }
+
+  function formatDateStr(str) {
+    if (!str) return '';
+    var p = str.split('-');
+    var d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    try {
+      return d.toLocaleDateString((lang === 'bn') ? 'bn-BD' : 'en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    } catch (e) {
+      return str;
+    }
+  }
+
+  function getOrderDateLabel(o) {
+    if (o && o.dateStr) return formatDateStr(o.dateStr);
+    return I18N[lang].dates[o ? o.dateIdx : 0] || I18N[lang].dates[0];
+  }
+
+  function selectDateStr(v) {
+    var today = todayStr();
+    if (!v || v < today) {
+      v = today;
+      var inp = document.getElementById('order-date');
+      if (inp) inp.value = v;
+    }
+    selectedDateStr = v;
+    renderCheckoutStep();
+  }
+
+  function buildWhatsAppMessage(o) {
+    var bn = (lang === 'bn');
+    var L = [];
+    L.push(bn ? '*কুলফিক্স — নতুন সার্ভিস অর্ডার*' : '*CoolFix — New Service Order*');
+    L.push((bn ? 'অর্ডার আইডি: ' : 'Order ID: ') + o.orderId);
+    L.push('');
+    L.push(bn ? '*সার্ভিস:*' : '*Services:*');
+    for (var i = 0; i < o.items.length; i++) {
+      var it = o.items[i];
+      L.push('• ' + getCartItemLabel(it) + ' × ' + it.qty + ' — ' + formatMoney(it.price * it.qty));
+    }
+    L.push('');
+    L.push((bn ? '📅 তারিখ: ' : '📅 Date: ') + formatDateStr(o.dateStr));
+    L.push((bn ? '⏰ সময়: ' : '⏰ Time: ') + getOrderSlotLabel(o));
+    L.push((bn ? '📍 এলাকা: ' : '📍 Area: ') + getAreaLabel(o.area));
+    L.push((bn ? '👤 নাম: ' : '👤 Name: ') + o.address.name);
+    L.push((bn ? '📞 ফোন: ' : '📞 Phone: ') + o.address.phone);
+    L.push((bn ? '🏠 ঠিকানা: ' : '🏠 Address: ') + o.address.fullAddress);
+    if (o.address.landmark) L.push((bn ? 'ল্যান্ডমার্ক: ' : 'Landmark: ') + o.address.landmark);
+    L.push('');
+    L.push((bn ? '💰 মোট: ' : '💰 Total: ') + formatMoney(o.total) + (bn ? ' (সার্ভিসের সময় ক্যাশ)' : ' (Cash on service)'));
+    return L.join('\n');
+  }
+
+  function openWhatsAppOrder() {
+    if (!lastWaUrl) return;
+    var w = window.open(lastWaUrl, '_blank');
+    if (!w) window.location.href = lastWaUrl;
+  }
+
+  function askDeleteOrder(idx) {
+    var o = window.ordersHistory[idx];
+    if (!o) return;
+    pendingDeleteId = o.orderId;
+    document.getElementById('delete-modal-title').textContent = t('deleteTitle');
+    document.getElementById('delete-modal-msg').textContent = t('deleteConfirmMsg') + ' (' + o.orderId + ')';
+    document.getElementById('delete-yes-btn').textContent = t('deleteYes');
+    document.getElementById('delete-no-btn').textContent = t('deleteNo');
+    document.getElementById('delete-modal').classList.add('open');
+  }
+
+  function closeDeleteModal() {
+    pendingDeleteId = null;
+    document.getElementById('delete-modal').classList.remove('open');
+  }
+
+  function confirmDeleteOrder() {
+    if (!pendingDeleteId) return;
+    var id = pendingDeleteId;
+    pendingDeleteId = null;
+    window.ordersHistory = window.ordersHistory.filter(function(o) { return o.orderId !== id; });
+    if (window.deletedOrderIds.indexOf(id) === -1) window.deletedOrderIds.push(id);
+    saveAppState();
+    document.getElementById('delete-modal').classList.remove('open');
+    renderOrdersBody();
+    showToast(t('toastOrderDeleted') + id);
+  }
+
+  function formatMoney(num) {
+    var n = Number(num);
+    var formatted = n.toLocaleString('en-US', {
+      minimumFractionDigits: (n % 1 === 0) ? 0 : 2,
+      maximumFractionDigits: 2
+    });
+    return '৳' + formatted;
+  }
+
+  function findServiceById(id) {
+    for (var i = 0; i < SERVICES.length; i++) {
+      if (SERVICES[i].id === id) return SERVICES[i];
+    }
+    return null;
+  }
+
+  function getCartItemLabel(item) {
+    return (lang === 'bn') ? item.nameBn : item.nameEn;
+  }
+
+  function openCategory(catId, keepSearch) {
+    if (!keepSearch) {
+      searchFilterText = '';
+      var siEl = document.getElementById('home-search-input');
+      if (siEl) siEl.value = '';
+      syncSearchClear();
+    }
+    activeCategory = catId;
+    activeServiceTab = 'services';
+    var catName = t('catAll');
+    for (var i = 0; i < CATEGORIES.length; i++) {
+      if (CATEGORIES[i].id === catId) {
+        catName = (lang === 'bn') ? CATEGORIES[i].bn : CATEGORIES[i].en;
+        break;
+      }
+    }
+    document.getElementById('service-screen-title').textContent = catName;
+    renderCategoryChips();
+    resetPillTabs();
+    renderServiceTabContent();
+    showScreen('screen-services');
+  }
+
+  function renderCategoryChips() {
+    var strip = document.getElementById('cat-filter-strip');
+    var html = '';
+    for (var i = 0; i < CATEGORIES.length; i++) {
+      var c = CATEGORIES[i];
+      var cName = (lang === 'bn') ? c.bn : c.en;
+      var activeCls = (c.id === activeCategory) ? ' active' : '';
+      html += '<button class="filter-chip' + activeCls + '" onclick="openCategory(\'' + c.id + '\')">' + cName + '</button>';
+    }
+    strip.innerHTML = html;
+  }
+
+  function resetPillTabs() {
+    var tabs = document.querySelectorAll('.pill-tab');
+    for (var i = 0; i < tabs.length; i++) {
+      if (i === 0) tabs[i].classList.add('active');
+      else tabs[i].classList.remove('active');
+    }
+  }
+
+  function switchServiceTab(btn, tabKey) {
+    var tabs = document.querySelectorAll('.pill-tab');
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].classList.remove('active');
+    }
+    btn.classList.add('active');
+    activeServiceTab = tabKey;
+    renderServiceTabContent();
+  }
+
+  function renderServiceCardsHtml(list, extraMargin) {
+    var html = '<div class="service-list-wrap">';
+    for (var i = 0; i < list.length; i++) {
+      var s = list[i];
+      var sTitle = getServiceTitle(s);
+      var sOff = getServiceOff(s);
+      var sBullets = getServiceBullets(s);
+
+      var bulletsHtml = '';
+      for (var b = 0; b < sBullets.length; b++) {
+        bulletsHtml += '<li>' + sBullets[b] + '</li>';
+      }
+
+      var actionBtn = (s.type === 'direct')
+        ? '<button class="btn-card-action add-type" onclick="addDirectService(\'' + s.id + '\')">' + t('addBtn') + '</button>'
+        : '<button class="btn-card-action" onclick="openSubOptions(\'' + s.id + '\')">' + t('nextBtn') + '</button>';
+
+      html += '<div class="service-card" id="srv-card-' + s.id + '"' + (extraMargin ? ' style="margin-bottom:14px;"' : '') + '>' +
+        '<div class="card-top">' +
+          '<div class="service-thumb svc-tile" style="' + serviceTileStyle(s) + '">' +
+            serviceIconSvg(s, 46, (i % 6) * 0.5) +
+            (sOff ? '<span class="discount-tag">' + sOff + '</span>' : '') +
+          '</div>' +
+          '<div class="service-info">' +
+            '<div class="service-title-row"><h3>' + sTitle + '</h3><span style="color:var(--logo-deep-blue); font-weight:700;">›</span></div>' +
+            '<div class="price-row">' + t('startsFrom') + ' ' +
+              (s.oldPrice ? '<span class="old-price">' + formatMoney(s.oldPrice) + '</span>' : '') +
+              '<span class="new-price">' + formatMoney(s.price) + '</span>' +
+            '</div>' +
+            '<ul class="service-bullets">' + bulletsHtml + '</ul>' +
+          '</div>' +
+        '</div>' +
+        '<hr class="card-divider">' +
+        '<div class="card-bottom">' +
+          '<span class="schedule-hint" onclick="openCartScreen()">' + t('tapSchedule') + '</span>' +
+          actionBtn +
+        '</div>' +
+      '</div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function renderServiceTabContent() {
+    var body = document.getElementById('service-tab-body');
+
+    if (activeServiceTab === 'request') {
+      body.innerHTML =
+        '<div class="tab-content-box">' +
+          '<h4>' + t('reqTitle') + '</h4>' +
+          '<p>' + t('reqDesc') + '</p>' +
+          '<textarea id="custom-req-text" style="width:100%; height:90px; margin:10px 0; padding:10px; border-radius:12px; border:1.5px solid var(--logo-deep-blue); font-family:inherit;" placeholder="' + t('reqPlaceholder') + '"></textarea>' +
+          '<button class="btn-green" onclick="submitCustomReq()">' + t('reqSendBtn') + '</button>' +
+        '</div>';
+      return;
+    }
+
+    if (activeServiceTab === 'overview') {
+      var ovList = t('overviewList');
+      var ovHtml = '';
+      for (var o = 0; o < ovList.length; o++) ovHtml += '<li>' + ovList[o] + '</li>';
+      body.innerHTML =
+        '<div class="tab-content-box">' +
+          '<h4>' + t('overviewTitle') + '</h4>' +
+          '<ul>' + ovHtml + '</ul>' +
+        '</div>';
+      return;
+    }
+
+    if (activeServiceTab === 'included') {
+      var incList = t('includedList');
+      var incHtml = '';
+      for (var k = 0; k < incList.length; k++) incHtml += '<li>' + incList[k] + '</li>';
+      body.innerHTML =
+        '<div class="tab-content-box">' +
+          '<h4>' + t('includedTitle') + '</h4>' +
+          '<ul>' + incHtml + '</ul>' +
+        '</div>';
+      return;
+    }
+
+    var list = [];
+    if (activeCategory === 'all') {
+      list = SERVICES;
+    } else {
+      for (var i = 0; i < SERVICES.length; i++) {
+        if (SERVICES[i].cat === activeCategory) list.push(SERVICES[i]);
+      }
+    }
+
+    if (searchFilterText) {
+      var found = searchServices(searchFilterText, list);
+      var bar =
+        '<div class="search-result-bar">' +
+          '<span>🔍 “' + escapeHtml(searchFilterText) + '” — ' + found.length + t('searchResultCount') + '</span>' +
+          '<button onclick="clearSearchResults()">' + t('searchClearResults') + '</button>' +
+        '</div>';
+      if (!found.length) {
+        body.innerHTML = bar +
+          '<div class="tab-content-box" style="text-align:center;">' +
+            '<div style="font-size:36px;">🔎</div>' +
+            '<h4>' + t('searchNoResult') + '</h4>' +
+            '<p>' + t('searchNoResultDesc') + '</p>' +
+            '<button class="btn-green" style="margin-top:10px;" onclick="openCustomRequestFromSearch()">' + t('searchCustomReq') + '</button>' +
+          '</div>';
+        return;
+      }
+      body.innerHTML = bar + renderServiceCardsHtml(found, false);
+      return;
+    }
+
+    body.innerHTML = renderServiceCardsHtml(list, false);
+  }
+
+  function submitCustomReq() {
+    var val = document.getElementById('custom-req-text').value.trim();
+    if (!val) {
+      showToast(t('toastReqEmpty'));
+      return;
+    }
+    document.getElementById('custom-req-text').value = '';
+    showToast(t('toastReqSent'));
+  }
+
+  function addDirectService(serviceId) {
+    var srv = findServiceById(serviceId);
+    if (!srv) return;
+    pushCartItem({
+      key: serviceId + '_direct',
+      nameBn: srv.titleBn,
+      nameEn: srv.titleEn,
+      price: srv.price,
+      qty: 1
+    });
+  }
+
+  function openSubOptions(serviceId) {
+    var srv = findServiceById(serviceId);
+    if (!srv) return;
+    currentSubServiceId = serviceId;
+    selectedGasService = null;
+    currentGasTon = null;
+
+    document.getElementById('subopt-title').textContent = getServiceTitle(srv);
+    var body = document.getElementById('subopt-body');
+
+    if (srv.type === 'ton') {
+      var cardsHtml = '';
+      for (var i = 0; i < srv.options.length; i++) {
+        var opt = srv.options[i];
+        var oLabel = (lang === 'bn') ? opt.labelBn : opt.labelEn;
+        var oUnit = (lang === 'bn') ? opt.unitBn : opt.unitEn;
+        cardsHtml +=
+          '<div class="option-card">' +
+            '<div class="option-card-left">' +
+              '<h4>' + oLabel + '</h4>' +
+              '<div class="option-price">' + formatMoney(opt.price) + ' <span>' + oUnit + '</span></div>' +
+            '</div>' +
+            '<button class="btn-card-action add-type" onclick="addOptionService(\'' + serviceId + '\', ' + i + ')">' + t('addBtn') + '</button>' +
+          '</div>';
+      }
+      body.innerHTML = '<div class="option-step-label">' + t('chooseOption') + '</div><div class="option-list">' + cardsHtml + '</div>';
+    } else if (srv.type === 'gas_two_step') {
+      selectedGasService = srv;
+      renderGasStep1();
+    }
+
+    showScreen('screen-suboptions');
+  }
+
+  function addOptionService(serviceId, optIdx) {
+    var srv = findServiceById(serviceId);
+    if (!srv || !srv.options || !srv.options[optIdx]) return;
+    var opt = srv.options[optIdx];
+    pushCartItem({
+      key: serviceId + '_opt_' + optIdx,
+      nameBn: srv.titleBn + ' (' + opt.labelBn + ')',
+      nameEn: srv.titleEn + ' (' + opt.labelEn + ')',
+      price: opt.price,
+      qty: 1
+    });
+  }
+
+  function renderGasStep1() {
+    currentGasTon = null;
+    var body = document.getElementById('subopt-body');
+    var cardsHtml = '';
+    for (var i = 0; i < selectedGasService.tons.length; i++) {
+      var tn = selectedGasService.tons[i];
+      cardsHtml +=
+        '<div class="option-card">' +
+          '<div class="option-card-left">' +
+            '<h4>' + tn.label + ' AC</h4>' +
+            '<p>' + t('startPrice') + '</p>' +
+            '<div class="option-price">' + formatMoney(tn.startPrice) + ' <span>' + t('fromWord') + '</span></div>' +
+          '</div>' +
+          '<button class="btn-card-action" onclick="renderGasStep2(\'' + tn.label + '\')">' + t('nextBtn') + '</button>' +
+        '</div>';
+    }
+    body.innerHTML = '<div class="option-step-label">' + t('gasStep1') + '</div><div class="option-list">' + cardsHtml + '</div>';
+  }
+
+  function renderGasStep2(tonLabel) {
+    currentGasTon = tonLabel;
+    var body = document.getElementById('subopt-body');
+    var cardsHtml = '';
+    for (var i = 0; i < selectedGasService.gases.length; i++) {
+      var g = selectedGasService.gases[i];
+      var gLabel = (lang === 'bn') ? g.labelBn : g.labelEn;
+      cardsHtml +=
+        '<div class="option-card">' +
+          '<div class="option-card-left">' +
+            '<h4>' + gLabel + '</h4>' +
+            '<p>' + tonLabel + ' ' + t('forAc') + '</p>' +
+            '<div class="option-price">' + formatMoney(g.price) + ' <span>/unit</span></div>' +
+          '</div>' +
+          '<button class="btn-card-action add-type" onclick="addGasService(\'' + tonLabel + '\', ' + i + ')">' + t('addBtn') + '</button>' +
+        '</div>';
+    }
+    body.innerHTML =
+      '<div class="gas-step-banner">' +
+        '<span>' + t('selectedSize') + ' <strong>' + tonLabel + ' AC</strong></span>' +
+        '<span style="text-decoration:underline; cursor:pointer;" onclick="renderGasStep1()">' + t('changeSize') + '</span>' +
+      '</div>' +
+      '<div class="option-step-label">' + t('gasStep2') + '</div>' +
+      '<div class="option-list">' + cardsHtml + '</div>';
+  }
+
+  function addGasService(tonLabel, gasIdx) {
+    if (!selectedGasService || !selectedGasService.gases[gasIdx]) return;
+    var g = selectedGasService.gases[gasIdx];
+    pushCartItem({
+      key: 'gas_' + tonLabel + '_' + gasIdx,
+      nameBn: 'AC গ্যাস চার্জ (' + tonLabel + ' - ' + g.labelBn + ')',
+      nameEn: 'AC Gas Charge (' + tonLabel + ' - ' + g.labelEn + ')',
+      price: g.price,
+      qty: 1
+    });
+  }
+
+  function backFromSuboptions() {
+    currentSubServiceId = null;
+    selectedGasService = null;
+    currentGasTon = null;
+    showScreen('screen-services');
+  }
+
+  function pushCartItem(newItem) {
+    var found = false;
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].key === newItem.key) {
+        cart[i].qty += 1;
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      cart.push(newItem);
+    }
+    saveAppState();
+    updateCartBadges();
+    var disp = (lang === 'bn') ? newItem.nameBn : newItem.nameEn;
+    showToast(t('toastAdded') + disp);
+  }
+
+  function changeCartQty(index, delta) {
+    if (!cart[index]) return;
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) {
+      cart.splice(index, 1);
+    }
+    saveAppState();
+    updateCartBadges();
+    renderCheckoutStep();
+  }
+
+  function removeCartItem(index) {
+    cart.splice(index, 1);
+    saveAppState();
+    updateCartBadges();
+    renderCheckoutStep();
+    showToast(t('toastRemoved'));
+  }
+
+  function getTotalCartCount() {
+    var total = 0;
+    for (var i = 0; i < cart.length; i++) {
+      total += cart[i].qty;
+    }
+    return total;
+  }
+
+  function getCartSubtotal() {
+    var sum = 0;
+    for (var i = 0; i < cart.length; i++) {
+      sum += (cart[i].price * cart[i].qty);
+    }
+    return sum;
+  }
+
+  function updateCartBadges() {
+    var totalCount = getTotalCartCount();
+    var ids = ['bottom-cart-badge', 'top-cart-count', 'sub-cart-count', 'offers-cart-count'];
+    for (var i = 0; i < ids.length; i++) {
+      var el = document.getElementById(ids[i]);
+      if (el) el.textContent = totalCount;
+    }
+  }
+
+  function openCartScreen() {
+    setActiveNavTab('Cart');
+    checkoutSubStep = 1;
+    renderCheckoutStep();
+    showScreen('screen-cart');
+  }
+
+  function setCheckoutSubStep(stepNum) {
+    if (stepNum > 1 && cart.length === 0) {
+      showToast(t('toastNeedCart'));
+      return;
+    }
+    checkoutSubStep = stepNum;
+    renderCheckoutStep();
+  }
+
+  function selectDateIdx(idx) {
+    selectedDateIdx = idx;
+    renderCheckoutStep();
+  }
+
+  function selectSlotIdx(idx) {
+    selectedSlotIdx = idx;
+    renderCheckoutStep();
+  }
+
+  function renderCheckoutStep() {
+    var body = document.getElementById('checkout-body');
+    var stepBar = document.getElementById('checkout-step-bar');
+
+    var pillIds = ['pill-1', 'pill-2', 'pill-3'];
+    for (var p = 0; p < pillIds.length; p++) {
+      var el = document.getElementById(pillIds[p]);
+      var stepNo = p + 1;
+      el.classList.remove('active', 'done');
+      if (stepNo === checkoutSubStep) el.classList.add('active');
+      else if (stepNo < checkoutSubStep) el.classList.add('done');
+    }
+
+    if (checkoutSubStep !== 3 && cart.length === 0) {
+      stepBar.style.display = 'none';
+      body.innerHTML =
+        '<div class="empty-cart-box">' +
+          '<div style="font-size:44px; margin-bottom:10px;">🛒</div>' +
+          '<h3 style="color:var(--logo-deep-blue); margin-bottom:6px;">' + t('emptyCartTitle') + '</h3>' +
+          '<p style="color:var(--text-muted); font-size:14px; margin-bottom:18px;">' + t('emptyCartDesc') + '</p>' +
+          '<button class="btn-primary" onclick="openCategory(\'all\')">' + t('viewServicesBtn') + '</button>' +
+        '</div>';
+      return;
+    }
+
+    stepBar.style.display = 'grid';
+
+    if (checkoutSubStep === 1) {
+      var subtotal = getCartSubtotal();
+      var dates = t('dates');
+      var slots = getSlotsFor(lang);
+
+      var itemsHtml = '';
+      for (var i = 0; i < cart.length; i++) {
+        var item = cart[i];
+        itemsHtml +=
+          '<div class="cart-item-row">' +
+            '<div class="cart-item-info">' +
+              '<h4>' + getCartItemLabel(item) + '</h4>' +
+              '<div class="cart-item-price">' + formatMoney(item.price * item.qty) + '</div>' +
+            '</div>' +
+            '<div class="qty-controls">' +
+              '<button class="qty-btn" onclick="changeCartQty(' + i + ', -1)">-</button>' +
+              '<span class="qty-num">' + item.qty + '</span>' +
+              '<button class="qty-btn" onclick="changeCartQty(' + i + ', 1)">+</button>' +
+              '<button class="remove-btn" onclick="removeCartItem(' + i + ')">' + t('removeBtn') + '</button>' +
+            '</div>' +
+          '</div>';
+      }
+
+      var todayIso = todayStr();
+      if (!selectedDateStr || selectedDateStr < todayIso) selectedDateStr = todayIso;
+      if (selectedDateStr === todayIso && new Date().getHours() + 1 > SLOT_LAST_START) selectedDateStr = tomorrowStr();
+      var firstFreeHour = (selectedDateStr === todayIso) ? (new Date().getHours() + 1) : 0;
+      if (SLOT_FIRST_HOUR + selectedSlotIdx < firstFreeHour) selectedSlotIdx = Math.max(0, firstFreeHour - SLOT_FIRST_HOUR);
+      var datesHtml =
+        '<input type="date" id="order-date" class="date-input" min="' + todayIso + '" value="' + selectedDateStr + '" onchange="selectDateStr(this.value)">' +
+        '<div class="date-label-note" id="order-date-label">📅 ' + formatDateStr(selectedDateStr) + '</div>';
+
+      var slotsHtml = '';
+      for (var s = 0; s < slots.length; s++) {
+        var slotOff = (SLOT_FIRST_HOUR + s) < firstFreeHour;
+        slotsHtml += '<button class="choice-chip slot-chip' + (selectedSlotIdx === s ? ' selected' : '') + '"' + (slotOff ? ' disabled' : ' onclick="selectSlotIdx(' + s + ')"') + '>' + slots[s] + '</button>';
+      }
+
+      body.innerHTML =
+        '<div class="dashed-box-card">' +
+          '<div class="dashed-box-title">' +
+            '<span>' + t('cartReview') + ' (' + getTotalCartCount() + t('itemsWord') + ')</span>' +
+            '<span style="font-size:12px; color:var(--logo-green-dark); cursor:pointer;" onclick="openCategory(\'all\')">' + t('addMore') + '</span>' +
+          '</div>' +
+          itemsHtml +
+          '<div class="summary-total"><span>' + t('serviceTotal') + '</span><span>' + formatMoney(subtotal) + '</span></div>' +
+        '</div>' +
+        '<div class="dashed-box-card">' +
+          '<div class="dashed-box-title"><span>' + t('scheduleTitle') + '</span></div>' +
+          '<div class="form-label">' + t('selectDate') + '</div>' +
+          '<div style="margin-bottom:12px;">' + datesHtml + '</div>' +
+          '<div class="form-label">' + t('selectSlot') + '</div>' +
+          '<div class="slot-grid">' + slotsHtml + '</div>' +
+        '</div>' +
+        '<button class="btn-primary" onclick="setCheckoutSubStep(2)">' + t('goToAddress') + '</button>';
+      return;
+    }
+
+    if (checkoutSubStep === 2) {
+      var areaText = getAreaLabel(selectedAreaKey);
+      body.innerHTML =
+        '<div class="dashed-box-card">' +
+          '<div class="dashed-box-title">' +
+            '<span>' + t('addressTitle') + '</span>' +
+            '<span style="font-size:12px; color:var(--logo-green-dark);">' + t('areaPrefix') + ' ' + areaText + '</span>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label class="form-label">' + t('nameLabel') + '</label>' +
+            '<input type="text" id="addr-name" class="form-input" placeholder="' + t('namePlaceholder') + '" value="' + escapeHtml(customerAddress.name) + '">' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label class="form-label">' + t('phoneLabel') + '</label>' +
+            '<input type="tel" id="addr-phone" class="form-input" placeholder="01XXXXXXXXX" maxlength="11" value="' + escapeHtml(customerAddress.phone) + '">' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label class="form-label">' + t('fullAddrLabel') + '</label>' +
+            '<textarea id="addr-full" class="form-textarea" rows="2" placeholder="' + t('fullAddrPlaceholder') + '">' + escapeHtml(customerAddress.fullAddress) + '</textarea>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label class="form-label">' + t('landmarkLabel') + '</label>' +
+            '<input type="text" id="addr-landmark" class="form-input" placeholder="' + t('landmarkPlaceholder') + '" value="' + escapeHtml(customerAddress.landmark) + '">' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex; gap:10px;">' +
+          '<button class="skip-btn" style="padding:14px 18px; border-radius:14px;" onclick="setCheckoutSubStep(1)">' + t('backBtn') + '</button>' +
+          '<button class="btn-primary" style="flex:1;" onclick="saveAddressAndGoConfirm()">' + t('goToSummary') + '</button>' +
+        '</div>';
+      return;
+    }
+
+    if (checkoutSubStep === 3) {
+      if (lastCreatedOrder) {
+        var dLbl = getOrderDateLabel(lastCreatedOrder);
+        var sLbl = getOrderSlotLabel(lastCreatedOrder);
+        body.innerHTML =
+          '<div class="success-box">' +
+            '<div style="font-size:48px;">✅</div>' +
+            '<h3 style="color:var(--logo-green-dark); margin-top:6px; font-size:21px;">' + t('orderConfirmed') + '</h3>' +
+            '<p style="font-size:13px; color:var(--text-muted); margin-top:4px;">' + t('orderConfirmedDesc') + '</p>' +
+            '<div class="order-id-badge">' + lastCreatedOrder.orderId + '</div>' +
+            '<div class="dashed-box-card" style="text-align:left; margin-top:10px;">' +
+              '<div class="summary-line"><span>' + t('statusRow') + '</span><strong style="color:var(--logo-deep-blue);">' + lastCreatedOrder.status + '</strong></div>' +
+              '<div class="summary-line"><span>' + t('timeRow') + '</span><strong>' + dLbl + ' · ' + sLbl + '</strong></div>' +
+              '<div class="summary-line"><span>' + t('addressRow') + '</span><strong>' + escapeHtml(lastCreatedOrder.address.fullAddress) + '</strong></div>' +
+              '<div class="summary-line"><span>' + t('paymentRow') + '</span><strong style="color:var(--logo-green-dark);">' + t('cashPaymentVal') + '</strong></div>' +
+              '<div class="summary-total"><span>' + t('payableTotal') + '</span><span>' + formatMoney(lastCreatedOrder.total) + '</span></div>' +
+            '</div>' +
+            '<button class="btn-green" style="margin-bottom:10px;" onclick="openWhatsAppOrder()">💬 ' + t('waResend') + '</button>' +
+            '<button class="btn-primary" style="margin-bottom:10px;" onclick="openOrdersScreen()">' + t('viewMyOrders') + '</button>' +
+            '<button class="skip-btn" style="width:100%; padding:13px; border-radius:14px;" onclick="goBackToHome()">' + t('backHome') + '</button>' +
+          '</div>';
+        return;
+      }
+
+      var sub = getCartSubtotal();
+      var sumLines = '';
+      for (var k = 0; k < cart.length; k++) {
+        var cItem = cart[k];
+        sumLines += '<div class="summary-line"><span>' + getCartItemLabel(cItem) + ' × ' + cItem.qty + '</span><strong style="font-family:\'Inter\',sans-serif;">' + formatMoney(cItem.price * cItem.qty) + '</strong></div>';
+      }
+
+      body.innerHTML =
+        '<div class="dashed-box-card">' +
+          '<div class="dashed-box-title"><span>' + t('orderSummary') + '</span></div>' +
+          sumLines +
+          '<hr class="card-divider">' +
+          '<div class="summary-line"><span>' + t('scheduleRow') + '</span><strong>' + formatDateStr(selectedDateStr) + ' · ' + getSlotsFor(lang)[selectedSlotIdx] + '</strong></div>' +
+          '<div class="summary-line"><span>' + t('customerRow') + '</span><strong>' + escapeHtml(customerAddress.name) + ' (' + escapeHtml(customerAddress.phone) + ')</strong></div>' +
+          '<div class="summary-line"><span>' + t('addressRow') + '</span><strong>' + escapeHtml(customerAddress.fullAddress) + (customerAddress.landmark ? ' (' + escapeHtml(customerAddress.landmark) + ')' : '') + '</strong></div>' +
+          '<div class="summary-total"><span>' + t('totalMoney') + '</span><span>' + formatMoney(sub) + '</span></div>' +
+        '</div>' +
+        '<div class="cash-badge-box"><span>💵</span><span>' + t('cashBadge') + '</span></div>' +
+        '<div style="display:flex; gap:10px;">' +
+          '<button class="skip-btn" style="padding:14px 16px; border-radius:14px;" onclick="setCheckoutSubStep(2)">' + t('backToAddr') + '</button>' +
+          '<button class="btn-green" style="flex:1;" onclick="confirmFinalOrder()">' + t('confirmOrder') + '</button>' +
+        '</div>';
+    }
+  }
+
+  function saveAddressAndGoConfirm() {
+    var name = document.getElementById('addr-name').value.trim();
+    var phone = document.getElementById('addr-phone').value.trim();
+    var full = document.getElementById('addr-full').value.trim();
+    var landmark = document.getElementById('addr-landmark').value.trim();
+
+    if (!name || !/^01\d{9}$/.test(phone) || !full) {
+      showToast(t('toastBadAddr'));
+      return;
+    }
+
+    customerAddress = { name: name, phone: phone, fullAddress: full, landmark: landmark };
+    window.customerAddress = customerAddress;
+    saveAppState();
+    lastCreatedOrder = null;
+    checkoutSubStep = 3;
+    renderCheckoutStep();
+  }
+
+  function confirmFinalOrder() {
+    var orderId = 'CF' + (nextOrderSeq++);
+    var itemsCopy = [];
+    for (var i = 0; i < cart.length; i++) {
+      itemsCopy.push({
+        key: cart[i].key,
+        nameBn: cart[i].nameBn,
+        nameEn: cart[i].nameEn,
+        price: cart[i].price,
+        qty: cart[i].qty
+      });
+    }
+    var newOrder = {
+      orderId: orderId,
+      area: selectedAreaKey,
+      items: itemsCopy,
+      dateIdx: 0,
+      dateStr: selectedDateStr,
+      slotIdx: selectedSlotIdx,
+      slotBn: getSlotsFor('bn')[selectedSlotIdx],
+      slotEn: getSlotsFor('en')[selectedSlotIdx],
+      address: {
+        name: customerAddress.name,
+        phone: customerAddress.phone,
+        fullAddress: customerAddress.fullAddress,
+        landmark: customerAddress.landmark
+      },
+      total: getCartSubtotal(),
+      status: 'Pending'
+    };
+
+    if (typeof window.saveOrderToFirestore === 'function') {
+      window.saveOrderToFirestore(newOrder);
+    }
+
+    lastWaUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(buildWhatsAppMessage(newOrder));
+    openWhatsAppOrder();
+
+    window.ordersHistory.unshift(newOrder);
+    lastCreatedOrder = newOrder;
+    cart = [];
+    saveAppState();
+    updateCartBadges();
+    renderCheckoutStep();
+    if (typeof window.startOrdersRealtimeListener === 'function') {
+      window.startOrdersRealtimeListener();
+    }
+    showToast(t('toastOrderSuccess') + orderId);
+  }
+
+  function renderOffersBody() {
+    updateCartBadges();
+    var discounted = [];
+    for (var i = 0; i < SERVICES.length; i++) {
+      if (SERVICES[i].offTextBn || SERVICES[i].offTextEn) discounted.push(SERVICES[i]);
+    }
+    var banner =
+      '<div class="offer-hero-banner">' +
+        '<h3>' + t('offerHeroTitle') + '</h3>' +
+        '<p>' + t('offerHeroDesc') + '</p>' +
+      '</div>';
+    document.getElementById('offers-body').innerHTML = banner + renderServiceCardsHtml(discounted, true);
+  }
+
+  function openOffersScreen() {
+    renderOffersBody();
+    showScreen('screen-offers');
+  }
+
+  var STATUS_MAP = {
+    'pending':   { bn: 'অপেক্ষমাণ', en: 'Pending', cls: 'st-pending', step: 0 },
+    'assigned':  { bn: 'টেকনিশিয়ান নির্ধারিত', en: 'Technician Assigned', cls: 'st-active', step: 1 },
+    'on the way': { bn: 'পথে আছেন', en: 'On the Way', cls: 'st-active', step: 2 },
+    'processing': { bn: 'কাজ চলছে', en: 'In Progress', cls: 'st-active', step: 2 },
+    'completed': { bn: 'সম্পন্ন', en: 'Completed', cls: 'st-completed', step: 3 },
+    'served':    { bn: 'সম্পন্ন', en: 'Completed', cls: 'st-completed', step: 3 },
+    'delivered': { bn: 'সম্পন্ন', en: 'Completed', cls: 'st-completed', step: 3 },
+    'cancelled': { bn: 'বাতিল', en: 'Cancelled', cls: 'st-cancelled', step: -1 }
+  };
+
+  function getStatusInfo(status) {
+    var k = String(status || 'pending').toLowerCase();
+    return STATUS_MAP[k] || { bn: status, en: status, cls: 'st-pending', step: 0 };
+  }
+
+  function buildTracker(step) {
+    var labels = t('trkSteps');
+    var html = '<div class="trk">';
+    for (var i = 0; i < labels.length; i++) {
+      var cls = (step === 3 || i < step) ? 'done' : (i === step ? 'current' : '');
+      var dot = (cls === 'done')
+        ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"/></svg>'
+        : '';
+      html += '<div class="trk-step ' + cls + '"><div class="trk-dot">' + dot + '</div>' + labels[i] + '</div>';
+    }
+    return html + '</div>';
+  }
+
+  function renderOrdersBody() {
+    document.getElementById('orders-count-label').textContent = window.ordersHistory.length + t('ordersCountSuffix');
+    var body = document.getElementById('orders-body');
+
+    if (window.ordersHistory.length === 0) {
+      body.innerHTML =
+        '<div class="empty-cart-box">' +
+          '<div style="font-size:44px; margin-bottom:10px;">📋</div>' +
+          '<h3 style="color:var(--logo-deep-blue); margin-bottom:6px;">' + t('noOrdersTitle') + '</h3>' +
+          '<p style="color:var(--text-muted); font-size:14px; margin-bottom:18px;">' + t('noOrdersDesc') + '</p>' +
+          '<button class="btn-primary" onclick="openCategory(\'all\')">' + t('bookServiceBtn') + '</button>' +
+        '</div>';
+      return;
+    }
+
+    var trashSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>';
+    var cards = '';
+    for (var i = 0; i < window.ordersHistory.length; i++) {
+      var ord = window.ordersHistory[i];
+      var info = getStatusInfo(ord.status);
+      var stLow = String(ord.status || '').toLowerCase();
+
+      var ordItemsHtml = '';
+      for (var j = 0; j < ord.items.length; j++) {
+        var it = ord.items[j];
+        ordItemsHtml += '<div class="ord-item"><span class="nm">' + escapeHtml(getCartItemLabel(it)) + '<span class="qt">× ' + it.qty + '</span></span><span class="pr">' + formatMoney(it.price * it.qty) + '</span></div>';
+      }
+
+      if (ord.extraCharge && ord.extraCharge > 0) {
+        ordItemsHtml += '<div class="ord-item"><span class="nm" style="color:var(--logo-deep-blue);">+ ' + ((lang === 'bn') ? 'অতিরিক্ত চার্জ/পার্টস' : 'Extra Parts/Charge') + '</span><span class="pr">' + formatMoney(ord.extraCharge) + '</span></div>';
+      }
+
+      var noteHtml = ord.managerNote
+        ? '<div style="font-size:12px; background:var(--logo-blue-light); padding:7px 10px; border-radius:10px; margin-top:8px; color:var(--logo-deep-blue);">💬 ' + escapeHtml(ord.managerNote) + '</div>'
+        : '';
+
+      var tracker = (info.step >= 0) ? buildTracker(info.step) : '';
+
+      var actionRow = '<div class="order-action-row">';
+      if (stLow === 'pending') {
+        actionRow += '<button class="mini-outline-btn" onclick="cancelDemoOrder(' + i + ')">' + t('cancelOrderBtn') + '</button>';
+      }
+      actionRow += '<button class="mini-outline-btn delete-btn" onclick="askDeleteOrder(' + i + ')">' + trashSvg + '<span>' + t('deleteOrderBtn').replace(/^\S+\s+/, '') + '</span></button></div>';
+
+      var dTxt = getOrderDateLabel(ord);
+      var sTxt = getOrderSlotLabel(ord);
+      var addr = ord.address || {};
+
+      cards +=
+        '<div class="order-card">' +
+          '<div class="order-card-top">' +
+            '<div>' +
+              '<div class="order-code">' + escapeHtml(ord.orderId) + '</div>' +
+              '<small style="color:var(--text-muted); font-size:12px;">' + dTxt + ' · ' + sTxt + '</small>' +
+            '</div>' +
+            '<span class="status-badge ' + info.cls + '">' + escapeHtml((lang === 'bn') ? info.bn : info.en) + '</span>' +
+          '</div>' +
+          tracker +
+          '<div style="margin-bottom:4px;">' + ordItemsHtml + '</div>' +
+          noteHtml +
+          '<div style="font-size:12px; color:var(--text-muted); margin-top:10px;">📍 ' + t('addressRow') + ' <strong style="color:var(--text-dark);">' + escapeHtml(addr.fullAddress || '') + '</strong> (' + escapeHtml(addr.phone || '') + ')</div>' +
+          '<div class="summary-line" style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border-blue);">' +
+            '<span>' + t('totalBillCash') + ' (' + t('cashOnService') + '):</span>' +
+            '<strong style="color:var(--logo-green-dark); font-size:16px; font-family:\'Inter\',sans-serif;">' + formatMoney(ord.total) + '</strong>' +
+          '</div>' +
+          actionRow +
+        '</div>';
+    }
+
+    body.innerHTML = cards;
+  }
+  window.renderOrdersBody = renderOrdersBody;
+
+  function openOrdersScreen() {
+    setActiveNavTab('Orders');
+    if (typeof window.startOrdersRealtimeListener === 'function') {
+      window.startOrdersRealtimeListener();
+    }
+    renderOrdersBody();
+    showScreen('screen-orders');
+  }
+
+  function cancelDemoOrder(idx) {
+    var targetOrder = window.ordersHistory[idx];
+    if (!targetOrder) return;
+    targetOrder.status = 'Cancelled';
+    saveAppState();
+    if (typeof window.updateOrderStatusInFirestore === 'function') {
+      window.updateOrderStatusInFirestore(targetOrder.orderId, 'Cancelled');
+    }
+    showToast(t('toastOrderCancelled') + targetOrder.orderId);
+    renderOrdersBody();
+  }
+
+  function menuIcon(body, bg, fg) {
+    return '<span class="mi-ico" style="background:' + bg + ';"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="' + fg + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + body + '</svg></span>';
+  }
+
+  function stripLead(txt) { return String(txt).replace(/^\S+\s+/, ''); }
+
+  function renderMenuBody() {
+    var displayName = getCurrentUserDisplay();
+    var areaText = getAreaLabel(selectedAreaKey);
+    var initial = (customerAddress.name || '').trim().charAt(0).toUpperCase();
+    var avatar = initial
+      ? initial
+      : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5"/></svg>';
+    var phoneLine = (customerAddress.phone && displayName !== customerAddress.phone)
+      ? '<p style="font-size:12px; color:var(--text-muted); font-family:\'Inter\',sans-serif;">' + escapeHtml(customerAddress.phone) + '</p>'
+      : '';
+
+    function row(icon, label, sub, click, tag) {
+      var open = tag === 'a' ? '<a class="menu-list-item" href="tel:' + SUPPORT_PHONE + '" style="text-decoration:none;">' : '<div class="menu-list-item" onclick="' + click + '">';
+      var close = tag === 'a' ? '</a>' : '</div>';
+      return open + '<span class="mi-left">' + icon + '<span>' + label + '</span></span><span class="sub-info">' + sub + ' ›</span>' + close;
+    }
+
+    document.getElementById('menu-body').innerHTML =
+      '<div class="menu-profile-card">' +
+        '<div class="menu-avatar">' + avatar + '</div>' +
+        '<div>' +
+          '<h3 style="color:var(--logo-deep-blue); font-size:17px;">' + escapeHtml(displayName) + '</h3>' +
+          phoneLine +
+          '<p style="font-size:12px; color:var(--text-muted);">' + t('currentAreaLabel') + ' <strong>' + areaText + '</strong></p>' +
+        '</div>' +
+      '</div>' +
+      row(menuIcon('<circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>', '#E8F1FF', '#0B4EC9'), 'বাংলা / English', (lang === 'bn' ? 'বাংলা' : 'English'), 'toggleLanguage()') +
+      row(menuIcon('<path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>', '#FFF0E5', '#EA580C'), stripLead(t('changeAreaMenu')), areaText, 'openAreaModal()') +
+      row(menuIcon('<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="13" y2="15"/>', '#EAF8E3', '#3E9E00'), stripLead(t('orderTrackMenu')), window.ordersHistory.length + t('ordersWord'), 'openOrdersScreen()') +
+      row(menuIcon('<path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3" fill="#7C3AED"/>', '#F3EDFF', '#7C3AED'), stripLead(t('offersMenu')), t('seeDiscount').replace(' ›', ''), 'openOffersScreen()') +
+      row(menuIcon('<circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.8" r="0.6" fill="#0891B2"/>', '#E3F7FB', '#0891B2'), stripLead(t('aboutMenu')), t('versionInfo').replace(' ›', ''), 'showToast(\'' + t('tagline').replace(/'/g, "\\'") + '\')') +
+      row(menuIcon('<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>', '#EAF8E3', '#3E9E00'), stripLead(t('supportMenu')), SUPPORT_PHONE, '', 'a') +
+      '<button class="btn-outline-danger" onclick="logoutUser()">' + t('logoutBtn') + '</button>';
+  }
+
+  function openMenuScreen() {
+    setActiveNavTab('Menu');
+    renderMenuBody();
+    showScreen('screen-menu');
+  }
+
+  function navClick(tabName) {
+    setActiveNavTab(tabName);
+    if (tabName === 'Home') {
+      showScreen('screen-home');
+    } else if (tabName === 'Cart') {
+      openCartScreen();
+    } else if (tabName === 'Offers') {
+      openOffersScreen();
+    } else if (tabName === 'Orders') {
+      openOrdersScreen();
+    } else if (tabName === 'Menu') {
+      openMenuScreen();
+    }
+  }
+
+  fillIconTiles();
+  applyTranslations();
+  if (currentUserKey) {
+    setActiveNavTab('Home');
+    showScreen('screen-home');
+  }
+</script>
+</body>
+</html>
