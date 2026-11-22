@@ -183,7 +183,7 @@
     }
 
     .btn-primary:disabled, .btn-green:disabled {
-      opacity: 0.65;
+      opacity: 0.55;
       cursor: not-allowed;
     }
 
@@ -1221,19 +1221,6 @@
       font-family: inherit;
     }
 
-    .mini-green-btn {
-      flex: 1;
-      padding: 7px 10px;
-      border-radius: 10px;
-      border: 1.5px solid var(--logo-green-dark);
-      background: var(--logo-green-light);
-      color: var(--logo-green-dark);
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
     .menu-profile-card {
       background: linear-gradient(145deg, var(--logo-blue-light), var(--white));
       border: 1.5px solid var(--border-blue);
@@ -1394,13 +1381,26 @@
 
     .phone-input {
       width: 100%;
-      padding: 14px;
+      padding: 13px 14px;
       border: 1.5px solid var(--logo-deep-blue);
       border-radius: 12px;
       font-size: 16px;
       font-family: 'Inter', sans-serif;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       outline: none;
+    }
+
+    .phone-input:disabled {
+      background: #F4F7FB;
+      color: var(--text-muted);
+      border-color: var(--border-blue);
+      cursor: not-allowed;
+    }
+
+    .otp-box-section {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1.5px dashed var(--border-blue);
     }
 
     .toast {
@@ -1702,27 +1702,28 @@
     </div>
   </div>
 
-  <!-- ================= PHONE OTP MODAL ================= -->
+  <!-- ================= PHONE OTP MODAL (মোবাইল নম্বরের নিচে OTP বক্স) ================= -->
   <div id="phone-modal" class="modal-overlay">
     <div class="modal-sheet">
       <div class="modal-header">
-        <h3 id="phone-modal-title">ফোন নম্বর দিন</h3>
+        <h3 id="phone-modal-title">ফোন নম্বর ও OTP যাচাই</h3>
         <button class="close-modal" onclick="closeModals()">✕</button>
       </div>
 
-      <!-- Step 1: Phone Input -->
-      <div id="phone-step-1">
+      <!-- উপরে মোবাইল নম্বরের বক্স -->
+      <div class="form-group" style="margin-bottom:8px;">
+        <label class="form-label" id="phone-input-label">মোবাইল নম্বর (১১ ডিজিট)</label>
         <input type="tel" id="phone-field" class="phone-input" placeholder="01XXXXXXXXX" maxlength="11">
-        <div id="recaptcha-container" style="margin-bottom:10px;"></div>
-        <button class="btn-green" id="phone-submit-btn" onclick="sendFirebasePhoneOTP()">OTP পাঠান</button>
+        <div id="recaptcha-container" style="margin-bottom:8px;"></div>
+        <button class="btn-primary" id="phone-submit-btn" onclick="sendFirebasePhoneOTP()">OTP পাঠান</button>
       </div>
 
-      <!-- Step 2: 6-digit OTP Verification -->
-      <div id="phone-step-2" style="display:none;">
-        <p id="otp-sent-info" style="font-size:13px; color:var(--text-muted); margin-bottom:10px;"></p>
-        <input type="number" id="otp-code-field" class="phone-input" placeholder="৬ ডিজিটের OTP দিন (123456)" maxlength="6">
-        <button class="btn-green" id="otp-verify-btn" onclick="confirmFirebasePhoneOTP()">OTP যাচাই ও লগইন করুন</button>
-        <button type="button" onclick="resetPhoneModal()" style="width:100%; margin-top:10px; background:none; border:none; color:var(--logo-deep-blue); font-weight:600; font-size:13px; cursor:pointer;">← নম্বর পরিবর্তন করুন</button>
+      <!-- মোবাইল নম্বরের ঠিক নিচে OTP বক্স -->
+      <div class="otp-box-section">
+        <label class="form-label" id="otp-input-label">OTP কোড (৬ ডিজিট)</label>
+        <p id="otp-sent-info" style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">আগে মোবাইল নম্বর দিয়ে OTP পাঠান, তারপর কোডটি নিচে লিখুন</p>
+        <input type="tel" id="otp-code-field" class="phone-input" placeholder="৬ ডিজিটের OTP লিখুন" maxlength="6" disabled>
+        <button class="btn-green" id="otp-verify-btn" onclick="confirmFirebasePhoneOTP()" disabled>OTP যাচাই ও লগইন করুন</button>
       </div>
     </div>
   </div>
@@ -1766,30 +1767,23 @@
     serverTimestamp
   } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-  // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+  const firebaseConfig = {
+    apiKey: "AIzaSyBOhXKY60-A8_LTl52VRODRLNuiSXWYoAQ",
+    authDomain: "cool-fix-8cc00.firebaseapp.com",
+    projectId: "cool-fix-8cc00",
+    storageBucket: "cool-fix-8cc00.firebasestorage.app",
+    messagingSenderId: "1080573194990",
+    appId: "1:1080573194990:web:94400fd5994310470ab9ff",
+    measurementId: "G-DMM010CD30"
+  };
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBOhXKY60-A8_LTl52VRODRLNuiSXWYoAQ",
-  authDomain: "cool-fix-8cc00.firebaseapp.com",
-  projectId: "cool-fix-8cc00",
-  storageBucket: "cool-fix-8cc00.firebasestorage.app",
-  messagingSenderId: "1080573194990",
-  appId: "1:1080573194990:web:94400fd5994310470ab9ff",
-  measurementId: "G-DMM010CD30"
-};
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  let analytics = null;
+  try {
+    analytics = getAnalytics(app);
+  } catch (e) {}
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-  
-  
   const auth = getAuth(app);
   const db = getFirestore(app);
   const googleProvider = new GoogleAuthProvider();
@@ -1814,6 +1808,9 @@ const analytics = getAnalytics(app);
 
     const formattedPhone = '+88' + rawPhone;
     const btn = document.getElementById('phone-submit-btn');
+    const otpInput = document.getElementById('otp-code-field');
+    const verifyBtn = document.getElementById('otp-verify-btn');
+
     btn.disabled = true;
     btn.textContent = (window.lang === 'bn') ? 'OTP পাঠানো হচ্ছে...' : 'Sending OTP...';
 
@@ -1827,15 +1824,22 @@ const analytics = getAnalytics(app);
       const confirmation = await signInWithPhoneNumber(auth, formattedPhone, window.recaptchaVerifier);
       window.confirmationResult = confirmation;
 
-      document.getElementById('phone-step-1').style.display = 'none';
-      document.getElementById('phone-step-2').style.display = 'block';
+      // OTP সফলভাবে পাঠানো হলে নিচের OTP বক্স এবং লগইন বাটন সক্রিয় হবে
+      otpInput.disabled = false;
+      verifyBtn.disabled = false;
+      otpInput.focus();
+
+      document.getElementById('otp-sent-info').style.color = 'var(--logo-green-dark)';
       document.getElementById('otp-sent-info').textContent =
         (window.lang === 'bn')
-          ? `${rawPhone} নম্বরে পাঠানো ৬ ডিজিটের কোডটি লিখুন:`
-          : `Enter the 6-digit OTP sent to ${rawPhone}:`;
+          ? `✅ ${rawPhone} নম্বরে ৬ ডিজিটের OTP পাঠানো হয়েছে। কোডটি নিচে লিখে লগইন করুন:`
+          : `✅ 6-digit OTP sent to ${rawPhone}. Enter it below to login:`;
       window.showToast((window.lang === 'bn') ? 'OTP পাঠানো হয়েছে!' : 'OTP sent!');
     } catch (err) {
       console.error("Phone Auth Error:", err);
+      window.confirmationResult = null;
+      otpInput.disabled = true;
+      verifyBtn.disabled = true;
       if (window.recaptchaVerifier) {
         try { window.recaptchaVerifier.clear(); } catch (e) {}
         window.recaptchaVerifier = null;
@@ -1849,10 +1853,15 @@ const analytics = getAnalytics(app);
     }
   };
 
-  // ২. ৬ ডিজিটের OTP কোড ভেরিফাই করা
+  // ২. ৬ ডিজিটের OTP কোড ভেরিফাই করা (সঠিক OTP ছাড়া লগইন হবে না)
   window.confirmFirebasePhoneOTP = async function() {
+    if (!window.confirmationResult) {
+      window.showToast((window.lang === 'bn') ? 'আগে মোবাইল নম্বর দিয়ে OTP পাঠান!' : 'Please send OTP first!');
+      return;
+    }
+
     const code = document.getElementById('otp-code-field').value.trim();
-    if (code.length < 6 || !window.confirmationResult) {
+    if (!/^\d{6}$/.test(code)) {
       window.showToast((window.lang === 'bn') ? 'সঠিক ৬ ডিজিটের OTP দিন' : 'Enter a valid 6-digit OTP');
       return;
     }
@@ -1872,15 +1881,17 @@ const analytics = getAnalytics(app);
       window.goToHome(localPhone || user.uid);
     } catch (err) {
       console.error("OTP Verify Error:", err);
-      window.showToast((window.lang === 'bn') ? 'ভুল OTP কোড! আবার চেষ্টা করুন।' : 'Invalid OTP! Please try again.');
+      window.showToast((window.lang === 'bn') ? 'ভুল OTP কোড! আবার সঠিক কোড দিন।' : 'Invalid OTP! Please enter the correct code.');
     } finally {
       btn.disabled = false;
-      btn.textContent = (window.lang === 'bn') ? 'OTP যাচাই ও লগইন করুন' : 'Verify OTP & Login';
+      btn.textContent = window.t('verifyOtpBtn');
     }
   };
 
   // ৩. Google Sign-In ফাংশন
   window.signInWithFirebaseGoogle = async function() {
+    const btn = document.getElementById('login-google-btn');
+    if (btn) btn.disabled = true;
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
@@ -1888,23 +1899,34 @@ const analytics = getAnalytics(app);
       window.saveAppState();
       window.goToHome(user.displayName || 'google');
     } catch (err) {
-      console.warn("Google popup fallback:", err);
-      window.goToHome('google');
+      console.error("Google Sign-In Error:", err);
+      window.showToast((window.lang === 'bn')
+        ? 'Google লগইন সম্পন্ন হয়নি: ' + (err.code || err.message)
+        : 'Google sign-in failed: ' + (err.code || err.message));
+    } finally {
+      if (btn) btn.disabled = false;
     }
   };
 
-  // ৪. লগআউট ফাংশন
+  // ৪. লগআউট ফাংশন (একদম নির্ভুলভাবে কাজ করবে)
   window.logoutUser = async function() {
     try {
       await signOut(auth);
-    } catch (e) {}
+    } catch (e) {
+      console.warn("SignOut warning:", e);
+    }
+    if (window.unsubscribeOrders) {
+      try { window.unsubscribeOrders(); } catch (e) {}
+      window.unsubscribeOrders = null;
+    }
+    window.confirmationResult = null;
     localStorage.removeItem('coolfix_user_key');
     window.currentUserKey = null;
     window.showScreen('screen-login');
-    window.showToast((window.lang === 'bn') ? 'লগআউট সম্পন্ন হয়েছে' : 'Logged out');
+    window.showToast((window.lang === 'bn') ? 'সফলভাবে লগআউট হয়েছে' : 'Logged out successfully');
   };
 
-  // ৫. অর্ডার Firestore-এ নির্দিষ্ট orderId ডকুমেন্ট হিসেবে সেভ করা (যাতে ম্যানেজার অ্যাপ আপডেট করলে সরাসরি সিঙ্ক হয়)
+  // ৫. অর্ডার Firestore-এ সেভ করা
   window.saveOrderToFirestore = async function(orderObj) {
     try {
       const uid = auth.currentUser ? auth.currentUser.uid : null;
@@ -1920,7 +1942,7 @@ const analytics = getAnalytics(app);
     }
   };
 
-  // ৬. অর্ডারের স্ট্যাটাস Firestore-এ আপডেট করা (যেমন কাস্টমার বাতিল করলে)
+  // ৬. অর্ডারের স্ট্যাটাস Firestore-এ আপডেট করা
   window.updateOrderStatusInFirestore = async function(orderId, newStatus) {
     try {
       const orderRef = doc(db, "orders", orderId);
@@ -1933,13 +1955,13 @@ const analytics = getAnalytics(app);
     }
   };
 
-  // ৭. রিয়েল-টাইম লিসেনার (onSnapshot): ম্যানেজার অ্যাপ থেকে সার্ভ/বিল/স্ট্যাটাস আপডেট হলেই কাস্টমার অ্যাপে লাইভ আপডেট হবে
-  let unsubscribeOrders = null;
+  // ৭. রিয়েল-টাইম লিসেনার (onSnapshot)
+  window.unsubscribeOrders = null;
   window.startOrdersRealtimeListener = function() {
-    if (unsubscribeOrders) return;
+    if (window.unsubscribeOrders) return;
     try {
       const ordersQuery = query(collection(db, "orders"), orderBy("createdAt", "desc"));
-      unsubscribeOrders = onSnapshot(ordersQuery, (snapshot) => {
+      window.unsubscribeOrders = onSnapshot(ordersQuery, (snapshot) => {
         const myPhone = (window.customerAddress.phone || '').trim();
         const myUid = auth.currentUser ? auth.currentUser.uid : null;
         const myLocalIds = new Set(window.ordersHistory.map(o => o.orderId));
@@ -1952,14 +1974,12 @@ const analytics = getAnalytics(app);
           const docOrderId = data.orderId || docSnap.id;
           const docPhone = (data.address && data.address.phone) ? data.address.phone.trim() : '';
 
-          // ইউজারের নিজের ফোন নম্বর, UID অথবা লোকাল অর্ডার আইডির সাথে মিললে গ্রহণ করবে
           const isMine =
             (myPhone && docPhone === myPhone) ||
             (myUid && data.uid === myUid) ||
             myLocalIds.has(docOrderId);
 
           if (isMine) {
-            // ম্যানেজার অ্যাপ থেকে বিল আপডেট হলে তা এখানে রিসিভ হবে
             const liveTotal = (data.finalBill !== undefined && data.finalBill !== null)
               ? Number(data.finalBill)
               : (data.billAmount !== undefined && data.billAmount !== null)
@@ -1987,7 +2007,6 @@ const analytics = getAnalytics(app);
         });
 
         if (updatedFromServer.length > 0) {
-          // সার্ভারে এখনো সিঙ্ক না হওয়া লোকাল অর্ডার থাকলে তাও ধরে রাখা
           const serverIds = new Set(updatedFromServer.map(o => o.orderId));
           const localOnly = window.ordersHistory.filter(o => !serverIds.has(o.orderId));
           window.ordersHistory = [...localOnly, ...updatedFromServer];
@@ -2033,6 +2052,7 @@ const analytics = getAnalytics(app);
 
 <script>
   var lang = localStorage.getItem('coolfix_lang') || 'bn';
+  window.lang = lang;
 
   var AREAS = [
     { key: 'Mohammadpur', bn: 'মোহাম্মদপুর', en: 'Mohammadpur' },
@@ -2393,10 +2413,14 @@ const analytics = getAnalytics(app);
       seeDiscount: 'ছাড় দেখুন ›',
       aboutMenu: '❄️ কুলফিক্স সম্পর্কে',
       versionInfo: 'v1.1 Live ›',
-      goLoginBtn: 'লগইন স্ক্রিনে যান / অ্যাকাউন্ট বদলান',
       logoutBtn: 'লগআউট করুন',
-      phoneModalTitle: 'ফোন নম্বর দিন',
+      phoneModalTitle: 'ফোন নম্বর ও OTP যাচাই',
+      phoneInputLabel: 'মোবাইল নম্বর (১১ ডিজিট)',
+      otpInputLabel: 'OTP কোড (৬ ডিজিট)',
+      otpHintDefault: 'আগে মোবাইল নম্বর দিয়ে OTP পাঠান, তারপর কোডটি নিচে লিখুন',
+      otpPlaceholder: '৬ ডিজিটের OTP লিখুন',
       otpBtn: 'OTP পাঠান',
+      verifyOtpBtn: 'OTP যাচাই ও লগইন করুন',
       areaModalTitle: 'আপনার এলাকা নির্বাচন করুন',
       navHome: 'Home',
       navOffers: 'Offers',
@@ -2546,10 +2570,14 @@ const analytics = getAnalytics(app);
       seeDiscount: 'View Offers ›',
       aboutMenu: '❄️ About CoolFix',
       versionInfo: 'v1.1 Live ›',
-      goLoginBtn: 'Go to Login / Switch Account',
       logoutBtn: 'Logout',
-      phoneModalTitle: 'Enter Phone Number',
+      phoneModalTitle: 'Phone & OTP Verification',
+      phoneInputLabel: 'Mobile Number (11 Digits)',
+      otpInputLabel: 'OTP Code (6 Digits)',
+      otpHintDefault: 'Send OTP to your mobile number first, then enter the code below',
+      otpPlaceholder: 'Enter 6-digit OTP',
       otpBtn: 'Send OTP',
+      verifyOtpBtn: 'Verify OTP & Login',
       areaModalTitle: 'Select Your Area',
       navHome: 'Home',
       navOffers: 'Offers',
@@ -2613,8 +2641,8 @@ const analytics = getAnalytics(app);
     return (lang === 'bn') ? srv.bulletsBn : srv.bulletsEn;
   }
 
-  // স্থায়ীভাবে স্টেট লোড ও সেভ করার ফাংশন (যাতে অ্যাপ বন্ধ করলে বা রিফ্রেশ করলে হিস্ট্রি না হারায়)
   var currentUserKey = localStorage.getItem('coolfix_user_key') || null;
+  window.currentUserKey = currentUserKey;
   var selectedAreaKey = localStorage.getItem('coolfix_area') || 'Mohammadpur';
   var activeCategory = 'all';
   var activeServiceTab = 'services';
@@ -2650,7 +2678,7 @@ const analytics = getAnalytics(app);
 
   function saveAppState() {
     try {
-      if (currentUserKey) localStorage.setItem('coolfix_user_key', currentUserKey);
+      if (window.currentUserKey) localStorage.setItem('coolfix_user_key', window.currentUserKey);
       localStorage.setItem('coolfix_lang', lang);
       localStorage.setItem('coolfix_area', selectedAreaKey);
       localStorage.setItem('coolfix_cart', JSON.stringify(cart));
@@ -2674,9 +2702,10 @@ const analytics = getAnalytics(app);
   window.showToast = showToast;
 
   function getCurrentUserDisplay() {
-    if (!currentUserKey || currentUserKey === 'guest') return t('guestUser');
-    if (currentUserKey === 'google') return customerAddress.name || t('googleUser');
-    return currentUserKey;
+    var uKey = window.currentUserKey || currentUserKey;
+    if (!uKey || uKey === 'guest') return t('guestUser');
+    if (uKey === 'google') return customerAddress.name || t('googleUser');
+    return uKey;
   }
 
   function applyTranslations() {
@@ -2738,7 +2767,11 @@ const analytics = getAnalytics(app);
     document.getElementById('menu-screen-title').textContent = t('menuTitle');
 
     document.getElementById('phone-modal-title').textContent = t('phoneModalTitle');
+    document.getElementById('phone-input-label').textContent = t('phoneInputLabel');
+    document.getElementById('otp-input-label').textContent = t('otpInputLabel');
+    document.getElementById('otp-code-field').placeholder = t('otpPlaceholder');
     document.getElementById('phone-submit-btn').textContent = t('otpBtn');
+    document.getElementById('otp-verify-btn').textContent = t('verifyOtpBtn');
     document.getElementById('area-modal-title').textContent = t('areaModalTitle');
 
     var navItems = document.querySelectorAll('#bottom-nav .nav-item');
@@ -2789,6 +2822,7 @@ const analytics = getAnalytics(app);
 
   function toggleLanguage() {
     lang = (lang === 'bn') ? 'en' : 'bn';
+    window.lang = lang;
     saveAppState();
     applyTranslations();
     showToast(t('toastLangSwitched'));
@@ -2809,6 +2843,7 @@ const analytics = getAnalytics(app);
 
   function goToHome(userKey) {
     currentUserKey = userKey;
+    window.currentUserKey = userKey;
     if (!customerAddress.name && userKey && userKey !== 'guest') {
       if (/^01\d{9}$/.test(userKey)) {
         customerAddress.phone = userKey;
@@ -2847,9 +2882,21 @@ const analytics = getAnalytics(app);
   }
 
   function resetPhoneModal() {
-    document.getElementById('phone-step-1').style.display = 'block';
-    document.getElementById('phone-step-2').style.display = 'none';
-    document.getElementById('otp-code-field').value = '';
+    window.confirmationResult = null;
+    var otpInput = document.getElementById('otp-code-field');
+    var verifyBtn = document.getElementById('otp-verify-btn');
+    var infoEl = document.getElementById('otp-sent-info');
+    if (otpInput) {
+      otpInput.value = '';
+      otpInput.disabled = true;
+    }
+    if (verifyBtn) {
+      verifyBtn.disabled = true;
+    }
+    if (infoEl) {
+      infoEl.style.color = 'var(--text-muted)';
+      infoEl.textContent = t('otpHintDefault');
+    }
   }
   window.resetPhoneModal = resetPhoneModal;
 
@@ -2881,7 +2928,7 @@ const analytics = getAnalytics(app);
     if (typeof window.signInWithFirebaseGoogle === 'function') {
       window.signInWithFirebaseGoogle();
     } else {
-      goToHome('google');
+      showToast((lang === 'bn') ? 'Firebase লোড হচ্ছে, অনুগ্রহ করে একটু অপেক্ষা করুন...' : 'Loading Firebase, please wait...');
     }
   }
 
@@ -3679,7 +3726,6 @@ const analytics = getAnalytics(app);
     }
   }
 
-  // অ্যাপ লোড হওয়ার সাথে সাথে ভাষা এবং পূর্বের সেশন রিস্টোর করা
   applyTranslations();
   if (currentUserKey) {
     setActiveNavTab('Home');
