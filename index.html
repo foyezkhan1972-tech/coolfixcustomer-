@@ -182,6 +182,11 @@
       box-shadow: 0 6px 16px rgba(0, 56, 198, 0.28);
     }
 
+    .btn-primary:disabled, .btn-green:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
     .btn-green {
       width: 100%;
       background: linear-gradient(90deg, var(--logo-green-dark), var(--logo-lime-green));
@@ -1182,6 +1187,19 @@
       border: 1px dashed var(--text-muted);
     }
 
+    .live-sync-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--logo-green-dark);
+      background: var(--logo-green-light);
+      padding: 3px 9px;
+      border-radius: 10px;
+      border: 1px solid var(--logo-lime-green);
+    }
+
     .order-action-row {
       display: flex;
       gap: 8px;
@@ -1399,7 +1417,8 @@
       z-index: 300;
       display: none;
       box-shadow: 0 4px 12px rgba(0, 56, 198, 0.3);
-      white-space: nowrap;
+      max-width: 90%;
+      text-align: center;
     }
   </style>
 </head>
@@ -1640,6 +1659,7 @@
     <div class="sub-header">
       <button class="back-btn" onclick="goBackToHome()">←</button>
       <h2 id="orders-screen-title">আমার অর্ডারসমূহ</h2>
+      <span class="live-sync-pill">● Live</span>
       <span style="font-size:12px; font-weight:700; color:var(--logo-deep-blue);" id="orders-count-label">0</span>
     </div>
 
@@ -1682,15 +1702,28 @@
     </div>
   </div>
 
-  <!-- ================= PHONE MODAL ================= -->
+  <!-- ================= PHONE OTP MODAL ================= -->
   <div id="phone-modal" class="modal-overlay">
     <div class="modal-sheet">
       <div class="modal-header">
         <h3 id="phone-modal-title">ফোন নম্বর দিন</h3>
         <button class="close-modal" onclick="closeModals()">✕</button>
       </div>
-      <input type="tel" id="phone-field" class="phone-input" placeholder="01XXXXXXXXX" maxlength="11">
-      <button class="btn-green" id="phone-submit-btn" onclick="verifyDemoPhone()">OTP পাঠান ও লগইন করুন</button>
+
+      <!-- Step 1: Phone Input -->
+      <div id="phone-step-1">
+        <input type="tel" id="phone-field" class="phone-input" placeholder="01XXXXXXXXX" maxlength="11">
+        <div id="recaptcha-container" style="margin-bottom:10px;"></div>
+        <button class="btn-green" id="phone-submit-btn" onclick="sendFirebasePhoneOTP()">OTP পাঠান</button>
+      </div>
+
+      <!-- Step 2: 6-digit OTP Verification -->
+      <div id="phone-step-2" style="display:none;">
+        <p id="otp-sent-info" style="font-size:13px; color:var(--text-muted); margin-bottom:10px;"></p>
+        <input type="number" id="otp-code-field" class="phone-input" placeholder="৬ ডিজিটের OTP দিন (123456)" maxlength="6">
+        <button class="btn-green" id="otp-verify-btn" onclick="confirmFirebasePhoneOTP()">OTP যাচাই ও লগইন করুন</button>
+        <button type="button" onclick="resetPhoneModal()" style="width:100%; margin-top:10px; background:none; border:none; color:var(--logo-deep-blue); font-weight:600; font-size:13px; cursor:pointer;">← নম্বর পরিবর্তন করুন</button>
+      </div>
     </div>
   </div>
 
@@ -1710,8 +1743,28 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+  import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    RecaptchaVerifier,
+    signInWithPhoneNumber,
+    onAuthStateChanged,
+    signOut,
+    setPersistence,
+    browserLocalPersistence
+  } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+  import {
+    getFirestore,
+    collection,
+    doc,
+    setDoc,
+    updateDoc,
+    onSnapshot,
+    query,
+    orderBy,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyB0hXKY60-A8_LTLS2VRODRLnIsWXyoAQ",
@@ -1729,39 +1782,245 @@
   const db = getFirestore(app);
   const googleProvider = new GoogleAuthProvider();
 
+  // ব্রাউজারে সেশন স্থায়ীভাবে সেভ রাখা
+  setPersistence(auth, browserLocalPersistence).catch(() => {});
+
   window.firebaseApp = app;
   window.firebaseAnalytics = analytics;
   window.firebaseAuth = auth;
   window.firebaseDb = db;
+  window.confirmationResult = null;
+  window.recaptchaVerifier = null;
 
-  // বাস্তব Google Sign-In ফাংশন (Firebase Console-এ Google Provider অন থাকলে কাজ করবে)
+  // ১. আসল Firebase Phone OTP পাঠানো
+  window.sendFirebasePhoneOTP = async function() {
+    const rawPhone = document.getElementById('phone-field').value.trim();
+    if (!/^01\d{9}$/.test(rawPhone)) {
+      window.showToast(window.t('toastBadPhone'));
+      return;
+    }
+
+    const formattedPhone = '+88' + rawPhone;
+    const btn = document.getElementById('phone-submit-btn');
+    btn.disabled = true;
+    btn.textContent = (window.lang === 'bn') ? 'OTP পাঠানো হচ্ছে...' : 'Sending OTP...';
+
+    try {
+      if (!window.recaptchaVerifier) {
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+          size: 'invisible'
+        });
+      }
+
+      const confirmation = await signInWithPhoneNumber(auth, formattedPhone, window.recaptchaVerifier);
+      window.confirmationResult = confirmation;
+
+      document.getElementById('phone-step-1').style.display = 'none';
+      document.getElementById('phone-step-2').style.display = 'block';
+      document.getElementById('otp-sent-info').textContent =
+        (window.lang === 'bn')
+          ? `${rawPhone} নম্বরে পাঠানো ৬ ডিজিটের কোডটি লিখুন:`
+          : `Enter the 6-digit OTP sent to ${rawPhone}:`;
+      window.showToast((window.lang === 'bn') ? 'OTP পাঠানো হয়েছে!' : 'OTP sent!');
+    } catch (err) {
+      console.error("Phone Auth Error:", err);
+      if (window.recaptchaVerifier) {
+        try { window.recaptchaVerifier.clear(); } catch (e) {}
+        window.recaptchaVerifier = null;
+      }
+      window.showToast((window.lang === 'bn')
+        ? 'OTP পাঠাতে সমস্যা হয়েছে: ' + (err.code || err.message)
+        : 'Failed to send OTP: ' + (err.code || err.message));
+    } finally {
+      btn.disabled = false;
+      btn.textContent = window.t('otpBtn');
+    }
+  };
+
+  // ২. ৬ ডিজিটের OTP কোড ভেরিফাই করা
+  window.confirmFirebasePhoneOTP = async function() {
+    const code = document.getElementById('otp-code-field').value.trim();
+    if (code.length < 6 || !window.confirmationResult) {
+      window.showToast((window.lang === 'bn') ? 'সঠিক ৬ ডিজিটের OTP দিন' : 'Enter a valid 6-digit OTP');
+      return;
+    }
+
+    const btn = document.getElementById('otp-verify-btn');
+    btn.disabled = true;
+    btn.textContent = (window.lang === 'bn') ? 'যাচাই হচ্ছে...' : 'Verifying...';
+
+    try {
+      const result = await window.confirmationResult.confirm(code);
+      const user = result.user;
+      const localPhone = (user.phoneNumber || '').replace('+88', '');
+      window.customerAddress.phone = localPhone;
+      window.saveAppState();
+      window.closeModals();
+      window.resetPhoneModal();
+      window.goToHome(localPhone || user.uid);
+    } catch (err) {
+      console.error("OTP Verify Error:", err);
+      window.showToast((window.lang === 'bn') ? 'ভুল OTP কোড! আবার চেষ্টা করুন।' : 'Invalid OTP! Please try again.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = (window.lang === 'bn') ? 'OTP যাচাই ও লগইন করুন' : 'Verify OTP & Login';
+    }
+  };
+
+  // ৩. Google Sign-In ফাংশন
   window.signInWithFirebaseGoogle = async function() {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       window.customerAddress.name = user.displayName || window.t('googleUser');
+      window.saveAppState();
       window.goToHome(user.displayName || 'google');
     } catch (err) {
-      console.warn("Google popup fallback to demo:", err);
+      console.warn("Google popup fallback:", err);
       window.goToHome('google');
     }
   };
 
-  // অর্ডার হলে Firestore-এ সেভ করার হেল্পার
+  // ৪. লগআউট ফাংশন
+  window.logoutUser = async function() {
+    try {
+      await signOut(auth);
+    } catch (e) {}
+    localStorage.removeItem('coolfix_user_key');
+    window.currentUserKey = null;
+    window.showScreen('screen-login');
+    window.showToast((window.lang === 'bn') ? 'লগআউট সম্পন্ন হয়েছে' : 'Logged out');
+  };
+
+  // ৫. অর্ডার Firestore-এ নির্দিষ্ট orderId ডকুমেন্ট হিসেবে সেভ করা (যাতে ম্যানেজার অ্যাপ আপডেট করলে সরাসরি সিঙ্ক হয়)
   window.saveOrderToFirestore = async function(orderObj) {
     try {
-      await addDoc(collection(db, "orders"), {
+      const uid = auth.currentUser ? auth.currentUser.uid : null;
+      const orderRef = doc(db, "orders", orderObj.orderId);
+      await setDoc(orderRef, {
         ...orderObj,
-        createdAt: serverTimestamp()
+        uid: uid,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
       });
     } catch (err) {
-      console.warn("Firestore save skipped or rules pending:", err);
+      console.warn("Firestore save error:", err);
     }
   };
+
+  // ৬. অর্ডারের স্ট্যাটাস Firestore-এ আপডেট করা (যেমন কাস্টমার বাতিল করলে)
+  window.updateOrderStatusInFirestore = async function(orderId, newStatus) {
+    try {
+      const orderRef = doc(db, "orders", orderId);
+      await updateDoc(orderRef, {
+        status: newStatus,
+        updatedAt: serverTimestamp()
+      });
+    } catch (err) {
+      console.warn("Firestore status update error:", err);
+    }
+  };
+
+  // ৭. রিয়েল-টাইম লিসেনার (onSnapshot): ম্যানেজার অ্যাপ থেকে সার্ভ/বিল/স্ট্যাটাস আপডেট হলেই কাস্টমার অ্যাপে লাইভ আপডেট হবে
+  let unsubscribeOrders = null;
+  window.startOrdersRealtimeListener = function() {
+    if (unsubscribeOrders) return;
+    try {
+      const ordersQuery = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+      unsubscribeOrders = onSnapshot(ordersQuery, (snapshot) => {
+        const myPhone = (window.customerAddress.phone || '').trim();
+        const myUid = auth.currentUser ? auth.currentUser.uid : null;
+        const myLocalIds = new Set(window.ordersHistory.map(o => o.orderId));
+
+        let updatedFromServer = [];
+        let hasLiveNotification = false;
+
+        snapshot.forEach((docSnap) => {
+          const data = docSnap.data();
+          const docOrderId = data.orderId || docSnap.id;
+          const docPhone = (data.address && data.address.phone) ? data.address.phone.trim() : '';
+
+          // ইউজারের নিজের ফোন নম্বর, UID অথবা লোকাল অর্ডার আইডির সাথে মিললে গ্রহণ করবে
+          const isMine =
+            (myPhone && docPhone === myPhone) ||
+            (myUid && data.uid === myUid) ||
+            myLocalIds.has(docOrderId);
+
+          if (isMine) {
+            // ম্যানেজার অ্যাপ থেকে বিল আপডেট হলে তা এখানে রিসিভ হবে
+            const liveTotal = (data.finalBill !== undefined && data.finalBill !== null)
+              ? Number(data.finalBill)
+              : (data.billAmount !== undefined && data.billAmount !== null)
+                ? Number(data.billAmount)
+                : Number(data.total || 0);
+
+            const prevOrder = window.ordersHistory.find(o => o.orderId === docOrderId);
+            if (prevOrder && (prevOrder.status !== data.status || Number(prevOrder.total) !== liveTotal)) {
+              hasLiveNotification = true;
+            }
+
+            updatedFromServer.push({
+              orderId: docOrderId,
+              area: data.area || 'Mohammadpur',
+              items: data.items || [],
+              dateIdx: (data.dateIdx !== undefined) ? data.dateIdx : 0,
+              slotIdx: (data.slotIdx !== undefined) ? data.slotIdx : 0,
+              address: data.address || { name: '', phone: myPhone, fullAddress: '', landmark: '' },
+              total: liveTotal,
+              extraCharge: data.extraCharge ? Number(data.extraCharge) : 0,
+              managerNote: data.managerNote || data.note || '',
+              status: data.status || 'Pending'
+            });
+          }
+        });
+
+        if (updatedFromServer.length > 0) {
+          // সার্ভারে এখনো সিঙ্ক না হওয়া লোকাল অর্ডার থাকলে তাও ধরে রাখা
+          const serverIds = new Set(updatedFromServer.map(o => o.orderId));
+          const localOnly = window.ordersHistory.filter(o => !serverIds.has(o.orderId));
+          window.ordersHistory = [...localOnly, ...updatedFromServer];
+          window.saveAppState();
+
+          if (document.getElementById('screen-orders').classList.contains('active')) {
+            window.renderOrdersBody();
+          }
+          if (hasLiveNotification) {
+            window.showToast((window.lang === 'bn')
+              ? '🔔 আপনার অর্ডারের স্ট্যাটাস ও বিল আপডেট হয়েছে!'
+              : '🔔 Your order status & bill has been updated!');
+          }
+        }
+      }, (err) => {
+        console.warn("Realtime listener paused:", err);
+      });
+    } catch (e) {
+      console.warn("Listener setup error:", e);
+    }
+  };
+
+  // ৮. অ্যাপ চালু হলে বা রিফ্রেশ করলে সেশন চেক করা
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const localPhone = (user.phoneNumber || '').replace('+88', '');
+      const userLabel = localPhone || user.displayName || 'google';
+      if (localPhone) window.customerAddress.phone = localPhone;
+      if (user.displayName && !window.customerAddress.name) {
+        window.customerAddress.name = user.displayName;
+      }
+      window.currentUserKey = userLabel;
+      window.saveAppState();
+
+      if (document.getElementById('screen-login').classList.contains('active')) {
+        window.setActiveNavTab('Home');
+        window.showScreen('screen-home');
+      }
+    }
+    window.startOrdersRealtimeListener();
+  });
 </script>
 
 <script>
-  var lang = 'bn'; // 'bn' or 'en'
+  var lang = localStorage.getItem('coolfix_lang') || 'bn';
 
   var AREAS = [
     { key: 'Mohammadpur', bn: 'মোহাম্মদপুর', en: 'Mohammadpur' },
@@ -2110,8 +2369,7 @@
       noOrdersDesc: 'আপনার প্রথম সার্ভিস অর্ডারটি এখনই বুক করুন।',
       bookServiceBtn: 'সার্ভিস বুক করুন',
       totalBillCash: 'মোট বিল',
-      updateStatusDemo: 'স্ট্যাটাস আপডেট (ডেমো)',
-      cancelOrderBtn: 'বাতিল করুন',
+      cancelOrderBtn: 'অর্ডার বাতিল করুন',
       menuTitle: 'মেনু ও প্রোফাইল',
       guestUser: 'অতিথি ব্যবহারকারী',
       googleUser: 'Google ইউজার',
@@ -2122,10 +2380,11 @@
       offersMenu: '🏷️ চলমান অফারসমূহ',
       seeDiscount: 'ছাড় দেখুন ›',
       aboutMenu: '❄️ কুলফিক্স সম্পর্কে',
-      versionInfo: 'v1.0 ডেমো ›',
+      versionInfo: 'v1.1 Live ›',
       goLoginBtn: 'লগইন স্ক্রিনে যান / অ্যাকাউন্ট বদলান',
+      logoutBtn: 'লগআউট করুন',
       phoneModalTitle: 'ফোন নম্বর দিন',
-      otpBtn: 'OTP পাঠান ও লগইন করুন',
+      otpBtn: 'OTP পাঠান',
       areaModalTitle: 'আপনার এলাকা নির্বাচন করুন',
       navHome: 'Home',
       navOffers: 'Offers',
@@ -2150,7 +2409,7 @@
       ],
       toastLangSwitched: 'ভাষা বাংলায় পরিবর্তন করা হয়েছে',
       toastWelcome: 'স্বাগতম, ',
-      toastBadPhone: 'সঠিক ১১ ডিজিটের ফোন নম্বর দিন',
+      toastBadPhone: 'সঠিক ১১ ডিজিটের ফোন নম্বর দিন (01XXXXXXXXX)',
       toastAreaChanged: 'এলাকা পরিবর্তন হয়েছে: ',
       toastReqEmpty: 'দয়া করে সমস্যার কথা লিখুন',
       toastReqSent: 'আপনার রিকোয়েস্ট গ্রহণ করা হয়েছে!',
@@ -2159,7 +2418,6 @@
       toastNeedCart: 'আগে কার্টে অন্তত একটি সার্ভিস যোগ করুন',
       toastBadAddr: 'নাম, ১১ ডিজিটের ফোন নম্বর ও পূর্ণ ঠিকানা দিন',
       toastOrderSuccess: 'অর্ডার কনফার্ম হয়েছে! আইডি: ',
-      toastStatusUpdated: 'স্ট্যাটাস পরিবর্তিত হয়েছে: ',
       toastOrderCancelled: 'অর্ডার বাতিল করা হয়েছে: '
     },
     en: {
@@ -2264,8 +2522,7 @@
       noOrdersDesc: 'Book your first appliance service now.',
       bookServiceBtn: 'Book a Service',
       totalBillCash: 'Total Bill',
-      updateStatusDemo: 'Update Status (Demo)',
-      cancelOrderBtn: 'Cancel',
+      cancelOrderBtn: 'Cancel Order',
       menuTitle: 'Menu & Profile',
       guestUser: 'Guest User',
       googleUser: 'Google User',
@@ -2276,10 +2533,11 @@
       offersMenu: '🏷️ Active Offers',
       seeDiscount: 'View Offers ›',
       aboutMenu: '❄️ About CoolFix',
-      versionInfo: 'v1.0 Demo ›',
+      versionInfo: 'v1.1 Live ›',
       goLoginBtn: 'Go to Login / Switch Account',
+      logoutBtn: 'Logout',
       phoneModalTitle: 'Enter Phone Number',
-      otpBtn: 'Send OTP & Login',
+      otpBtn: 'Send OTP',
       areaModalTitle: 'Select Your Area',
       navHome: 'Home',
       navOffers: 'Offers',
@@ -2304,7 +2562,7 @@
       ],
       toastLangSwitched: 'Language switched to English',
       toastWelcome: 'Welcome, ',
-      toastBadPhone: 'Enter a valid 11-digit phone number',
+      toastBadPhone: 'Enter a valid 11-digit phone number (01XXXXXXXXX)',
       toastAreaChanged: 'Area changed to: ',
       toastReqEmpty: 'Please describe your issue',
       toastReqSent: 'Your request has been received!',
@@ -2313,7 +2571,6 @@
       toastNeedCart: 'Please add at least one service to cart first',
       toastBadAddr: 'Enter name, 11-digit phone and full address',
       toastOrderSuccess: 'Order confirmed! ID: ',
-      toastStatusUpdated: 'Status updated to: ',
       toastOrderCancelled: 'Order cancelled: '
     }
   };
@@ -2344,11 +2601,14 @@
     return (lang === 'bn') ? srv.bulletsBn : srv.bulletsEn;
   }
 
-  var currentUserKey = null;
-  var selectedAreaKey = 'Mohammadpur';
+  // স্থায়ীভাবে স্টেট লোড ও সেভ করার ফাংশন (যাতে অ্যাপ বন্ধ করলে বা রিফ্রেশ করলে হিস্ট্রি না হারায়)
+  var currentUserKey = localStorage.getItem('coolfix_user_key') || null;
+  var selectedAreaKey = localStorage.getItem('coolfix_area') || 'Mohammadpur';
   var activeCategory = 'all';
   var activeServiceTab = 'services';
   var cart = [];
+  try { cart = JSON.parse(localStorage.getItem('coolfix_cart')) || []; } catch (e) { cart = []; }
+
   var selectedGasService = null;
   var currentSubServiceId = null;
   var currentGasTon = null;
@@ -2362,12 +2622,32 @@
     fullAddress: '',
     landmark: ''
   };
+  try {
+    var savedAddr = JSON.parse(localStorage.getItem('coolfix_address'));
+    if (savedAddr) customerAddress = savedAddr;
+  } catch (e) {}
   window.customerAddress = customerAddress;
 
   var ordersHistory = [];
-  var nextOrderSeq = 1001;
+  try { ordersHistory = JSON.parse(localStorage.getItem('coolfix_orders')) || []; } catch (e) { ordersHistory = []; }
+  window.ordersHistory = ordersHistory;
+
+  var nextOrderSeq = Number(localStorage.getItem('coolfix_order_seq')) || 1001;
   var lastCreatedOrder = null;
   var toastTimer = null;
+
+  function saveAppState() {
+    try {
+      if (currentUserKey) localStorage.setItem('coolfix_user_key', currentUserKey);
+      localStorage.setItem('coolfix_lang', lang);
+      localStorage.setItem('coolfix_area', selectedAreaKey);
+      localStorage.setItem('coolfix_cart', JSON.stringify(cart));
+      localStorage.setItem('coolfix_address', JSON.stringify(customerAddress));
+      localStorage.setItem('coolfix_orders', JSON.stringify(window.ordersHistory));
+      localStorage.setItem('coolfix_order_seq', String(nextOrderSeq));
+    } catch (e) {}
+  }
+  window.saveAppState = saveAppState;
 
   function showToast(msg) {
     var el = document.getElementById('toast');
@@ -2377,12 +2657,13 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function() {
       el.style.display = 'none';
-    }, 2300);
+    }, 2600);
   }
+  window.showToast = showToast;
 
   function getCurrentUserDisplay() {
     if (!currentUserKey || currentUserKey === 'guest') return t('guestUser');
-    if (currentUserKey === 'google') return t('googleUser');
+    if (currentUserKey === 'google') return customerAddress.name || t('googleUser');
     return currentUserKey;
   }
 
@@ -2441,7 +2722,7 @@
 
     document.getElementById('offers-screen-title').textContent = t('offersTitle');
     document.getElementById('orders-screen-title').textContent = t('ordersTitle');
-    document.getElementById('orders-count-label').textContent = ordersHistory.length + t('ordersCountSuffix');
+    document.getElementById('orders-count-label').textContent = window.ordersHistory.length + t('ordersCountSuffix');
     document.getElementById('menu-screen-title').textContent = t('menuTitle');
 
     document.getElementById('phone-modal-title').textContent = t('phoneModalTitle');
@@ -2460,6 +2741,7 @@
     }
 
     renderAreaModalOptions();
+    updateCartBadges();
 
     var activeScreen = document.querySelector('.screen.active');
     if (activeScreen) {
@@ -2495,6 +2777,7 @@
 
   function toggleLanguage() {
     lang = (lang === 'bn') ? 'en' : 'bn';
+    saveAppState();
     applyTranslations();
     showToast(t('toastLangSwitched'));
   }
@@ -2510,6 +2793,7 @@
     if (nav) nav.style.display = (screenId === 'screen-login') ? 'none' : 'grid';
     window.scrollTo(0, 0);
   }
+  window.showScreen = showScreen;
 
   function goToHome(userKey) {
     currentUserKey = userKey;
@@ -2520,8 +2804,12 @@
         customerAddress.name = getCurrentUserDisplay();
       }
     }
+    saveAppState();
     setActiveNavTab('Home');
     showScreen('screen-home');
+    if (typeof window.startOrdersRealtimeListener === 'function') {
+      window.startOrdersRealtimeListener();
+    }
     showToast(t('toastWelcome') + getCurrentUserDisplay());
   }
   window.goToHome = goToHome;
@@ -2539,10 +2827,19 @@
       else items[i].classList.remove('active');
     }
   }
+  window.setActiveNavTab = setActiveNavTab;
 
   function openPhoneModal() {
+    resetPhoneModal();
     document.getElementById('phone-modal').classList.add('open');
   }
+
+  function resetPhoneModal() {
+    document.getElementById('phone-step-1').style.display = 'block';
+    document.getElementById('phone-step-2').style.display = 'none';
+    document.getElementById('otp-code-field').value = '';
+  }
+  window.resetPhoneModal = resetPhoneModal;
 
   function renderAreaModalOptions() {
     var listEl = document.getElementById('area-options-list');
@@ -2566,17 +2863,7 @@
     document.getElementById('phone-modal').classList.remove('open');
     document.getElementById('area-modal').classList.remove('open');
   }
-
-  function verifyDemoPhone() {
-    var phone = document.getElementById('phone-field').value.trim();
-    if (phone.length < 11) {
-      showToast(t('toastBadPhone'));
-      return;
-    }
-    customerAddress.phone = phone;
-    closeModals();
-    goToHome(phone);
-  }
+  window.closeModals = closeModals;
 
   function demoGoogleLogin() {
     if (typeof window.signInWithFirebaseGoogle === 'function') {
@@ -2588,6 +2875,7 @@
 
   function setArea(areaKey) {
     selectedAreaKey = areaKey;
+    saveAppState();
     document.getElementById('selected-area-display').textContent = getAreaLabel(areaKey) + ' ▾';
     closeModals();
     showToast(t('toastAreaChanged') + getAreaLabel(areaKey));
@@ -2910,6 +3198,7 @@
     if (!found) {
       cart.push(newItem);
     }
+    saveAppState();
     updateCartBadges();
     var disp = (lang === 'bn') ? newItem.nameBn : newItem.nameEn;
     showToast(t('toastAdded') + disp);
@@ -2921,12 +3210,14 @@
     if (cart[index].qty <= 0) {
       cart.splice(index, 1);
     }
+    saveAppState();
     updateCartBadges();
     renderCheckoutStep();
   }
 
   function removeCartItem(index) {
     cart.splice(index, 1);
+    saveAppState();
     updateCartBadges();
     renderCheckoutStep();
     showToast(t('toastRemoved'));
@@ -3156,6 +3447,7 @@
 
     customerAddress = { name: name, phone: phone, fullAddress: full, landmark: landmark };
     window.customerAddress = customerAddress;
+    saveAppState();
     lastCreatedOrder = null;
     checkoutSubStep = 3;
     renderCheckoutStep();
@@ -3193,11 +3485,15 @@
       window.saveOrderToFirestore(newOrder);
     }
 
-    ordersHistory.unshift(newOrder);
+    window.ordersHistory.unshift(newOrder);
     lastCreatedOrder = newOrder;
     cart = [];
+    saveAppState();
     updateCartBadges();
     renderCheckoutStep();
+    if (typeof window.startOrdersRealtimeListener === 'function') {
+      window.startOrdersRealtimeListener();
+    }
     showToast(t('toastOrderSuccess') + orderId);
   }
 
@@ -3222,10 +3518,10 @@
   }
 
   function renderOrdersBody() {
-    document.getElementById('orders-count-label').textContent = ordersHistory.length + t('ordersCountSuffix');
+    document.getElementById('orders-count-label').textContent = window.ordersHistory.length + t('ordersCountSuffix');
     var body = document.getElementById('orders-body');
 
-    if (ordersHistory.length === 0) {
+    if (window.ordersHistory.length === 0) {
       body.innerHTML =
         '<div class="empty-cart-box">' +
           '<div style="font-size:44px; margin-bottom:10px;">📋</div>' +
@@ -3237,12 +3533,13 @@
     }
 
     var cards = '';
-    for (var i = 0; i < ordersHistory.length; i++) {
-      var ord = ordersHistory[i];
+    for (var i = 0; i < window.ordersHistory.length; i++) {
+      var ord = window.ordersHistory[i];
       var badgeClass = 'st-pending';
-      if (ord.status === 'Completed') badgeClass = 'st-completed';
-      else if (ord.status === 'Cancelled') badgeClass = 'st-cancelled';
-      else if (ord.status === 'Assigned' || ord.status === 'On the way') badgeClass = 'st-active';
+      var stLow = (ord.status || '').toLowerCase();
+      if (stLow === 'completed' || stLow === 'served' || stLow === 'delivered') badgeClass = 'st-completed';
+      else if (stLow === 'cancelled') badgeClass = 'st-cancelled';
+      else if (stLow === 'assigned' || stLow === 'on the way' || stLow === 'processing') badgeClass = 'st-active';
 
       var ordItemsHtml = '';
       for (var j = 0; j < ord.items.length; j++) {
@@ -3250,17 +3547,24 @@
         ordItemsHtml += '<div>• ' + getCartItemLabel(it) + ' × ' + it.qty + ' — <strong style="color:var(--logo-green-dark); font-family:\'Inter\',sans-serif;">' + formatMoney(it.price * it.qty) + '</strong></div>';
       }
 
+      if (ord.extraCharge && ord.extraCharge > 0) {
+        ordItemsHtml += '<div style="color:var(--logo-deep-blue); margin-top:3px;">+ ' + ((lang === 'bn') ? 'অতিরিক্ত চার্জ/পার্টস' : 'Extra Parts/Charge') + ': <strong>' + formatMoney(ord.extraCharge) + '</strong></div>';
+      }
+
+      var noteHtml = ord.managerNote
+        ? '<div style="font-size:12px; background:var(--logo-blue-light); padding:6px 10px; border-radius:8px; margin-top:6px; color:var(--logo-deep-blue);">💬 ' + ord.managerNote + '</div>'
+        : '';
+
       var actionRow = '';
-      if (ord.status !== 'Cancelled' && ord.status !== 'Completed') {
+      if (stLow === 'pending') {
         actionRow =
           '<div class="order-action-row">' +
-            '<button class="mini-green-btn" onclick="cycleDemoStatus(' + i + ')">' + t('updateStatusDemo') + '</button>' +
             '<button class="mini-outline-btn" onclick="cancelDemoOrder(' + i + ')">' + t('cancelOrderBtn') + '</button>' +
           '</div>';
       }
 
-      var dTxt = I18N[lang].dates[ord.dateIdx];
-      var sTxt = I18N[lang].slots[ord.slotIdx];
+      var dTxt = I18N[lang].dates[ord.dateIdx] || I18N[lang].dates[0];
+      var sTxt = I18N[lang].slots[ord.slotIdx] || I18N[lang].slots[0];
 
       cards +=
         '<div class="order-card">' +
@@ -3272,10 +3576,11 @@
             '<span class="status-badge ' + badgeClass + '">' + ord.status + '</span>' +
           '</div>' +
           '<div style="font-size:13px; margin-bottom:6px;">' + ordItemsHtml + '</div>' +
+          noteHtml +
           '<div style="font-size:12px; color:var(--text-muted); margin-top:6px;">📍 ' + t('addressRow') + ' <strong style="color:var(--text-dark);">' + ord.address.fullAddress + '</strong> (' + ord.address.phone + ')</div>' +
           '<div class="summary-line" style="margin-top:8px; padding-top:6px; border-top:1px dashed var(--border-blue);">' +
             '<span>' + t('totalBillCash') + ' (' + t('cashOnService') + '):</span>' +
-            '<strong style="color:var(--logo-green-dark); font-family:\'Inter\',sans-serif;">' + formatMoney(ord.total) + '</strong>' +
+            '<strong style="color:var(--logo-green-dark); font-size:16px; font-family:\'Inter\',sans-serif;">' + formatMoney(ord.total) + '</strong>' +
           '</div>' +
           actionRow +
         '</div>';
@@ -3283,25 +3588,26 @@
 
     body.innerHTML = cards;
   }
+  window.renderOrdersBody = renderOrdersBody;
 
   function openOrdersScreen() {
     setActiveNavTab('Orders');
+    if (typeof window.startOrdersRealtimeListener === 'function') {
+      window.startOrdersRealtimeListener();
+    }
     renderOrdersBody();
     showScreen('screen-orders');
   }
 
-  function cycleDemoStatus(idx) {
-    var flow = ['Pending', 'Assigned', 'On the way', 'Completed'];
-    var current = ordersHistory[idx].status;
-    var nextIdx = (flow.indexOf(current) + 1) % flow.length;
-    ordersHistory[idx].status = flow[nextIdx];
-    showToast(t('toastStatusUpdated') + flow[nextIdx]);
-    renderOrdersBody();
-  }
-
   function cancelDemoOrder(idx) {
-    ordersHistory[idx].status = 'Cancelled';
-    showToast(t('toastOrderCancelled') + ordersHistory[idx].orderId);
+    var targetOrder = window.ordersHistory[idx];
+    if (!targetOrder) return;
+    targetOrder.status = 'Cancelled';
+    saveAppState();
+    if (typeof window.updateOrderStatusInFirestore === 'function') {
+      window.updateOrderStatusInFirestore(targetOrder.orderId, 'Cancelled');
+    }
+    showToast(t('toastOrderCancelled') + targetOrder.orderId);
     renderOrdersBody();
   }
 
@@ -3327,7 +3633,7 @@
       '</div>' +
       '<div class="menu-list-item" onclick="openOrdersScreen()">' +
         '<span>' + t('orderTrackMenu') + '</span>' +
-        '<span class="sub-info">' + ordersHistory.length + t('ordersWord') + ' ›</span>' +
+        '<span class="sub-info">' + window.ordersHistory.length + t('ordersWord') + ' ›</span>' +
       '</div>' +
       '<div class="menu-list-item" onclick="openOffersScreen()">' +
         '<span>' + t('offersMenu') + '</span>' +
@@ -3337,7 +3643,7 @@
         '<span>' + t('aboutMenu') + '</span>' +
         '<span class="sub-info">' + t('versionInfo') + '</span>' +
       '</div>' +
-      '<button class="btn-primary" style="margin-top:16px;" onclick="showScreen(\'screen-login\')">' + t('goLoginBtn') + '</button>';
+      '<button class="btn-primary" style="margin-top:16px;" onclick="logoutUser()">' + t('logoutBtn') + '</button>';
   }
 
   function openMenuScreen() {
@@ -3361,7 +3667,12 @@
     }
   }
 
+  // অ্যাপ লোড হওয়ার সাথে সাথে ভাষা এবং পূর্বের সেশন রিস্টোর করা
   applyTranslations();
+  if (currentUserKey) {
+    setActiveNavTab('Home');
+    showScreen('screen-home');
+  }
 </script>
 </body>
 </html>
